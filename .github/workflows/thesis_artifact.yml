@@ -1,9 +1,9 @@
 name: Thesis-Artifact
 
-on:
-  push:
-    paths:
-    - 'thesis/**'
+on: push
+#  push:
+#    paths:
+#    - 'thesis/**'
 
 jobs:
   generate-thesis-artifact:
