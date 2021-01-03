@@ -16,7 +16,8 @@ jobs:
       - name: Run Action for LaTeX
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: ./thesis/src/matfmaster.tex
+          working_directory: ./thesis/src
+          root_file: matfmaster.tex
           latexmk_use_xelatex: true
 
       - name: Create Release
