@@ -13,22 +13,6 @@
 
 \usepackage{fontspec}
 
-\newfontfamily{\cmuserif}[
-Path = fonts/,
-Extension = .otf,
-BoldFont = *-Bold,
-ItalicFont = *-Italic,
-BoldItalicFont = *-BoldItalic
-]{CMU Serif}
-
-\newfontfamily{\cmutypewritertext}[
-Path = fonts/,
-Extension = .otf,
-BoldFont = *-Bold,
-ItalicFont = *-Italic,
-BoldItalicFont = *-BoldItalic
-]{CMU Typewriter Text}
-
 %%%% ---------------------------------------------------------------------------
 %%%% Opcije paketa
 %%%% ---------------------------------------------------------------------------
@@ -78,7 +62,20 @@ BoldItalicFont = *-BoldItalic
     % drugi jezik je engleski
     \setotherlanguage{english}
     % osnovni font je CMU Serif
-    \setmainfont{CMU Serif}
+    \setmainfont{CMU Serif}[
+      Path = ./fonts/,
+      Extension = .otf,
+      BoldFont = *-Bold,
+      ItalicFont = *-Italic,
+      BoldItalicFont = *-BoldItalic
+    ]
+    \setmonofont{CMU Typewriter Text}[
+      Path = ./fonts/,
+      Extension = .otf,
+      BoldFont = *-Bold,
+      ItalicFont = *-Italic,
+      BoldItalicFont = *-BoldItalic
+    ]
     % odmah postavljamo srpski jezik (i pre \begin{document})
     \selectlanguage{serbian}
   \else                    % ako je izabrana ćirilica
@@ -94,7 +91,14 @@ BoldItalicFont = *-BoldItalic
     \selectlanguage{serbian}
   \fi
   % sans-serif font za naslovne strane
-  \newfontfamily\headersans{Open Sans}
+  \newfontfamily\headersans{OpenSans}[
+      Path = ./fonts/,
+      Extension = .ttf,
+      UprightFont = *-Regular,
+      BoldFont = *-Bold,
+      ItalicFont = *-Italic,
+      BoldItalicFont = *-BoldItalic
+    ]
 
   % komande i okruženja za korišćenje ćirilice u latiničkom tekstu
   % i obratno nemaju smisla, ali opet ih definišemo, da bi dokumenti
