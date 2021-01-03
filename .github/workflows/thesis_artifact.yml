@@ -19,7 +19,6 @@ jobs:
           working_directory: ./thesis/src
           root_file: matfmaster.tex
           latexmk_use_xelatex: true
-          pre_compile: mkdir -p ~/.font && cp ./fonts/CMU/* ~/.font && cp ./fonts/OpenSans/* ~/.font
 
       - name: Create Release
         id: create_release

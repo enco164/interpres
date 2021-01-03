@@ -11,12 +11,30 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{matfmaster}[2015/10/01 v.1.0 MATF master teza]
 
+\usepackage{fontspec}
+
+\newfontfamily{\cmuserif}[
+Path = fonts/,
+Extension = .otf,
+BoldFont = *-Bold,
+ItalicFont = *-Italic,
+BoldItalicFont = *-BoldItalic
+]{CMU Serif}
+
+\newfontfamily{\cmutypewritertext}[
+Path = fonts/,
+Extension = .otf,
+BoldFont = *-Bold,
+ItalicFont = *-Italic,
+BoldItalicFont = *-BoldItalic
+]{CMU Typewriter Text}
+
 %%%% ---------------------------------------------------------------------------
 %%%% Opcije paketa
 %%%% ---------------------------------------------------------------------------
 
 %% Izbor pisma: podrazumevano pismo je ćirilica, a latinica se uključuje
-%% navođenjem opcije [latinica] 
+%% navođenjem opcije [latinica]
 %% tj. \usepackage[latinica]{matfmaster}
 \newif\ifmatfmaster@latinica
 \DeclareOption{latinica}{\matfmaster@latinicatrue}
@@ -79,8 +97,8 @@
   \newfontfamily\headersans{Open Sans}
 
   % komande i okruženja za korišćenje ćirilice u latiničkom tekstu
-  % i obratno nemaju smisla, ali opet ih definišemo, da bi dokumenti 
-  % pripremljeni za pdflatex mogli da se prevode bez problema i pomoću 
+  % i obratno nemaju smisla, ali opet ih definišemo, da bi dokumenti
+  % pripremljeni za pdflatex mogli da se prevode bez problema i pomoću
   % xelatex-a
   \newcommand{\cir}{}
   \newenvironment{cirilica}{}{}
@@ -124,7 +142,7 @@
     \newcommand{\lat}{\selectlanguage{serbian}\fontencoding{T1}\selectfont}
     \newenvironment{latinica}{\begin{otherlanguage}{serbian}\fontencoding{T1}\selectfont}{\end{otherlanguage}}
   \fi
-  
+
   % sans-serif font za naslovne strane
   \newcommand{\headersans}{\fontfamily{fos}\selectfont}
 \fi
@@ -145,7 +163,7 @@
 \RequirePackage{graphicx}
 % paket omogućava uključivanje gotovih pdf dokumenata
 \RequirePackage{pdfpages}
-% paket omogućava 
+% paket omogućava
 \RequirePackage{url}
 % paket omogućava automatsko podešavanje navodnika
 \RequirePackage{csquotes}
@@ -174,12 +192,12 @@
 
 %%%% ---------------------------------------------------------------------------
 %%%% Podešavamo parametre strane (opcije klase memoir)
-%%%% za detalje parametara videti dokumentaciju klase memoir 
+%%%% za detalje parametara videti dokumentaciju klase memoir
 %%%% (https://www.ctan.org/pkg/memoir?lang=en)
 %%%% ---------------------------------------------------------------------------
 
 % podešavamo veličinu strane (A4 papir osim ako je navedena opcija b5paper kad se koristi B5 papir)
-\ifmatfmaster@bfive 
+\ifmatfmaster@bfive
   \setstocksize{250mm}{176mm}
 \else
   \setstocksize{297mm}{210mm}
@@ -189,7 +207,7 @@
 
 % osnovna veličina margine (3cm ako za A4 tj. 2cm za B5)
 \newlength{\@basemargin}
-\ifmatfmaster@bfive 
+\ifmatfmaster@bfive
   \setlength{\@basemargin}{20mm}
 \else
   \setlength{\@basemargin}{30mm}
@@ -202,7 +220,7 @@
 % podešavamo veličinu zaglavlja i podnožja strane
 \setheadfoot{1.1\onelineskip}{2\onelineskip}
 \setheaderspaces{*}{\onelineskip}{*}
-% pokrećemo izračunavanja 
+% pokrećemo izračunavanja
 \settypeoutlayoutunit{mm}
 \checkandfixthelayout
 
@@ -389,12 +407,12 @@
 \newcommand{\bib}[1]{%
 \def\matfmaster@bib{#1}%                 % pamtimo parametar u promenljivoj \matfmaster@bib
 \ifmatfmaster@biblatex %                 % ako se koristi biblatex
-  \addbibresource{\matfmaster@bib .bib}%      % bibliografska datoteka se uključuje već u preambuli 
+  \addbibresource{\matfmaster@bib .bib}%      % bibliografska datoteka se uključuje već u preambuli
 \fi
 }
 
 % komanda koja kreira stranicu sa literaturom
-\newcommand{\literatura}{%                
+\newcommand{\literatura}{%
 \ifmatfmaster@biblatex %                 % ako se koristi biblatex
    \printbibliography%
 \else                                      % ako se koristi bibtex
