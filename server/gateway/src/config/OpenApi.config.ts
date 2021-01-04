@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function setupOpenApi(app: INestApplication) {
-  let BASE_URL = process.env.BASE_URL || 'http://localhost:8090';
+  const BASE_URL = process.env.BASE_URL || 'http://localhost:8090';
 
   const options = new DocumentBuilder()
     .setTitle('Interpres API')

@@ -34,11 +34,13 @@ jobs:
         run: cd server && yarn install
 
       - name: Typescript Checks
-        run: cd server && yarn lint
+        run: cd server && yarn workspaces run lint
 
       - name: Build
-        run: cd server && yarn build
+        run: cd server && yarn workspaces run build
 
-      - name: Run Tests
-        run: cd server && yarn test
+      - name: Run Unit Tests
+        run: cd server && yarn workspaces run test --ci
 
+      - name: Run e2e Tests
+        run: cd server && yarn workspaces run test:e2e --ci
