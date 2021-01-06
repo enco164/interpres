@@ -6,16 +6,13 @@ import {
   ListItemText,
   Typography,
 } from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { TreeItem, TreeView } from '@material-ui/lab';
 import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
-import { TranslationKeyTree } from '../../domain/translation-key-tree';
 
 import { useAppDispatch } from '../../state/store';
 import { TranslationEditor } from './translation-editor';
+import { TranslationKeysTreeView } from './translation-keys-tree-view';
 import {
   fetchTranslationsByProjectId,
   selectKey,
@@ -41,26 +38,6 @@ export const TranslationsPage: React.FC = () => {
     };
   }, [dispatch, params]);
 
-  const treeItems = React.useMemo(() => {
-    const renderTree = (node: TranslationKeyTree) => (
-      <TreeItem
-        key={node.getKeyPath()}
-        nodeId={node.getKeyPath()}
-        label={node.key}
-        onLabelClick={(event) => {
-          event.preventDefault();
-          dispatch(selectKey(node.getKeyPath()));
-        }}
-      >
-        {Array.isArray(node.children)
-          ? node.children.map((n) => renderTree(n))
-          : null}
-      </TreeItem>
-    );
-
-    return translationKeysTrees.map(renderTree);
-  }, [translationKeysTrees, dispatch]);
-
   const translationKeys = useMemo(() => {
     const set = new Set(translations.map((t) => t.key));
     return Array.from(set).sort();
@@ -68,16 +45,14 @@ export const TranslationsPage: React.FC = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item>
-        <TreeView
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          selected={selectedKey}
-        >
-          {treeItems}
-        </TreeView>
+      <Grid item xs={3}>
+        <TranslationKeysTreeView
+          translationKeysTrees={translationKeysTrees}
+          selectedKey={selectedKey}
+          onKeySelect={(key) => dispatch(selectKey(key))}
+        />
       </Grid>
-      <Grid item>
+      <Grid item xs={9}>
         <Typography variant="subtitle1">Edit translations</Typography>
         <List>
           {translationKeys.map((translationKey) => (
