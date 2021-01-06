@@ -1,13 +1,21 @@
-import { Grid, Typography } from '@material-ui/core';
+import {
+  Box,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { TreeItem, TreeView } from '@material-ui/lab';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { TranslationKeyTree } from '../../domain/translation-key-tree';
 
 import { useAppDispatch } from '../../state/store';
+import { TranslationEditor } from './translation-editor';
 import {
   fetchTranslationsByProjectId,
   selectKey,
@@ -53,6 +61,11 @@ export const TranslationsPage: React.FC = () => {
     return translationKeysTrees.map(renderTree);
   }, [translationKeysTrees, dispatch]);
 
+  const translationKeys = useMemo(() => {
+    const set = new Set(translations.map((t) => t.key));
+    return Array.from(set).sort();
+  }, [translations]);
+
   return (
     <Grid container spacing={2}>
       <Grid item>
@@ -66,7 +79,28 @@ export const TranslationsPage: React.FC = () => {
       </Grid>
       <Grid item>
         <Typography variant="subtitle1">Edit translations</Typography>
-        <pre>{JSON.stringify(translations, null, 2)}</pre>
+        <List>
+          {translationKeys.map((translationKey) => (
+            <ListItem alignItems="flex-start" key={translationKey}>
+              <ListItemText
+                disableTypography
+                primary={<Typography>{translationKey}</Typography>}
+                secondary={
+                  <Box>
+                    {translations
+                      .filter((t) => t.key === translationKey)
+                      .map((translation) => (
+                        <TranslationEditor
+                          key={translation.key + translation.lang}
+                          translation={translation}
+                        />
+                      ))}
+                  </Box>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
       </Grid>
     </Grid>
   );

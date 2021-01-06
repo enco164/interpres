@@ -66,15 +66,8 @@ export const selectTranslationKeysTrees = createSelector(
         tree.addKeyPath(tail.join('.'));
       }
     });
-    return trees; //.sort((a, b) => a.key.localeCompare(b.key));
+    return trees;
   },
-);
-
-export const selectTranslationsByKeyStartsWith = createSelector(
-  selectAllTranslations,
-  (_: RootState, keyStartsWith: string) => keyStartsWith,
-  (translations, keyStartsWith) =>
-    translations.filter((t) => t.key.startsWith(keyStartsWith)),
 );
 
 export const selectSelectedKey = createSelector(
