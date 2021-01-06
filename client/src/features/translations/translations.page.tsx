@@ -59,9 +59,6 @@ export const TranslationsPage: React.FC = () => {
         <TreeView
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
-          // onNodeSelect={(event) => {
-          //   event.preventDefault();
-          // }}
           selected={selectedKey}
         >
           {treeItems}

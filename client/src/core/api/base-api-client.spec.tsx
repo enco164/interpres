@@ -1,23 +1,23 @@
-import fetchMock from "fetch-mock";
-import { BaseApiClient } from "./base-api-client";
+import fetchMock from 'fetch-mock';
+import { BaseApiClient } from './base-api-client';
 
 class TestApiClient extends BaseApiClient {
   async getTest() {
-    return this.fetchApi("/test");
+    return this.fetchApi('/test');
   }
 }
 
 const TestApi = new TestApiClient();
 
-describe("BaseApiClient", () => {
+describe('BaseApiClient', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it("should add content-type to header", async () => {
-    fetchMock.get("/test", {
+  it('should add content-type to header', async () => {
+    fetchMock.get('/test', {
       body: {},
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     });
 
     await TestApi.getTest();
@@ -27,7 +27,7 @@ describe("BaseApiClient", () => {
         `/test`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         },
       ]),
