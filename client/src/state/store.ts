@@ -1,10 +1,12 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 
-import { projectsSlice } from "./projects.slice";
+import { projectsSlice } from '../features/projects/projects.slice';
+import { translationsSlice } from '../features/translations/translations.slice';
 
 export const rootReducers = {
   [projectsSlice.name]: projectsSlice.reducer,
+  [translationsSlice.name]: translationsSlice.reducer,
 };
 
 export const store = configureStore({

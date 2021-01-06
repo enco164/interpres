@@ -9,7 +9,7 @@ import {
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchProjects, selectAllProjects } from "../../state/projects.slice";
+import { fetchProjects, selectAllProjects } from "./projects.slice";
 import { useAppDispatch } from "../../state/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +47,7 @@ export const ProjectsList: React.FC = () => {
 
         {projects.map((project) => (
           <Grid key={project.id} item xs={12} sm={6} lg={3}>
-            <Link to={`/project/${project.id}/overview`}>
+            <Link to={`/project/${project.id}/translations`}>
               <Card>
                 <CardContent>
                   <Typography variant="h5" component="h2">
