@@ -1,17 +1,10 @@
-import {
-  Box,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@material-ui/core';
-import React, { useEffect, useMemo } from 'react';
+import { Grid, Typography } from '@material-ui/core';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 
 import { useAppDispatch } from '../../state/store';
-import { TranslationEditor } from './translation-editor';
+import { SelectedTranslationKeysEditor } from './selected-translation-keys-editor';
 import { TranslationKeysTreeView } from './translation-keys-tree-view';
 import {
   fetchTranslationsByProjectId,
@@ -22,11 +15,12 @@ import {
 } from './translations.slice';
 
 export const TranslationsPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { params } = useRouteMatch<{ projectId: string }>();
+
   const selectedKey = useSelector(selectSelectedKey);
   const translations = useSelector(selectSelectedTranslations);
   const translationKeysTrees = useSelector(selectTranslationKeysTrees);
-  const dispatch = useAppDispatch();
-  const { params } = useRouteMatch<{ projectId: string }>();
 
   useEffect(() => {
     const promise = dispatch(
@@ -38,14 +32,12 @@ export const TranslationsPage: React.FC = () => {
     };
   }, [dispatch, params]);
 
-  const translationKeys = useMemo(() => {
-    const set = new Set(translations.map((t) => t.key));
-    return Array.from(set).sort();
-  }, [translations]);
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={3}>
+        <Typography variant="h6" gutterBottom color="primary">
+          Translation keys
+        </Typography>
         <TranslationKeysTreeView
           translationKeysTrees={translationKeysTrees}
           selectedKey={selectedKey}
@@ -53,29 +45,10 @@ export const TranslationsPage: React.FC = () => {
         />
       </Grid>
       <Grid item xs={9}>
-        <Typography variant="subtitle1">Edit translations</Typography>
-        <List>
-          {translationKeys.map((translationKey) => (
-            <ListItem alignItems="flex-start" key={translationKey}>
-              <ListItemText
-                disableTypography
-                primary={<Typography>{translationKey}</Typography>}
-                secondary={
-                  <Box>
-                    {translations
-                      .filter((t) => t.key === translationKey)
-                      .map((translation) => (
-                        <TranslationEditor
-                          key={translation.key + translation.lang}
-                          translation={translation}
-                        />
-                      ))}
-                  </Box>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
+        <Typography variant="h6" gutterBottom color="primary">
+          Edit translations
+        </Typography>
+        <SelectedTranslationKeysEditor translations={translations} />
       </Grid>
     </Grid>
   );
