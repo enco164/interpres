@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import MenuIcon from '@material-ui/icons/Menu';
 
 const drawerWidth = 240;
 
@@ -25,9 +24,17 @@ const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+  },
+  toolbarIconButton: {
+    transform: (props: { open: boolean }) =>
+      `rotate(${props.open ? 0 : 180}deg)`,
+    transition: theme.transitions.create(['transform'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -57,6 +64,8 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
+    paddingTop: theme.spacing(8),
+    overflow: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -69,9 +78,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -92,19 +98,25 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  listItems: {
+    flex: '1 1 auto',
+  },
 }));
 
-export const AppLayout: React.FC = ({ children }) => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+interface AppLayoutProps {
+  listItems: any;
+}
+
+export const AppLayout: React.FC<AppLayoutProps> = ({
+  children,
+  listItems,
+}) => {
+  const [open, setOpen] = React.useState(false);
+  const handleToggleDrawerOpen = () => {
+    setOpen((o) => !o);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
+  const classes = useStyles({ open });
   return (
     <div className={classes.root}>
       <AppBar
@@ -112,17 +124,6 @@ export const AppLayout: React.FC = ({ children }) => {
         className={`${classes.appBar} ${open && classes.appBarShift}`}
       >
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={`${classes.menuButton} ${
-              open && classes.menuButtonHidden
-            }`}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             component="h1"
             variant="h6"
@@ -141,15 +142,13 @@ export const AppLayout: React.FC = ({ children }) => {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+        <div className={classes.listItems}>{listItems}</div>
+        <Divider />
+        <div className={classes.toolbarIcon} onClick={handleToggleDrawerOpen}>
+          <IconButton className={classes.toolbarIconButton}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
-        {/*<List>{mainListItems}</List>*/}
-        <Divider />
-        {/*<List>{secondaryListItems}</List>*/}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
