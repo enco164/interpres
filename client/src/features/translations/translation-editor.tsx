@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from '@material-ui/core';
+import { Box, TextField } from '@material-ui/core';
 import React from 'react';
 import { Translation } from '../../domain/translation';
 
@@ -13,9 +13,13 @@ export const TranslationEditor: React.FC<TranslationEditorProps> = ({
     return null;
   }
   return (
-    <Box component="div" display="flex">
-      <Typography>{translation.lang}</Typography>
-      <TextField value={translation.value} />
+    <Box component="div" display="flex" flexDirection="column" mb={1}>
+      <TextField
+        variant="outlined"
+        value={translation.value}
+        label={translation.lang}
+        size="small"
+      />
     </Box>
   );
 };

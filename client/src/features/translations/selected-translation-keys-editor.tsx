@@ -3,6 +3,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import React, { useMemo } from 'react';
@@ -13,6 +14,16 @@ interface SelectedTranslationKeysEditorProps {
   translations: Translation[];
 }
 
+const useStyles = makeStyles((theme) => ({
+  listItem: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    alignItems: 'flex-start',
+    '&:last-child': {
+      borderBottom: 'none',
+    },
+  },
+}));
+
 export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEditorProps> = ({
   translations,
 }) => {
@@ -21,13 +32,19 @@ export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEdit
     return Array.from(set).sort();
   }, [translations]);
 
+  const classes = useStyles();
+
   return (
     <List>
       {translationKeys.map((translationKey) => (
-        <ListItem alignItems="flex-start" key={translationKey}>
+        <ListItem key={translationKey} className={classes.listItem}>
           <ListItemText
             disableTypography
-            primary={<Typography>{translationKey}</Typography>}
+            primary={
+              <Typography variant="subtitle2" gutterBottom>
+                {translationKey}
+              </Typography>
+            }
             secondary={
               <Box>
                 {translations
