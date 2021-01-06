@@ -1,12 +1,14 @@
 import { CssBaseline } from "@material-ui/core";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "./state/store";
 
 export const AppProviders: React.FC = ({ children }) => {
   return (
-    <React.Fragment>
+    <ReduxProvider store={store}>
       <CssBaseline />
       <Router>{children}</Router>
-    </React.Fragment>
+    </ReduxProvider>
   );
 };
