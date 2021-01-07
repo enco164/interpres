@@ -1,4 +1,4 @@
-name: Server-PR
+name: Client-PR
 
 on:
   pull_request:
