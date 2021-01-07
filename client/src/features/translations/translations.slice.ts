@@ -5,7 +5,9 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import * as jsonpatch from 'fast-json-patch';
 import { ProjectsApi } from '../../api/projects.api';
+import { TranslationsApi } from '../../api/translations.api';
 import { Translation } from '../../domain/translation';
 import { TranslationKeyTree } from '../../domain/translation-key-tree';
 import { RootState } from '../../state/store';
@@ -22,6 +24,25 @@ export const fetchTranslationsByProjectId = createAsyncThunk(
   (arg: { projectId: number }) =>
     ProjectsApi.getTranslationsByProjectId(arg.projectId),
 );
+
+const deepCopy = <T>(arg: T): T => JSON.parse(JSON.stringify(arg));
+
+export const patchTranslationValueById = createAsyncThunk<
+  void,
+  { translationId: number; value: string },
+  { state: RootState }
+>('translations/patchTranslationValueById', async (arg, thunkAPI) => {
+  let entity = thunkAPI.getState().translations.entities[arg.translationId];
+  if (!entity) {
+    throw new Error(`Translation with id ${arg.translationId} not found`);
+  }
+  let applied = { ...entity, value: arg.value };
+  let patches = jsonpatch.compare(deepCopy(entity), applied);
+  return TranslationsApi.patchTranslation(
+    { translationId: arg.translationId, patches },
+    thunkAPI.signal,
+  );
+});
 
 export const translationsSlice = createSlice({
   name: 'translations',

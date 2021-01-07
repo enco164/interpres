@@ -1,4 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import * as jsonpatch from 'fast-json-patch';
+import { Operation } from 'fast-json-patch';
 import { ProjectRepository } from '../projects/project.repository';
 import { CreateTranslationDto } from './dto/create-translation.dto';
 import { UpdateTranslationDto } from './dto/update-translation.dto';
@@ -45,5 +47,16 @@ export class TranslationsService {
 
   remove(id: number) {
     return this.translationRepository.delete(id);
+  }
+
+  async patch(id: number, patches: Operation[]) {
+    const translation = await this.translationRepository.findOne(id);
+    if (!translation) {
+      throw new NotFoundException(`Translation with id ${id} not found`);
+    }
+
+    const patchedTranslation = jsonpatch.applyPatch(translation, patches)
+      .newDocument;
+    return this.translationRepository.save(patchedTranslation);
   }
 }

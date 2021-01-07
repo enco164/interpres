@@ -4,10 +4,12 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Operation } from 'fast-json-patch';
 import { CreateTranslationDto } from './dto/create-translation.dto';
 import { UpdateTranslationDto } from './dto/update-translation.dto';
 import { TranslationsService } from './translations.service';
@@ -38,6 +40,11 @@ export class TranslationsController {
     @Body() updateTranslationDto: UpdateTranslationDto,
   ) {
     return this.translationsService.update(+id, updateTranslationDto);
+  }
+
+  @Patch(':id')
+  patch(@Param('id') id: string, @Body() patches: Operation[]) {
+    return this.translationsService.patch(+id, patches);
   }
 
   @Delete(':id')

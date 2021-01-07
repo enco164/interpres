@@ -1,6 +1,8 @@
 import { Box, TextField } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Translation } from '../../domain/translation';
+import { useAppDispatch } from '../../state/store';
+import { patchTranslationValueById } from './translations.slice';
 
 interface TranslationEditorProps {
   translation: Translation;
@@ -9,16 +11,34 @@ interface TranslationEditorProps {
 export const TranslationEditor: React.FC<TranslationEditorProps> = ({
   translation,
 }) => {
-  if (!translation) {
-    return null;
-  }
+  const dispatch = useAppDispatch();
+  const [internalValue, setInternalValue] = useState<string>(translation.value);
+
+  useEffect(() => {
+    setInternalValue(translation.value);
+  }, [translation.value]);
+
   return (
     <Box component="div" display="flex" flexDirection="column" mb={1}>
       <TextField
         variant="outlined"
-        value={translation.value}
+        value={internalValue}
         label={translation.lang}
         size="small"
+        onChange={(event) => setInternalValue(event.target.value)}
+        onBlur={(event) => {
+          let value = event.target.value;
+          if (value === translation.value) {
+            return;
+          }
+
+          dispatch(
+            patchTranslationValueById({
+              translationId: translation.id,
+              value,
+            }),
+          );
+        }}
       />
     </Box>
   );
