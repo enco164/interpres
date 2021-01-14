@@ -34,19 +34,19 @@ jobs:
         run: cd server && yarn install
 
       - name: Typescript Checks
-        run: cd server && yarn workspaces run lint
+        run: cd server && yarn run lint
 
       - name: Build
-        run: cd server && yarn workspaces run build
+        run: cd server && yarn build
 
       - name: Run Unit Tests
-        run: cd server && yarn workspaces run test --ci
+        run: cd server && yarn run test --ci
 
       - name: Run docker-compose for server e2e tests
         run: docker-compose -f server/docker-compose.yml up -d
 
       - name: Run e2e Tests
-        run: cd server && yarn workspaces run test:e2e --ci
+        run: cd server && yarn run test:e2e --ci
 
       - name: Stop docker-compose for server e2e tests
         run: docker-compose -f server/docker-compose.yml down
