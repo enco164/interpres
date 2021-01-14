@@ -7,9 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "concurrently \"nest build gateway\" \"nest build translations\"",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "nest start",
+    "start": "concurrently \"nest start gateway\" \"nest start translations\"",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/server/test/jest-e2e.json"
+    "test:e2e": "concurrently \"jest --config ./apps/gateway/test/jest-e2e.json\" \"jest --config ./apps/translations/test/jest-e2e.json\""
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/swagger": "^4.7.9",
     "@nestjs/typeorm": "^7.1.5",
+    "concurrently": "^5.3.0",
     "fast-json-patch": "^3.0.0-1",
     "http-proxy-middleware": "^1.0.6",
     "pg": "^8.5.1",
