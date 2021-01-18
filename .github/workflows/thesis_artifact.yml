@@ -1,11 +1,11 @@
 name: Thesis-Artifact
 
-on: push
-#  push:
-#    branches:
-#      - main
-#    paths:
-#      - 'thesis/**'
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'thesis/**'
 
 jobs:
   generate-thesis-artifact:

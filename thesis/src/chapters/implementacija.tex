@@ -35,9 +35,11 @@ Autori ovog alata na svojoj internet stranici kažu da je TypeORM nastao pod vel
 Hibernate, Doctrine and Entity Framework~\cite{TypeORM}.
 
 Centralni objekat za preslikavanje tabele iz baze podataka u klasu programskog jezika je entitet (eng. \textit{Entity}).
-Entitet se sastoji od kolona i relacija, i mora da ima primarnu kolonu.
+Entitet se sastoji od kolona i relacija, i mora imati primarnu kolonu.
 
 \begin{minted}{TypeScript}
+@Entity()
+@Index(['projectId', 'key', 'lang'], { unique: true })
 export class Translation {
   @PrimaryGeneratedColumn()
   id: number;
