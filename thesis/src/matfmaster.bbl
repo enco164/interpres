@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{TypeORM}
+TypeORM
+\newblock {https://typeorm.io/}.
+\newblock {Internet prezentacija}.
+
 \bibitem{GuSh:243}
 Yuri Gurevich and Saharon Shelah.
 \newblock {Expected computation time for Hamiltonian path problem}.

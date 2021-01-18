@@ -1,11 +1,11 @@
 name: Thesis-Artifact
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'thesis/**'
+on: push
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'thesis/**'
 
 jobs:
   generate-thesis-artifact:
@@ -21,6 +21,9 @@ jobs:
           working_directory: ./thesis/src
           root_file: matfmaster.tex
           latexmk_use_xelatex: true
+          latexmk_shell_escape: true
+          extra_system_packages: py-pip
+          pre_compile: pip install Pygments
 
       - name: Create Release
         id: create_release

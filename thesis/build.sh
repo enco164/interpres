@@ -1,5 +1,5 @@
 cd ./src || exit
 
-latexmk -pdf -xelatex matfmaster
+latexmk -shell-escape -pdf -xelatex matfmaster
 
 cd - || exit
