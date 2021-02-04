@@ -3,7 +3,7 @@ uz sitne izmene (npr. koriscenje `minted` paketa za formatiranje koda)
 
 Za pisanje latex se koristi [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) ekstenzija za Visual Studio Code. Ova ekstenzija koristi Docker image za LaTeX kompilator. `minted` paket zahteva instalaciju `python-pygments`. Zbog toga postoji specijalan Dockerfile u kome je instaliran dodatni paket. Potrebno je izgraditi docker image komandom 
 ```
-docker build -t enco164/thesis-latex:1.0
+docker build -t enco164/thesis-latex:1.0 .
 ```
 
 Podesavanja (`settings.json`) za VS Code:

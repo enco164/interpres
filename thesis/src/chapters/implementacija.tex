@@ -32,27 +32,27 @@ parametre za povezivanje na bazu.
 Jedan od popularnijih ORM alata za JavaScript je TypeORM. On se može pokrenuti u različitim JavaScript platformama a
 preporučeno je pisanje u TypeScript jeziku. Od obrazaca za projektovanje podržava aktivni zapis i preslikavanje podataka.
 Autori ovog alata na svojoj internet stranici kažu da je TypeORM nastao pod velikim uticajem ostalih ORM alata, kao što
-Hibernate, Doctrine and Entity Framework~\cite{TypeORM}.
+Hibernate, Doctrine i Entity Framework~\cite{TypeORM}.
 
 Centralni objekat za preslikavanje tabele iz baze podataka u klasu programskog jezika je entitet (eng. \textit{Entity}).
 Entitet se sastoji od kolona i relacija, i mora imati primarnu kolonu.
 
-\begin{minted}{TypeScript}
+\begin{minted}[ fontsize=\footnotesize ]{TypeScript}
 @Entity()
 @Index(['projectId', 'key', 'lang'], { unique: true })
 export class Translation {
   @PrimaryGeneratedColumn()
   id: number;
-
+	
   @Column()
   projectId: number;
-
+	
   @Column()
   key: string;
-
+		
   @Column()
   lang: string;
-
+	
   @Column()
   value: string;
 
@@ -60,9 +60,30 @@ export class Translation {
 }
 \end{minted}
 
+\section{Kubernetes}\label{sec:kubernetes}
 
-- Nest.js (Issue \#7)
+Do nedavno, većina softverskih aplikacija je razvijana kao veliki monoliti, koji su funkcionisali kao jedan proces 
+ili kao mali broj procesa rasprostanjenih na više servera. Ovi zastareli sistemi su i dalje veoma rasprostranjeni. 
+Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko. Na kraju svakog razvojnog ciklus, programeri
+upakuju ceo sistem i predaju ga timu zaduženom za operacije, koji ga kasnije instalira i nadgleda. U slučaju hardverske
+greške, tim za operacije ručno migrira sistem na preostale servere koji su bez greške.
 
-- React
+Danas se ovako veliki monoliti rasčlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. S obzirom
+da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
+Ovakva osobina omogućava češće promene na komponentama. S druge strane, povećanjem broja komponenti koje treba 
+instalirati postaje sve teže konfigurisati, upravljati i očuvati ceo sistem u radnom stanju. Pored navedenog, mnogo 
+je teže shvatiti kako i gde postaviti ove komponente kako bi se postigla veća iskorišćenost resursa, a samim tim i 
+smanjiti cenu potrebnog hardvera. Odatle postoji potreba za automatizacijom, koja uključuje automatsku konfiguraciju,
+nadzor  i rešavanje problema. Iz ovih razloga je razvijen Kubernetes.
 
-- Material UI
+Kubernetes omogućava programerima da sami instaliraju svoju aplikaciju, bez pomoći tima za operacije. Ali s druge 
+strane, nemaju samo programeri benefit. Ovaj alat takođe pomaže operacionom timu tako što automatski nadgleda, 
+i u slučaju greške pokreće nove instance aplikacija. To znači da se fokus operacionog tima preusmerava sa nadgledanja
+pojedinačnih aplikacija na nadgledanje i upravljanje infrastrukture i Kubernetes alata, dok se Kubernetes stara o samim
+aplikacijama.
+
+Kubernetes apstrahuje hardversku infrastrukturu i pruža privid da je ceo data centar jedan veliki resurs. To omogućava
+velikim kompanijama koje pružaju usluge računarstva u oblaku da ponude programerima jednostavnu platformu za pokretanje
+raznih tipova aplikacija, a da pritom njihovi administratori sistema ne znaju koje su aplikacije pokrenute na njihovom
+hardveru. Kako velike kompanije sve više prihvataju Kubernetes model kao jedan od boljih načina za pokretanje aplikacija,
+tako Kubernetes postaje standardan model za računarstvo u oblaku~\cite{KIA}.
