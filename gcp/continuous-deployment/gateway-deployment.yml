@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: eu.gcr.io/interpre-164/gateway:@@IMAGE_TAG@@
+          image: eu.gcr.io/interpres-164/gateway:@@IMAGE_TAG@@
           ports:
             - containerPort: 8090
           imagePullPolicy: Always
