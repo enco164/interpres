@@ -26,10 +26,10 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Determine Docker Tag
-        run: echo "DOCKER_TAG=${{ github.run_number }}-$GITHUB_SHA"  >> $GITHUB_ENV
-      - run: |-
-          echo DOCKER_TAG:  $DOCKER_TAG
+#      - name: Determine Docker Tag
+#        run: echo "DOCKER_TAG=${{ github.run_number }}-$GITHUB_SHA"  >> $GITHUB_ENV
+#      - run: |-
+#          echo DOCKER_TAG:  $DOCKER_TAG
 
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@master
