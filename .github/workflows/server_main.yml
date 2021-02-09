@@ -50,6 +50,7 @@ jobs:
         run: |-
           docker build \
             --tag "eu.gcr.io/$PROJECT_ID/$GATEWAY_IMAGE:$DOCKER_TAG" \
+            --file ./server/gateway.Dockerfile \
             .
       # Push the Docker image to Google Container Registry
       - name: Publish
