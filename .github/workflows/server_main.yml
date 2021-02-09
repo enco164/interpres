@@ -56,3 +56,8 @@ jobs:
       - name: Publish
         run: |-
           docker push "eu.gcr.io/$PROJECT_ID/$GATEWAY_IMAGE:$DOCKER_TAG"
+      # Deploy Gateway
+      - name: Deploy
+        run: |-
+          chmod +x ./gcp/continuous-deployment/deploy.sh
+          ./gcp/continuous-deployment/deploy.sh $DOCKER_TAG
