@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sv-magic-platform-config
+  name: interpres-164-config
 data:
   GCP_PROJECT_ID: interpres-164
-  TRANSLTATION_SERVICE_URI: http://translation-service-service:8091
+  TRANSLATION_SERVICE_URI: http://translation-service-service:8091
