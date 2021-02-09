@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "concurrently \"nest build gateway\" \"nest build translations\"",
+    "build:gateway": "nest build gateway",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "concurrently \"nest start gateway\" \"nest start translations\"",
     "start:dev": "nest start --watch",
