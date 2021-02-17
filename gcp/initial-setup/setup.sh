@@ -9,3 +9,6 @@ echo "Create cluster"
 
 echo ""
 ./create-service-account.sh
+
+echo ""
+./create-nginx-ingress.sh
