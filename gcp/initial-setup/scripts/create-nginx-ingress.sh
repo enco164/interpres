@@ -8,11 +8,12 @@ echo "Verify that the nginx-ingress-controller Deployment and Service are deploy
 kubectl get deployment nginx-ingress-nginx-ingress
 kubectl get service nginx-ingress-nginx-ingress
 
-controller_ready_line=$(kubectl --namespace default get services | grep nginx-ingress-controller | grep "<pending>")
+controller_ready_line=$(kubectl get service nginx-ingress-nginx-ingress | grep "<pending>")
 while [ ${#controller_ready_line} -gt 0 ]; do
+  echo "$controller_ready_line"
   echo "... nginx-ingress not ready - keep waiting ..."
   sleep 15
-  controller_ready_line=$(kubectl --namespace default get services | grep nginx-ingress-controller | grep "<pending>")
+  controller_ready_line=$(kubectl get service nginx-ingress-nginx-ingress | grep "<pending>")
 done
 
 NGINX_INGRESS_IP=$(kubectl get service nginx-ingress-nginx-ingress -ojson | jq -r '.status.loadBalancer.ingress[].ip')
