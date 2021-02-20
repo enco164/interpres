@@ -1,9 +1,17 @@
 name: Build & Publish docker image
 
+## Uncomment this when GCP deploy is ready
+##
+#on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'server/**'
 on:
   push:
     branches:
-      - main
+      - tmp
     paths:
       - 'server/**'
 
