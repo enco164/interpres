@@ -1,0 +1,75 @@
+name: Build & Publish docker image
+
+## Uncomment this when GCP deploy is ready
+##
+#on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'server/**'
+on:
+  push:
+    branches:
+      - tmp
+    paths:
+      - 'server/**'
+
+env:
+  PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+  GKE_CLUSTER: interpres-164-cluster
+  GKE_ZONE: ${{ secrets.GOOGLE_COMPUTE_ZONE }}
+  GATEWAY_IMAGE: gateway
+  DOCKER_TAG: 8-2ffc234250c2382c169d50586a837dc42e6e7cb3
+
+jobs:
+  build-docker-and-publish:
+    runs-on: ubuntu-latest
+    environment: main
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Determine Docker Tag
+        run: echo "DOCKER_TAG=${{ github.run_number }}-$GITHUB_SHA"  >> $GITHUB_ENV
+      - run: |-
+          echo DOCKER_TAG:  $DOCKER_TAG
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
+
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
+      - run: |-
+          gcloud --quiet auth configure-docker
+      - run: |-
+          gcloud config list
+      # Get the GKE credentials so we can deploy to the cluster
+      - run: |-
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      # Build the Docker image
+      - name: Build
+        run: |-
+          docker build \
+            --tag "eu.gcr.io/$PROJECT_ID/$GATEWAY_IMAGE:$DOCKER_TAG" \
+            --file ./server/gateway.Dockerfile \
+            ./server
+      # Push the Docker image to Google Container Registry
+      - name: Publish
+        run: |-
+          docker push "eu.gcr.io/$PROJECT_ID/$GATEWAY_IMAGE:$DOCKER_TAG"
+      # Deploy Gateway
+      - name: Deploy
+        run: |-
+          cd ./gcp/continuous-deployment
+          chmod +x ./deploy.sh
+          ./deploy.sh $DOCKER_TAG
