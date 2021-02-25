@@ -16,3 +16,13 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: user
       POSTGRES_DB: translation
+
+  reverse-proxy:
+    container_name: reverse-proxy
+    build:
+      context: ./reverse-proxy
+      dockerfile: ./Dockerfile
+    image: enco164/reverse-proxy:0.0.1
+    ports:
+      - 8090:8090
+
