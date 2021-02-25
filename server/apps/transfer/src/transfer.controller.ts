@@ -1,11 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { TransferService } from './transfer.service';
 
 @Controller()
 export class TransferController {
   constructor(private readonly transferService: TransferService) {}
 
-  @Get()
+  @MessagePattern({ cmd: 'hello' })
   getHello(): string {
     return this.transferService.getHello();
   }

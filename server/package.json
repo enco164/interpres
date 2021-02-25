@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "concurrently \"nest build gateway\" \"nest build translations\"",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "concurrently \"nest start gateway\" \"nest start translations\"",
+    "start": "concurrently \"nest start --watch gateway\" \"nest start --watch translations\" \"nest start --watch transfer\"",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
