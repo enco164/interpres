@@ -1,6 +1,8 @@
 import { Button, Container, Grid, TextField } from '@material-ui/core';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { Form, Formik } from 'formik';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { CreateProjectDto } from '../../api/dto/create-project.dto';
 import { useAppDispatch } from '../../state/store';
 import { createProject } from './projects.slice';
@@ -9,9 +11,15 @@ interface NewProjectPageProps {}
 
 export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
-  const onSubmit = (values: CreateProjectDto) => {
-    dispatch(createProject(values));
+  const onSubmit = async (values: CreateProjectDto) => {
+    try {
+      const result = unwrapResult(await dispatch(createProject(values)));
+      history.push(`/project/${result.id}`);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

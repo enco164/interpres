@@ -24,7 +24,7 @@ class ProjectsApiClient extends BaseApiClient {
       method: 'POST',
       body: JSON.stringify(params),
     });
-    return new JSONApiResponse(response).value();
+    return new JSONApiResponse<Project>(response).value();
   }
 }
 

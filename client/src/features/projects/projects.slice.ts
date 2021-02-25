@@ -18,7 +18,7 @@ export const fetchProjects = createAsyncThunk('projects/fetchProjects', () =>
   ProjectsApi.getProjects(),
 );
 
-export const createProject = createAsyncThunk<unknown, CreateProjectDto>(
+export const createProject = createAsyncThunk<Project, CreateProjectDto>(
   'projects/createProject',
   (arg, thunkAPI) => ProjectsApi.postProject(arg, { signal: thunkAPI.signal }),
 );
@@ -28,9 +28,13 @@ export const projectsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchProjects.fulfilled, (state, action) => {
-      entityAdapter.setAll(state, action);
-    });
+    builder
+      .addCase(fetchProjects.fulfilled, (state, action) => {
+        entityAdapter.setAll(state, action);
+      })
+      .addCase(createProject.fulfilled, (state, action) => {
+        entityAdapter.addOne(state, action);
+      });
   },
 });
 
