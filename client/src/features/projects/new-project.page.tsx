@@ -18,7 +18,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
       const result = unwrapResult(await dispatch(createProject(values)));
       history.push(`/project/${result.id}`);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

@@ -20,7 +20,7 @@ export const fetchProjects = createAsyncThunk('projects/fetchProjects', () =>
 
 export const createProject = createAsyncThunk<Project, CreateProjectDto>(
   'projects/createProject',
-  (arg, thunkAPI) => ProjectsApi.postProject(arg, { signal: thunkAPI.signal }),
+  (arg, { signal }) => ProjectsApi.postProject(arg, { signal }),
 );
 
 export const projectsSlice = createSlice({
