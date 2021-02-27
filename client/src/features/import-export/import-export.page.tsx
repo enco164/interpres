@@ -3,7 +3,7 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import React, { useCallback } from 'react';
 import { useProjectIdParam } from '../../hooks/use-project-id-param';
 import { useAppDispatch } from '../../state/store';
-import { importTranslations } from './import-export.slice';
+import { exportTranslations, importTranslations } from './import-export.slice';
 import { ImportForm } from './import-form';
 
 interface ImportExportPageProps {}
@@ -26,6 +26,18 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
     },
     [dispatch, projectId],
   );
+
+  const handleExport = useCallback(async () => {
+    try {
+      const result = unwrapResult(
+        await dispatch(exportTranslations({ projectId: +projectId })),
+      );
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [dispatch, projectId]);
+
   return (
     <Grid container>
       <Grid item xs={6}>
@@ -38,7 +50,9 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
         <Typography variant="h6" component="h6">
           Export translations
         </Typography>
-        <Button color="primary">Export</Button>
+        <Button color="primary" onClick={handleExport}>
+          Export
+        </Button>
       </Grid>
     </Grid>
   );

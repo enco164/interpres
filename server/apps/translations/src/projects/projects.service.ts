@@ -72,4 +72,12 @@ export class ProjectsService {
       toArray(),
     );
   }
+
+  exportTranslations(projectId: number) {
+    return from(this.findProjectTranslations(projectId)).pipe(
+      map((translations) =>
+        this.importExportService.buildJsonTreeFromTranslations(translations),
+      ),
+    );
+  }
 }

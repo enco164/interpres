@@ -1,6 +1,7 @@
 import { BaseApiClient, JSONApiResponse } from '../core/api';
 import { Translation } from '../domain/translation';
 import { readJsonFile } from '../util';
+import { ExportTranslationsDto } from './dto/export-translations.dto';
 import { ImportTranslationsDto } from './dto/import-translations.dto';
 
 const BASE_URL = '/api/translation-service';
@@ -21,6 +22,14 @@ class ImportExportApiClient extends BaseApiClient {
       },
     );
     return new JSONApiResponse<Translation[]>(response).value();
+  }
+
+  async exportTranslations(param: ExportTranslationsDto, init?: RequestInit) {
+    const response = await this.fetchApi(
+      `${BASE_URL}/projects/${param.projectId}/export`,
+      init,
+    );
+    return new JSONApiResponse(response).value();
   }
 }
 
