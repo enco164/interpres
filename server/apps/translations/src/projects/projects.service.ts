@@ -1,6 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { EMPTY, from } from 'rxjs';
-import { catchError, concatMap, map, toArray } from 'rxjs/operators';
+import { EMPTY, from, of } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  map,
+  throwIfEmpty,
+  toArray,
+} from 'rxjs/operators';
 import { ImportExportService } from '../import-export/import-export.service';
 import { CreateTranslationDto } from '../translations/dto/create-translation.dto';
 import { TranslationsService } from '../translations/translations.service';
@@ -19,41 +25,47 @@ export class ProjectsService {
   ) {}
 
   create(createProjectDto: CreateProjectDto) {
-    const project = new Project();
-    project.name = createProjectDto.name;
-
-    return this.projectRepository.save(project);
+    return of(new Project()).pipe(
+      map((p) => {
+        p.name = createProjectDto.name;
+        return p;
+      }),
+      concatMap((p) => this.projectRepository.save(p)),
+    );
   }
 
   findAll() {
-    return this.projectRepository.find();
+    return from(this.projectRepository.find());
   }
 
   findOne(id: number) {
-    return this.projectRepository.findOne(id);
+    return from(this.projectRepository.findOne(id));
   }
 
-  async update(id: number, updateProjectDto: UpdateProjectDto) {
-    const project = await this.projectRepository.findOne(id);
-    if (!project) {
-      throw new NotFoundException(`Project with id ${id} not found`);
-    }
-
-    project.name = updateProjectDto.name;
-
-    return this.projectRepository.save(project);
+  update(id: number, updateProjectDto: UpdateProjectDto) {
+    return from(this.projectRepository.findOne(id)).pipe(
+      throwIfEmpty(
+        () => new NotFoundException(`Project with id ${id} not found`),
+      ),
+      map((project) => {
+        project.name = updateProjectDto.name;
+        return project;
+      }),
+      concatMap((project) => this.projectRepository.save(project)),
+    );
   }
 
   remove(id: number) {
-    return this.projectRepository.delete(id);
+    return from(this.projectRepository.delete(id));
   }
 
-  async findProjectTranslations(projectId: number) {
-    const project = await this.projectRepository.findOne(projectId);
-    if (!project) {
-      throw new NotFoundException(`Project with id ${projectId} not found`);
-    }
-    return await project.translations;
+  findProjectTranslations(projectId: number) {
+    return from(this.projectRepository.findOne(projectId)).pipe(
+      throwIfEmpty(
+        () => new NotFoundException(`Project with id ${projectId} not found`),
+      ),
+      concatMap((project) => project.translations),
+    );
   }
 
   async importFileToProject(projectId: number, importFileDto: ImportFileDto) {
@@ -74,7 +86,7 @@ export class ProjectsService {
   }
 
   exportTranslations(projectId: number) {
-    return from(this.findProjectTranslations(projectId)).pipe(
+    return this.findProjectTranslations(projectId).pipe(
       map((translations) =>
         this.importExportService.buildJsonTreeFromTranslations(translations),
       ),
