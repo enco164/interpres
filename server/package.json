@@ -7,9 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "concurrently \"nest build gateway\" \"nest build translations\"",
+    "build": "concurrently \"nest build translations\"",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "concurrently \"nest start --watch translations\" \"nest start --watch transfer\"",
+    "start": "concurrently \"nest start --watch translations\"",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
