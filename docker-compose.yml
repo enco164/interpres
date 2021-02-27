@@ -1,0 +1,53 @@
+version: '3'
+
+volumes:
+  postgres_interpres_data:
+    driver: local
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_interpres_data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: translation
+
+  reverse-proxy:
+    container_name: reverse-proxy
+    build:
+      context: ./reverse-proxy
+      dockerfile: ./Dockerfile
+    image: enco164/reverse-proxy:0.0.1
+    ports:
+      - 3626:3626
+
+  translations-service:
+    container_name: translations-service
+    build:
+      context: ./server
+      dockerfile: ./translations.Dockerfile
+    image: enco164/interpres/translations-service
+    ports:
+      - 8091:8091
+    depends_on:
+      - db
+    environment:
+      TRANSLATIONS_DB_HOST: db
+      TRANSLATIONS_DB_PORT: 5432
+      TRANSLATIONS_DB_USERNAME: user
+      TRANSLATIONS_DB_PASSWORD: password
+      TRANSLATIONS_DB_DATABASE: translation
+
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: enco164/interpres/client
+    ports:
+      - 3000:80
