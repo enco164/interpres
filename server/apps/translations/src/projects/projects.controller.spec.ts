@@ -1,4 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ImportExportService } from '../import-export/import-export.service';
+import { TranslationRepository } from '../translations/translation.repository';
+import { TranslationsService } from '../translations/translations.service';
 import { repositoryMockFactory } from '../util/testing';
 import { ProjectRepository } from './project.repository';
 import { ProjectsController } from './projects.controller';
@@ -12,7 +15,10 @@ describe('ProjectsController', () => {
       controllers: [ProjectsController],
       providers: [
         ProjectsService,
+        ImportExportService,
+        TranslationsService,
         { provide: ProjectRepository, useFactory: repositoryMockFactory },
+        { provide: TranslationRepository, useFactory: repositoryMockFactory },
       ],
     }).compile();
 

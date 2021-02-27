@@ -1,12 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { EMPTY, from } from 'rxjs';
+import { catchError, concatMap, map, toArray } from 'rxjs/operators';
+import { ImportExportService } from '../import-export/import-export.service';
+import { CreateTranslationDto } from '../translations/dto/create-translation.dto';
+import { TranslationsService } from '../translations/translations.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { ImportFileDto } from './dto/import-file.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project } from './entities/project.entity';
 import { ProjectRepository } from './project.repository';
 
 @Injectable()
 export class ProjectsService {
-  constructor(private readonly projectRepository: ProjectRepository) {}
+  constructor(
+    private readonly projectRepository: ProjectRepository,
+    private readonly importExportService: ImportExportService,
+    private readonly translationsService: TranslationsService,
+  ) {}
 
   create(createProjectDto: CreateProjectDto) {
     const project = new Project();
@@ -44,5 +54,22 @@ export class ProjectsService {
       throw new NotFoundException(`Project with id ${projectId} not found`);
     }
     return await project.translations;
+  }
+
+  async importFileToProject(projectId: number, importFileDto: ImportFileDto) {
+    return from(this.importExportService.importFile(importFileDto.file)).pipe(
+      map((kv) => ({
+        key: kv.key,
+        value: kv.value,
+        lang: importFileDto.lang,
+        projectId: projectId,
+      })),
+      concatMap((createTranslationDto: CreateTranslationDto) =>
+        from(this.translationsService.create(createTranslationDto)).pipe(
+          catchError(() => EMPTY),
+        ),
+      ),
+      toArray(),
+    );
   }
 }

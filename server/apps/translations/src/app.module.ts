@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectsModule } from './projects/projects.module';
 import { TranslationsModule } from './translations/translations.module';
+import { ImportExportModule } from './import-export/import-export.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TranslationsModule } from './translations/translations.module';
     }),
     ProjectsModule,
     TranslationsModule,
+    ImportExportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

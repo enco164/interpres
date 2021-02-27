@@ -25,6 +25,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/translations/tsconfig.app.json"
       }
+    },
+    "transfer": {
+      "type": "application",
+      "root": "apps/transfer",
+      "entryFile": "main",
+      "sourceRoot": "apps/transfer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/transfer/tsconfig.app.json"
+      }
     }
   }
 }

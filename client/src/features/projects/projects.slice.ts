@@ -3,6 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
+import { CreateProjectDto } from '../../api/dto/create-project.dto';
 import { ProjectsApi } from '../../api/projects.api';
 import { Project } from '../../domain/project';
 import { RootState } from '../../state/store';
@@ -17,14 +18,23 @@ export const fetchProjects = createAsyncThunk('projects/fetchProjects', () =>
   ProjectsApi.getProjects(),
 );
 
+export const createProject = createAsyncThunk<Project, CreateProjectDto>(
+  'projects/createProject',
+  (arg, { signal }) => ProjectsApi.postProject(arg, { signal }),
+);
+
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchProjects.fulfilled, (state, action) => {
-      entityAdapter.setAll(state, action);
-    });
+    builder
+      .addCase(fetchProjects.fulfilled, (state, action) => {
+        entityAdapter.setAll(state, action);
+      })
+      .addCase(createProject.fulfilled, (state, action) => {
+        entityAdapter.addOne(state, action);
+      });
   },
 });
 

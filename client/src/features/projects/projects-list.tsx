@@ -36,13 +36,15 @@ export const ProjectsList: React.FC = () => {
       <Typography variant="subtitle1">Your Interpres projects</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} lg={3}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" component="h2">
-                Add project
-              </Typography>
-            </CardContent>
-          </Card>
+          <Link to="/project/new">
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="h2">
+                  Add project
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
         </Grid>
 
         {projects.map((project) => (
