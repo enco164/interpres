@@ -52,6 +52,7 @@ export class TranslationsService {
     const { projectId, ...translationAttributes } = updateTranslationDto;
     const translation = await this.translationRepository.findOne(id);
 
+    // TODO: check how repository.merge works
     Object.assign(translation, translationAttributes);
 
     return this.translationRepository.save(translation);
