@@ -3,7 +3,7 @@ Translation manager. Master's Thesis
 
 
 ## Running the project
-In root folder of run
+Run the following command
 ```shell
 docker-compose up
 ```
