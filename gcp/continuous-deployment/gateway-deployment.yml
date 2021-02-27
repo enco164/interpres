@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: "gateway"
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: eu.gcr.io/interpres-164/gateway:@@IMAGE_TAG@@
+          ports:
+            - containerPort: 8090
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8090
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8090
+              scheme: HTTP
+            initialDelaySeconds: 70
+            periodSeconds: 20
+          resources:
+            limits:
+              memory: 600Mi
+          env:
+            - name: TRANSLATION_SERVICE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-164-config
+                  key: TRANSLATION_SERVICE_URI
