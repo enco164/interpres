@@ -85,11 +85,13 @@ export class ProjectsService {
     );
   }
 
-  exportTranslations(projectId: number) {
-    return this.findProjectTranslations(projectId).pipe(
-      map((translations) =>
-        this.importExportService.buildJsonTreeFromTranslations(translations),
-      ),
-    );
+  exportTranslations(projectId: number, lang: string) {
+    return this.translationsService
+      .findByProjectIdAndLang(projectId, lang)
+      .pipe(
+        map((translations) =>
+          this.importExportService.buildJsonTreeFromTranslations(translations),
+        ),
+      );
   }
 }

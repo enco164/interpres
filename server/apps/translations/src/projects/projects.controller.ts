@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -58,8 +59,8 @@ export class ProjectsController {
   }
 
   @Get(':id/export')
-  exportTranslations(@Param('id') id: string) {
-    logger.log(`GET /projects/${id}/export`);
-    return this.projectsService.exportTranslations(+id);
+  exportTranslations(@Param('id') id: string, @Query('lang') lang: string) {
+    logger.log(`GET /projects/${id}/export?lang=${lang}`);
+    return this.projectsService.exportTranslations(+id, lang);
   }
 }

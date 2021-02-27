@@ -26,7 +26,7 @@ class ImportExportApiClient extends BaseApiClient {
 
   async exportTranslations(param: ExportTranslationsDto, init?: RequestInit) {
     const response = await this.fetchApi(
-      `${BASE_URL}/projects/${param.projectId}/export`,
+      `${BASE_URL}/projects/${param.projectId}/export?lang=${param.lang}`,
       init,
     );
     return new JSONApiResponse(response).value();

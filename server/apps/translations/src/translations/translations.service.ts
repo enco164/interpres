@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as jsonpatch from 'fast-json-patch';
 import { Operation } from 'fast-json-patch';
+import { from } from 'rxjs';
 import { ProjectRepository } from '../projects/project.repository';
 import { CreateTranslationDto } from './dto/create-translation.dto';
 import { UpdateTranslationDto } from './dto/update-translation.dto';
@@ -34,6 +35,17 @@ export class TranslationsService {
 
   findOne(id: number) {
     return this.translationRepository.findOne(id);
+  }
+
+  findByProjectIdAndLang(projectId: number, lang: string) {
+    return from(
+      this.translationRepository.find({
+        where: {
+          projectId,
+          lang,
+        },
+      }),
+    );
   }
 
   async update(id: number, updateTranslationDto: UpdateTranslationDto) {
