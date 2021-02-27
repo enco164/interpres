@@ -9,10 +9,9 @@ import {
 } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import React from 'react';
-import { ImportTranslationsDto } from '../../api/dto/import-translations.dto';
 
 interface ImportFormProps {
-  onSubmit: (values: ImportTranslationsDto) => void;
+  onSubmit: (values: { lang: string; file: File | null }) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -24,8 +23,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const ImportForm: React.FC<ImportFormProps> = ({ onSubmit }) => {
   const classes = useStyles();
+  const initialValues: { lang: string; file: File | null } = {
+    lang: 'en',
+    file: null,
+  };
   return (
-    <Formik initialValues={{ lang: 'en', file: null }} onSubmit={onSubmit}>
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {(formik) => (
         <Form>
           <Box>

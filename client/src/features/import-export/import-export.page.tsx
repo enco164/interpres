@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from '@material-ui/core';
 import { unwrapResult } from '@reduxjs/toolkit';
 import React, { useCallback } from 'react';
-import { ImportTranslationsDto } from '../../api/dto/import-translations.dto';
+import { useProjectIdParam } from '../../hooks/use-project-id-param';
 import { useAppDispatch } from '../../state/store';
 import { importTranslations } from './import-export.slice';
 import { ImportForm } from './import-form';
@@ -9,18 +9,22 @@ import { ImportForm } from './import-form';
 interface ImportExportPageProps {}
 
 export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
+  const projectId = useProjectIdParam();
   const dispatch = useAppDispatch();
   const handleImportTranslations = useCallback(
-    async (values: ImportTranslationsDto) => {
-      console.log(values);
+    async (values: { lang: string; file: File | null }) => {
       try {
-        const result = unwrapResult(await dispatch(importTranslations(values)));
+        const result = unwrapResult(
+          await dispatch(
+            importTranslations({ ...values, projectId: +projectId }),
+          ),
+        );
         console.log(result);
       } catch (e) {
         console.log(e);
       }
     },
-    [dispatch],
+    [dispatch, projectId],
   );
   return (
     <Grid container>

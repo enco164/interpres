@@ -1,16 +1,17 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Put,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Post,
+  Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { ImportFileDto } from './dto/import-file.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { ProjectsService } from './projects.service';
 
 @ApiTags('projects')
 @Controller('projects')
@@ -45,5 +46,10 @@ export class ProjectsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.projectsService.remove(+id);
+  }
+
+  @Post(':id/import')
+  importFile(@Param('id') id: string, @Body() importFileDto: ImportFileDto) {
+    return this.projectsService.importFileToProject(+id, importFileDto);
   }
 }
