@@ -3,15 +3,19 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ImportFileDto } from './dto/import-file.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { ProjectsService } from './projects.service';
+
+const logger = new Logger('ProjectsController');
 
 @ApiTags('projects')
 @Controller('projects')
@@ -50,6 +54,13 @@ export class ProjectsController {
 
   @Post(':id/import')
   importFile(@Param('id') id: string, @Body() importFileDto: ImportFileDto) {
+    logger.log(`POST /projects/${id}/export ${JSON.stringify(importFileDto)}`);
     return this.projectsService.importFileToProject(+id, importFileDto);
+  }
+
+  @Get(':id/export')
+  exportTranslations(@Param('id') id: string, @Query('lang') lang: string) {
+    logger.log(`GET /projects/${id}/export?lang=${lang}`);
+    return this.projectsService.exportTranslations(+id, lang);
   }
 }

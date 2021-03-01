@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as jsonpatch from 'fast-json-patch';
 import { Operation } from 'fast-json-patch';
+import { from } from 'rxjs';
 import { ProjectRepository } from '../projects/project.repository';
 import { CreateTranslationDto } from './dto/create-translation.dto';
 import { UpdateTranslationDto } from './dto/update-translation.dto';
@@ -36,10 +37,22 @@ export class TranslationsService {
     return this.translationRepository.findOne(id);
   }
 
+  findByProjectIdAndLang(projectId: number, lang: string) {
+    return from(
+      this.translationRepository.find({
+        where: {
+          projectId,
+          lang,
+        },
+      }),
+    );
+  }
+
   async update(id: number, updateTranslationDto: UpdateTranslationDto) {
     const { projectId, ...translationAttributes } = updateTranslationDto;
     const translation = await this.translationRepository.findOne(id);
 
+    // TODO: check how repository.merge works
     Object.assign(translation, translationAttributes);
 
     return this.translationRepository.save(translation);
