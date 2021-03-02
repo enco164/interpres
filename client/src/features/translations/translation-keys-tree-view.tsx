@@ -7,19 +7,21 @@ import { TranslationKeyTree } from '../../domain/translation-key-tree';
 interface TranslationKeysTreeViewProps {
   translationKeysTrees: TranslationKeyTree[];
   selectedKey: string;
+  selectedNamespace: string;
   onKeySelect: (key: string) => void;
 }
 
 export const TranslationKeysTreeView: React.FC<TranslationKeysTreeViewProps> = ({
   translationKeysTrees,
   selectedKey,
+  selectedNamespace,
   onKeySelect,
 }) => {
   const treeItems = React.useMemo(() => {
     const renderTree = (node: TranslationKeyTree) => (
       <TreeItem
-        key={node.getKeyPath()}
-        nodeId={node.getKeyPath()}
+        key={[node.namespace, node.getKeyPath()].join('_')}
+        nodeId={[node.namespace, node.getKeyPath()].join('_')}
         label={node.key}
         onLabelClick={(event) => {
           event.preventDefault();
@@ -39,7 +41,7 @@ export const TranslationKeysTreeView: React.FC<TranslationKeysTreeViewProps> = (
     <TreeView
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
-      selected={selectedKey}
+      selected={[selectedNamespace, selectedKey].join('_')}
     >
       {treeItems}
     </TreeView>

@@ -18,7 +18,11 @@ class ImportExportApiClient extends BaseApiClient {
       {
         ...init,
         method: 'POST',
-        body: JSON.stringify({ ...param, file: parsedJsonFile }),
+        body: JSON.stringify({
+          ...param,
+          file: parsedJsonFile,
+          namespace: param.file.name,
+        }),
       },
     );
     return new JSONApiResponse<Translation[]>(response).value();

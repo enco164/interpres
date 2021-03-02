@@ -75,6 +75,7 @@ export class ProjectsService {
         value: kv.value,
         lang: importFileDto.lang,
         projectId: projectId,
+        namespace: importFileDto.namespace,
       })),
       concatMap((createTranslationDto: CreateTranslationDto) =>
         from(this.translationsService.create(createTranslationDto)).pipe(

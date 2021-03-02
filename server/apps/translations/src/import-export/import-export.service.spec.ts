@@ -46,6 +46,7 @@ describe('ImportExportService', () => {
         lang: 'en',
         projectId: 1,
         project: Promise.resolve(project),
+        namespace: 'ns1',
       },
       {
         id: 2,
@@ -54,6 +55,7 @@ describe('ImportExportService', () => {
         lang: 'en',
         projectId: 1,
         project: Promise.resolve(project),
+        namespace: 'ns1',
       },
       {
         id: 3,
@@ -62,6 +64,7 @@ describe('ImportExportService', () => {
         lang: 'en',
         projectId: 1,
         project: Promise.resolve(project),
+        namespace: 'ns1',
       },
     ];
     const result = service.buildJsonTreeFromTranslations(translations);
