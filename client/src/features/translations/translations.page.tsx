@@ -4,31 +4,31 @@ import {
   ListSubheader,
   makeStyles,
   Typography,
-} from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
+} from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useRouteMatch } from "react-router-dom";
 
-import { useAppDispatch } from '../../state/store';
-import { SelectedTranslationKeysEditor } from './selected-translation-keys-editor';
-import { TranslationKeysTreeView } from './translation-keys-tree-view';
+import { useAppDispatch } from "../../state/store";
+import { SelectedTranslationKeysEditor } from "./selected-translation-keys-editor";
+import { TranslationKeysTreeView } from "./translation-keys-tree-view";
 import {
   fetchTranslationsByProjectId,
   selectKeyAndNamespace,
   selectSelectedTranslations,
   selectTranslationKeyTreesByNamespace,
   selectTranslationsSlice,
-} from './translations.slice';
+} from "./translations.slice";
 
 const useStyles = makeStyles(() => ({
   namespace: {
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
     },
   },
   selectedNamespace: {
-    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
   },
 }));
 
@@ -37,16 +37,16 @@ export const TranslationsPage: React.FC = () => {
   const { params } = useRouteMatch<{ projectId: string }>();
 
   const { selectedKey, selectedNamespace } = useSelector(
-    selectTranslationsSlice,
+    selectTranslationsSlice
   );
   const translations = useSelector(selectSelectedTranslations);
   const translationKeyTreesByNamespace = useSelector(
-    selectTranslationKeyTreesByNamespace,
+    selectTranslationKeyTreesByNamespace
   );
 
   useEffect(() => {
     const promise = dispatch(
-      fetchTranslationsByProjectId({ projectId: +params.projectId }),
+      fetchTranslationsByProjectId({ projectId: +params.projectId })
     );
 
     return () => {
@@ -68,7 +68,7 @@ export const TranslationsPage: React.FC = () => {
             namespace === selectedNamespace && classes.selectedNamespace,
           ]
             .filter(Boolean)
-            .join(' ');
+            .join(" ");
 
           return (
             <Box key={namespace}>
@@ -77,7 +77,7 @@ export const TranslationsPage: React.FC = () => {
                 disableGutters
                 className={namespaceClasses}
                 onClick={() =>
-                  dispatch(selectKeyAndNamespace({ key: '', namespace }))
+                  dispatch(selectKeyAndNamespace({ key: "", namespace }))
                 }
               >
                 {namespace}

@@ -1,5 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Translation } from '../../translations/entities/translation.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Translation } from "../../translations/entities/translation.entity";
 
 @Entity()
 export class Project {

@@ -4,11 +4,11 @@ export class TranslationKeyTree {
   constructor(
     public key: string,
     public namespace: string,
-    public parent: TranslationKeyTree | null,
+    public parent: TranslationKeyTree | null
   ) {}
 
   addKeyPath(key: string, namespace: string) {
-    const [head, ...tail] = key.split('.');
+    const [head, ...tail] = key.split(".");
 
     let node = this.children.find((child) => child.key === head);
     if (!node) {
@@ -17,7 +17,7 @@ export class TranslationKeyTree {
     }
 
     if (tail.length > 0) {
-      node.addKeyPath(tail.join('.'), namespace);
+      node.addKeyPath(tail.join("."), namespace);
     }
 
     this.children.sort((a, b) => a.key.localeCompare(b.key));
@@ -28,6 +28,6 @@ export class TranslationKeyTree {
       return this.key;
     }
 
-    return this.parent.getKeyPath() + '.' + this.key;
+    return this.parent.getKeyPath() + "." + this.key;
   }
 }

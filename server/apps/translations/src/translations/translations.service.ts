@@ -1,18 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import * as jsonpatch from 'fast-json-patch';
-import { Operation } from 'fast-json-patch';
-import { from } from 'rxjs';
-import { ProjectRepository } from '../projects/project.repository';
-import { CreateTranslationDto } from './dto/create-translation.dto';
-import { UpdateTranslationDto } from './dto/update-translation.dto';
-import { Translation } from './entities/translation.entity';
-import { TranslationRepository } from './translation.repository';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import * as jsonpatch from "fast-json-patch";
+import { Operation } from "fast-json-patch";
+import { from } from "rxjs";
+import { ProjectRepository } from "../projects/project.repository";
+import { CreateTranslationDto } from "./dto/create-translation.dto";
+import { UpdateTranslationDto } from "./dto/update-translation.dto";
+import { Translation } from "./entities/translation.entity";
+import { TranslationRepository } from "./translation.repository";
 
 @Injectable()
 export class TranslationsService {
   constructor(
     private translationRepository: TranslationRepository,
-    private projectRepository: ProjectRepository,
+    private projectRepository: ProjectRepository
   ) {}
 
   async create(createTranslationDto: CreateTranslationDto) {
@@ -44,7 +44,7 @@ export class TranslationsService {
           projectId,
           lang,
         },
-      }),
+      })
     );
   }
 

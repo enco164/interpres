@@ -6,9 +6,9 @@ import {
   makeStyles,
   MenuItem,
   Select,
-} from '@material-ui/core';
-import { Form, Formik } from 'formik';
-import React from 'react';
+} from "@material-ui/core";
+import { Form, Formik } from "formik";
+import React from "react";
 
 interface ImportFormProps {
   onSubmit: (values: { lang: string; file: File | null }) => void;
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export const ImportForm: React.FC<ImportFormProps> = ({ onSubmit }) => {
   const classes = useStyles();
   const initialValues: { lang: string; file: File | null } = {
-    lang: 'en',
+    lang: "en",
     file: null,
   };
   return (
@@ -40,8 +40,8 @@ export const ImportForm: React.FC<ImportFormProps> = ({ onSubmit }) => {
                 value={formik.values.lang}
                 onChange={formik.handleChange}
               >
-                <MenuItem value={'en'}>en</MenuItem>
-                <MenuItem value={'sr'}>sr</MenuItem>
+                <MenuItem value={"en"}>en</MenuItem>
+                <MenuItem value={"sr"}>sr</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -51,7 +51,7 @@ export const ImportForm: React.FC<ImportFormProps> = ({ onSubmit }) => {
               name="file"
               type="file"
               onChange={(event) => {
-                formik.setFieldValue('file', event?.currentTarget?.files?.[0]);
+                formik.setFieldValue("file", event?.currentTarget?.files?.[0]);
               }}
             />
           </Box>

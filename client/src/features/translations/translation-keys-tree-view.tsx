@@ -1,8 +1,8 @@
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { TreeItem, TreeView } from '@material-ui/lab';
-import React from 'react';
-import { TranslationKeyTree } from '../../domain/translation-key-tree';
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { TreeItem, TreeView } from "@material-ui/lab";
+import React from "react";
+import { TranslationKeyTree } from "../../domain/translation-key-tree";
 
 interface TranslationKeysTreeViewProps {
   translationKeysTrees: TranslationKeyTree[];
@@ -20,8 +20,8 @@ export const TranslationKeysTreeView: React.FC<TranslationKeysTreeViewProps> = (
   const treeItems = React.useMemo(() => {
     const renderTree = (node: TranslationKeyTree) => (
       <TreeItem
-        key={[node.namespace, node.getKeyPath()].join('_')}
-        nodeId={[node.namespace, node.getKeyPath()].join('_')}
+        key={[node.namespace, node.getKeyPath()].join("_")}
+        nodeId={[node.namespace, node.getKeyPath()].join("_")}
         label={node.key}
         onLabelClick={(event) => {
           event.preventDefault();
@@ -41,7 +41,7 @@ export const TranslationKeysTreeView: React.FC<TranslationKeysTreeViewProps> = (
     <TreeView
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
-      selected={[selectedNamespace, selectedKey].join('_')}
+      selected={[selectedNamespace, selectedKey].join("_")}
     >
       {treeItems}
     </TreeView>

@@ -1,32 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { merge } from 'lodash/fp';
-import { Translation } from '../translations/entities/translation.entity';
+import { Injectable } from "@nestjs/common";
+import { merge } from "lodash/fp";
+import { Translation } from "../translations/entities/translation.entity";
 
 @Injectable()
 export class ImportExportService {
   importFile(
-    file: Record<string, unknown>,
+    file: Record<string, unknown>
   ): Array<{ key: string; value: string }> {
     return this.getKeyValues(file);
   }
 
   private getKeyValues(
-    object: Record<string, unknown>,
+    object: Record<string, unknown>
   ): Array<{ key: string; value: string }> {
     return Object.keys(object).flatMap((key) =>
-      this.getPlainKeyValues(key, object[key]),
+      this.getPlainKeyValues(key, object[key])
     );
   }
 
   private getPlainKeyValues(
     prefixKey: string,
-    value: unknown,
+    value: unknown
   ): Array<{ key: string; value: string }> {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       return [{ key: prefixKey, value }];
     }
     return Object.keys(value).flatMap((key) =>
-      this.getPlainKeyValues(`${prefixKey}.${key}`, value[key]),
+      this.getPlainKeyValues(`${prefixKey}.${key}`, value[key])
     );
   }
 
@@ -38,7 +38,7 @@ export class ImportExportService {
 
   private translationToJsonTree(translation: Translation) {
     const tree = {};
-    const keySlices = translation.key.split('.');
+    const keySlices = translation.key.split(".");
     let treePointer = tree;
     for (let i = 0; i < keySlices.length - 1; i++) {
       const slice = keySlices[i];

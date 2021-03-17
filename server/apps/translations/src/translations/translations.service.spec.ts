@@ -1,10 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ProjectRepository } from '../projects/project.repository';
-import { repositoryMockFactory } from '../util/testing';
-import { TranslationRepository } from './translation.repository';
-import { TranslationsService } from './translations.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ProjectRepository } from "../projects/project.repository";
+import { repositoryMockFactory } from "../util/testing";
+import { TranslationRepository } from "./translation.repository";
+import { TranslationsService } from "./translations.service";
 
-describe('TranslationsService', () => {
+describe("TranslationsService", () => {
   let service: TranslationsService;
   let translationRepository: TranslationRepository;
   let projectRepository: ProjectRepository;
@@ -29,7 +29,7 @@ describe('TranslationsService', () => {
     projectRepository = module.get(ProjectRepository);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
     expect(translationRepository).toBeDefined();
     expect(projectRepository).toBeDefined();

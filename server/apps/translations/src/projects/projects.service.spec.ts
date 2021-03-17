@@ -1,12 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ImportExportService } from '../import-export/import-export.service';
-import { TranslationRepository } from '../translations/translation.repository';
-import { TranslationsService } from '../translations/translations.service';
-import { repositoryMockFactory } from '../util/testing';
-import { ProjectRepository } from './project.repository';
-import { ProjectsService } from './projects.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ImportExportService } from "../import-export/import-export.service";
+import { TranslationRepository } from "../translations/translation.repository";
+import { TranslationsService } from "../translations/translations.service";
+import { repositoryMockFactory } from "../util/testing";
+import { ProjectRepository } from "./project.repository";
+import { ProjectsService } from "./projects.service";
 
-describe('ProjectsService', () => {
+describe("ProjectsService", () => {
   let service: ProjectsService;
 
   beforeEach(async () => {
@@ -23,7 +23,7 @@ describe('ProjectsService', () => {
     service = module.get<ProjectsService>(ProjectsService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });
