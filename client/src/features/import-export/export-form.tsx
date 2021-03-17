@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface ExportFormProps {
   onSubmit: (values: { lang: string }) => void;
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ExportForm: React.FC<ExportFormProps> = ({ onSubmit }) => {
+  const { t } = useTranslation(["project-import-export"]);
   const classes = useStyles();
   const initialValues: { lang: string } = {
     lang: "en",
@@ -32,7 +34,7 @@ export const ExportForm: React.FC<ExportFormProps> = ({ onSubmit }) => {
         <Form>
           <Box>
             <FormControl className={classes.formControl}>
-              <InputLabel>Language</InputLabel>
+              <InputLabel>{t("export_form.language_input_label")}</InputLabel>
               <Select
                 id="lang"
                 name="lang"
@@ -46,7 +48,7 @@ export const ExportForm: React.FC<ExportFormProps> = ({ onSubmit }) => {
           </Box>
           <Box>
             <Button variant="contained" color="primary" type="submit">
-              Export
+              {t("export_form.submit_button_label")}
             </Button>
           </Box>
         </Form>

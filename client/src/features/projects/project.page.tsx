@@ -1,5 +1,6 @@
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { AppLayout } from "../../layout/app-layout";
 import { ImportExportPage } from "../import-export/import-export.page";
@@ -11,6 +12,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 
 export const ProjectPage: React.FC = () => {
+  const { t } = useTranslation(["project"]);
   const { path, url } = useRouteMatch();
   const mainListItems = (
     <List>
@@ -18,19 +20,19 @@ export const ProjectPage: React.FC = () => {
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Overview" />
+        <ListItemText primary={t("menu.overview")} />
       </ListItem>
       <ListItem button component={Link} to={`${url}/translations`}>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Translations" />
+        <ListItemText primary={t("menu.translations")} />
       </ListItem>
       <ListItem button component={Link} to={`${url}/import-export`}>
         <ListItemIcon>
           <ImportExportIcon />
         </ListItemIcon>
-        <ListItemText primary="Translations" />
+        <ListItemText primary={t("menu.import_export")} />
       </ListItem>
     </List>
   );

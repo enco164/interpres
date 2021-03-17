@@ -1,0 +1,12 @@
+{
+  "import_header": "Uvoz prevoda",
+  "export_header": "Izvoz prevoda",
+  "import_form": {
+    "language_input_label": "Jezik",
+    "submit_button_label": "Uvezi"
+  },
+  "export_form": {
+    "language_input_label": "Jezik",
+    "submit_button_label": "Izvezi"
+  }
+}

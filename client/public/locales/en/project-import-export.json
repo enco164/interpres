@@ -1,0 +1,12 @@
+{
+  "import_header": "Import translations",
+  "export_header": "Export translations",
+  "import_form": {
+    "language_input_label": "Language",
+    "submit_button_label": "Import"
+  },
+  "export_form": {
+    "language_input_label": "Language",
+    "submit_button_label": "Export"
+  }
+}
