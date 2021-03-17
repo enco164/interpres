@@ -51,9 +51,6 @@ export const translationsSlice = createSlice({
   name: 'translations',
   initialState,
   reducers: {
-    selectKey: (state, action: PayloadAction<string>) => {
-      state.selectedKey = action.payload;
-    },
     selectKeyAndNamespace: (
       state,
       action: PayloadAction<{ key: string; namespace: string }>,
@@ -75,7 +72,7 @@ export const { selectAll: selectAllTranslations } = entityAdapter.getSelectors(
   selectTranslationsSlice,
 );
 
-export const { selectKey, selectKeyAndNamespace } = translationsSlice.actions;
+export const { selectKeyAndNamespace } = translationsSlice.actions;
 
 export const selectTranslationKeys = createSelector(
   selectAllTranslations,
@@ -122,9 +119,24 @@ export const selectSelectedTranslations = createSelector(
   selectTranslationsSlice,
   selectAllTranslations,
   (state, translations) =>
-    translations.filter(
-      (t) =>
-        t.key.startsWith(state.selectedKey) &&
-        t.namespace === state.selectedNamespace,
-    ),
+    translations.filter((t) => {
+      if (t.namespace !== state.selectedNamespace) {
+        return false;
+      }
+
+      if (!state.selectedKey) {
+        return true;
+      }
+
+      const selectedKeyParts = state.selectedKey.split('.');
+      const translationKeyParts = t.key.split('.');
+
+      for (let i = 0; i < selectedKeyParts.length; i++) {
+        if (selectedKeyParts[i] !== translationKeyParts[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    }),
 );
