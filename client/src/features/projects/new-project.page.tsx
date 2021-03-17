@@ -1,11 +1,11 @@
-import { Button, Container, Grid, TextField } from '@material-ui/core';
-import { unwrapResult } from '@reduxjs/toolkit';
-import { Form, Formik } from 'formik';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { CreateProjectDto } from '../../api/dto/create-project.dto';
-import { useAppDispatch } from '../../state/store';
-import { createProject } from './projects.slice';
+import { Button, Container, Grid, TextField } from "@material-ui/core";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { Form, Formik } from "formik";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { CreateProjectDto } from "../../api/dto/create-project.dto";
+import { useAppDispatch } from "../../state/store";
+import { createProject } from "./projects.slice";
 
 interface NewProjectPageProps {}
 
@@ -24,7 +24,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
 
   return (
     <Container maxWidth="sm">
-      <Formik initialValues={{ name: '' }} onSubmit={onSubmit}>
+      <Formik initialValues={{ name: "" }} onSubmit={onSubmit}>
         {(formik) => (
           <Form>
             <Grid container>

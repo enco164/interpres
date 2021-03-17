@@ -9,14 +9,14 @@ export const toBase64 = (file: File) =>
 export const readJsonFile = (file: File) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsText(file, 'utf-8');
+    reader.readAsText(file, "utf-8");
     reader.onload = () => {
       try {
-        if (typeof reader.result === 'string') {
+        if (typeof reader.result === "string") {
           const parsed = JSON.parse(reader.result);
           return resolve(parsed);
         }
-        return reject('not string file');
+        return reject("not string file");
       } catch (e) {
         return reject(e);
       }

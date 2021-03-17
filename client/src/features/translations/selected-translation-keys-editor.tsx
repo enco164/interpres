@@ -5,10 +5,10 @@ import {
   ListItemText,
   makeStyles,
   Typography,
-} from '@material-ui/core';
-import React, { useMemo } from 'react';
-import { Translation } from '../../domain/translation';
-import { TranslationEditor } from './translation-editor';
+} from "@material-ui/core";
+import React, { useMemo } from "react";
+import { Translation } from "../../domain/translation";
+import { TranslationEditor } from "./translation-editor";
 
 interface SelectedTranslationKeysEditorProps {
   translations: Translation[];
@@ -17,9 +17,9 @@ interface SelectedTranslationKeysEditorProps {
 const useStyles = makeStyles((theme) => ({
   listItem: {
     borderBottom: `1px solid ${theme.palette.divider}`,
-    alignItems: 'flex-start',
-    '&:last-child': {
-      borderBottom: 'none',
+    alignItems: "flex-start",
+    "&:last-child": {
+      borderBottom: "none",
     },
   },
 }));

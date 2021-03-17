@@ -1,5 +1,5 @@
-import { INestApplication } from '@nestjs/common';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { INestApplication } from "@nestjs/common";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 interface GatewayRouteConfig {
   predicate: string;
@@ -9,8 +9,8 @@ interface GatewayRouteConfig {
 export function setupRouting(app: INestApplication) {
   const gatewayRouteConfigs: GatewayRouteConfig[] = [
     {
-      predicate: '/api/translation-service',
-      target: process.env.TRANSLATION_SERVICE_URI || 'http://localhost:8091',
+      predicate: "/api/translation-service",
+      target: process.env.TRANSLATION_SERVICE_URI || "http://localhost:8091",
     },
   ];
 
@@ -19,8 +19,8 @@ export function setupRouting(app: INestApplication) {
       config.predicate,
       createProxyMiddleware({
         target: config.target,
-        pathRewrite: (path) => path.replace(config.predicate, ''),
-      }),
+        pathRewrite: (path) => path.replace(config.predicate, ""),
+      })
     );
   });
 }

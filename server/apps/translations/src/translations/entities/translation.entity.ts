@@ -5,11 +5,11 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Project } from '../../projects/entities/project.entity';
+} from "typeorm";
+import { Project } from "../../projects/entities/project.entity";
 
 @Entity()
-@Index(['projectId', 'key', 'lang'], { unique: true })
+@Index(["projectId", "key", "lang", "namespace"], { unique: true })
 export class Translation {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,15 +18,18 @@ export class Translation {
   projectId: number;
 
   @Column()
-  key: string;
+  lang: string;
 
   @Column()
-  lang: string;
+  namespace: string;
+
+  @Column()
+  key: string;
 
   @Column()
   value: string;
 
   @ManyToOne(() => Project, (project) => project.id)
-  @JoinColumn({ name: 'projectId' })
+  @JoinColumn({ name: "projectId" })
   project: Promise<Project>;
 }

@@ -1,11 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ProjectRepository } from '../projects/project.repository';
-import { repositoryMockFactory } from '../util/testing';
-import { TranslationRepository } from './translation.repository';
-import { TranslationsController } from './translations.controller';
-import { TranslationsService } from './translations.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ProjectRepository } from "../projects/project.repository";
+import { repositoryMockFactory } from "../util/testing";
+import { TranslationRepository } from "./translation.repository";
+import { TranslationsController } from "./translations.controller";
+import { TranslationsService } from "./translations.service";
 
-describe('TranslationsController', () => {
+describe("TranslationsController", () => {
   let controller: TranslationsController;
 
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('TranslationsController', () => {
     controller = module.get<TranslationsController>(TranslationsController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

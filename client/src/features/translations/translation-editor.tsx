@@ -1,8 +1,8 @@
-import { Box, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { Translation } from '../../domain/translation';
-import { useAppDispatch } from '../../state/store';
-import { patchTranslationValueById } from './translations.slice';
+import { Box, TextField } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Translation } from "../../domain/translation";
+import { useAppDispatch } from "../../state/store";
+import { patchTranslationValueById } from "./translations.slice";
 
 interface TranslationEditorProps {
   translation: Translation;
@@ -36,7 +36,7 @@ export const TranslationEditor: React.FC<TranslationEditorProps> = ({
             patchTranslationValueById({
               translationId: translation.id,
               value,
-            }),
+            })
           );
         }}
       />

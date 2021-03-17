@@ -4,25 +4,28 @@ import {
   createSelector,
   createSlice,
   PayloadAction,
-} from '@reduxjs/toolkit';
-import * as jsonpatch from 'fast-json-patch';
-import { ProjectsApi } from '../../api/projects.api';
-import { TranslationsApi } from '../../api/translations.api';
-import { Translation } from '../../domain/translation';
-import { TranslationKeyTree } from '../../domain/translation-key-tree';
-import { RootState } from '../../state/store';
+} from "@reduxjs/toolkit";
+import * as jsonpatch from "fast-json-patch";
+import { ProjectsApi } from "../../api/projects.api";
+import { TranslationsApi } from "../../api/translations.api";
+import { Translation } from "../../domain/translation";
+import { TranslationKeyTree } from "../../domain/translation-key-tree";
+import { RootState } from "../../state/store";
 
 const entityAdapter = createEntityAdapter<Translation>({
   selectId: (model) => model.id,
   sortComparer: (a, b) => a.key.localeCompare(b.key),
 });
 
-const initialState = entityAdapter.getInitialState({ selectedKey: '' });
+const initialState = entityAdapter.getInitialState({
+  selectedKey: "",
+  selectedNamespace: "",
+});
 
 export const fetchTranslationsByProjectId = createAsyncThunk(
-  'translations/fetchTranslationsByProjectId',
+  "translations/fetchTranslationsByProjectId",
   (arg: { projectId: number }) =>
-    ProjectsApi.getTranslationsByProjectId(arg.projectId),
+    ProjectsApi.getTranslationsByProjectId(arg.projectId)
 );
 
 const deepCopy = <T>(arg: T): T => JSON.parse(JSON.stringify(arg));
@@ -31,7 +34,7 @@ export const patchTranslationValueById = createAsyncThunk<
   void,
   { translationId: number; value: string },
   { state: RootState }
->('translations/patchTranslationValueById', async (arg, thunkAPI) => {
+>("translations/patchTranslationValueById", async (arg, thunkAPI) => {
   let entity = thunkAPI.getState().translations.entities[arg.translationId];
   if (!entity) {
     throw new Error(`Translation with id ${arg.translationId} not found`);
@@ -40,16 +43,20 @@ export const patchTranslationValueById = createAsyncThunk<
   let patches = jsonpatch.compare(deepCopy(entity), applied);
   return TranslationsApi.patchTranslation(
     { translationId: arg.translationId, patches },
-    thunkAPI.signal,
+    thunkAPI.signal
   );
 });
 
 export const translationsSlice = createSlice({
-  name: 'translations',
+  name: "translations",
   initialState,
   reducers: {
-    selectKey: (state, action: PayloadAction<string>) => {
-      state.selectedKey = action.payload;
+    selectKeyAndNamespace: (
+      state,
+      action: PayloadAction<{ key: string; namespace: string }>
+    ) => {
+      state.selectedKey = action.payload.key;
+      state.selectedNamespace = action.payload.namespace;
     },
   },
   extraReducers: (builder) => {
@@ -59,46 +66,77 @@ export const translationsSlice = createSlice({
   },
 });
 
-const selectSelf = (state: RootState) => state.translations;
+export const selectTranslationsSlice = (state: RootState) => state.translations;
 
 export const { selectAll: selectAllTranslations } = entityAdapter.getSelectors(
-  selectSelf,
+  selectTranslationsSlice
 );
 
-export const { selectKey } = translationsSlice.actions;
+export const { selectKeyAndNamespace } = translationsSlice.actions;
 
 export const selectTranslationKeys = createSelector(
   selectAllTranslations,
-  (translations) => translations.map((t) => t.key),
+  (translations) => translations.map((t) => t.key)
 );
 
-export const selectTranslationKeysTrees = createSelector(
+export const selectTranslationsByNamespace = createSelector(
   selectAllTranslations,
-  (translations) => {
-    const trees: TranslationKeyTree[] = [];
-    translations.forEach((translation) => {
-      const [rootKey, ...tail] = translation.key.split('.');
-      let tree = trees.find((t) => t.key === rootKey);
-      if (!tree) {
-        tree = new TranslationKeyTree(rootKey, null);
-        trees.push(tree);
+  (translations) =>
+    translations.reduce((previousValue, currentValue) => {
+      if (!previousValue[currentValue.namespace]) {
+        previousValue[currentValue.namespace] = [];
       }
-      if (tail.length > 0) {
-        tree.addKeyPath(tail.join('.'));
-      }
-    });
-    return trees;
-  },
+      previousValue[currentValue.namespace].push(currentValue);
+      return previousValue;
+    }, {} as Record<string, Translation[]>)
 );
 
-export const selectSelectedKey = createSelector(
-  selectSelf,
-  (res) => res.selectedKey,
+export const selectTranslationKeyTreesByNamespace = createSelector(
+  selectTranslationsByNamespace,
+  (translationsByNamespace) => {
+    const result = {} as Record<string, TranslationKeyTree[]>;
+    Object.keys(translationsByNamespace).forEach((namespace) => {
+      const trees: TranslationKeyTree[] = [];
+      const translations = translationsByNamespace[namespace];
+      translations.forEach((translation) => {
+        const [rootKey, ...tail] = translation.key.split(".");
+        let tree = trees.find((t) => t.key === rootKey);
+        if (!tree) {
+          tree = new TranslationKeyTree(rootKey, namespace, null);
+          trees.push(tree);
+        }
+        if (tail.length > 0) {
+          tree.addKeyPath(tail.join("."), namespace);
+        }
+      });
+      result[namespace] = trees;
+    });
+    return result;
+  }
 );
 
 export const selectSelectedTranslations = createSelector(
-  selectSelf,
+  selectTranslationsSlice,
   selectAllTranslations,
   (state, translations) =>
-    translations.filter((t) => t.key.startsWith(state.selectedKey)),
+    translations.filter((t) => {
+      if (t.namespace !== state.selectedNamespace) {
+        return false;
+      }
+
+      if (!state.selectedKey) {
+        return true;
+      }
+
+      const selectedKeyParts = state.selectedKey.split(".");
+      const translationKeyParts = t.key.split(".");
+
+      for (let i = 0; i < selectedKeyParts.length; i++) {
+        if (selectedKeyParts[i] !== translationKeyParts[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    })
 );

@@ -1,11 +1,11 @@
-import { Grid, Typography } from '@material-ui/core';
-import { unwrapResult } from '@reduxjs/toolkit';
-import React, { useCallback } from 'react';
-import { useProjectIdParam } from '../../hooks/use-project-id-param';
-import { useAppDispatch } from '../../state/store';
-import { ExportForm } from './export-form';
-import { exportTranslations, importTranslations } from './import-export.slice';
-import { ImportForm } from './import-form';
+import { Grid, Typography } from "@material-ui/core";
+import { unwrapResult } from "@reduxjs/toolkit";
+import React, { useCallback } from "react";
+import { useProjectIdParam } from "../../hooks/use-project-id-param";
+import { useAppDispatch } from "../../state/store";
+import { ExportForm } from "./export-form";
+import { exportTranslations, importTranslations } from "./import-export.slice";
+import { ImportForm } from "./import-form";
 
 interface ImportExportPageProps {}
 
@@ -17,15 +17,15 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
       try {
         const result = unwrapResult(
           await dispatch(
-            importTranslations({ ...values, projectId: +projectId }),
-          ),
+            importTranslations({ ...values, projectId: +projectId })
+          )
         );
         console.log(result);
       } catch (e) {
         console.log(e);
       }
     },
-    [dispatch, projectId],
+    [dispatch, projectId]
   );
 
   const handleExport = useCallback(
@@ -33,15 +33,15 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
       try {
         const result = unwrapResult(
           await dispatch(
-            exportTranslations({ lang: values.lang, projectId: +projectId }),
-          ),
+            exportTranslations({ lang: values.lang, projectId: +projectId })
+          )
         );
         console.log(result);
       } catch (e) {
         console.log(e);
       }
     },
-    [dispatch, projectId],
+    [dispatch, projectId]
   );
 
   return (

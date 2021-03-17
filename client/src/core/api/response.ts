@@ -10,7 +10,7 @@ export interface ResponseMapper<T> {
 export class JSONApiResponse<T> implements ApiResponse<T> {
   constructor(
     public raw: Response,
-    private mapper: ResponseMapper<T> = (json: any) => json,
+    private mapper: ResponseMapper<T> = (json: any) => json
   ) {}
 
   async value(): Promise<T> {
