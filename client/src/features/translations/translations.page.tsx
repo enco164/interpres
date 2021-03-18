@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 
@@ -33,6 +34,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const TranslationsPage: React.FC = () => {
+  const { t } = useTranslation(["project-translations"]);
   const dispatch = useAppDispatch();
   const { params } = useRouteMatch<{ projectId: string }>();
 
@@ -60,7 +62,7 @@ export const TranslationsPage: React.FC = () => {
     <Grid container spacing={2}>
       <Grid item xs={3}>
         <Typography variant="h6" gutterBottom color="primary">
-          Translation keys
+          {t("translation_keys_header")}
         </Typography>
         {Object.keys(translationKeyTreesByNamespace).map((namespace) => {
           const namespaceClasses = [
@@ -96,7 +98,7 @@ export const TranslationsPage: React.FC = () => {
       </Grid>
       <Grid item xs={9}>
         <Typography variant="h6" gutterBottom color="primary">
-          Edit translations
+          {t("edit_translations_header")}
         </Typography>
         <SelectedTranslationKeysEditor translations={translations} />
       </Grid>

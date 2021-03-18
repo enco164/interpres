@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProjects, selectAllProjects } from "./projects.slice";
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProjectsList: React.FC = () => {
-  const classes = useStyles();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const projects = useSelector(selectAllProjects);
 
@@ -31,16 +32,17 @@ export const ProjectsList: React.FC = () => {
     };
   }, [dispatch]);
 
+  const classes = useStyles();
   return (
     <Container className={classes.container}>
-      <Typography variant="subtitle1">Your Interpres projects</Typography>
+      <Typography variant="subtitle1">{t("recent_projects_header")}</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} lg={3}>
           <Link to="/project/new">
             <Card>
               <CardContent>
                 <Typography variant="h5" component="h2">
-                  Add project
+                  {t("new_project_button")}
                 </Typography>
               </CardContent>
             </Card>

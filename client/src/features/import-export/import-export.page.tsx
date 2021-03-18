@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
 import { useAppDispatch } from "../../state/store";
 import { ExportForm } from "./export-form";
@@ -10,6 +11,7 @@ import { ImportForm } from "./import-form";
 interface ImportExportPageProps {}
 
 export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
+  const { t } = useTranslation(["project-import-export"]);
   const projectId = useProjectIdParam();
   const dispatch = useAppDispatch();
   const handleImportTranslations = useCallback(
@@ -48,13 +50,13 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
     <Grid container>
       <Grid item xs={6}>
         <Typography variant="h6" component="h6">
-          Import translations
+          {t("import_header")}
         </Typography>
         <ImportForm onSubmit={handleImportTranslations} />
       </Grid>
       <Grid item xs={6}>
         <Typography variant="h6" component="h6">
-          Export translations
+          {t("export_header")}
         </Typography>
         <ExportForm onSubmit={handleExport} />
       </Grid>
