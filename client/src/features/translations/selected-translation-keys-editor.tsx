@@ -4,6 +4,7 @@ import {
   ListItem,
   ListItemText,
   makeStyles,
+  Paper,
   Typography,
 } from "@material-ui/core";
 import React, { useMemo } from "react";
@@ -15,12 +16,11 @@ interface SelectedTranslationKeysEditorProps {
 }
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginBottom: theme.spacing(1),
+  },
   listItem: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
     alignItems: "flex-start",
-    "&:last-child": {
-      borderBottom: "none",
-    },
   },
 }));
 
@@ -37,28 +37,30 @@ export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEdit
   return (
     <List>
       {translationKeys.map((translationKey) => (
-        <ListItem key={translationKey} className={classes.listItem}>
-          <ListItemText
-            disableTypography
-            primary={
-              <Typography variant="subtitle2" gutterBottom>
-                {translationKey}
-              </Typography>
-            }
-            secondary={
-              <Box>
-                {translations
-                  .filter((t) => t.key === translationKey)
-                  .map((translation) => (
-                    <TranslationEditor
-                      key={translation.key + translation.lang}
-                      translation={translation}
-                    />
-                  ))}
-              </Box>
-            }
-          />
-        </ListItem>
+        <Paper className={classes.paper} variant="outlined">
+          <ListItem key={translationKey} className={classes.listItem}>
+            <ListItemText
+              disableTypography
+              primary={
+                <Typography variant="subtitle2" gutterBottom>
+                  {translationKey}
+                </Typography>
+              }
+              secondary={
+                <Box>
+                  {translations
+                    .filter((t) => t.key === translationKey)
+                    .map((translation) => (
+                      <TranslationEditor
+                        key={translation.key + translation.lang}
+                        translation={translation}
+                      />
+                    ))}
+                </Box>
+              }
+            />
+          </ListItem>
+        </Paper>
       ))}
     </List>
   );
