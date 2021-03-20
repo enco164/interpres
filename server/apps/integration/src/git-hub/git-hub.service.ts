@@ -1,83 +1,64 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { App as GithubApp } from "@octokit/app";
+import { createAppAuth } from "@octokit/auth-app";
 import { components } from "@octokit/openapi-types/dist-types/generated/types";
+import { retry } from "@octokit/plugin-retry";
 import { Octokit } from "@octokit/rest";
-import { from, Observable, of, zip } from "rxjs";
+import { forkJoin, from, Observable, of, zip } from "rxjs";
 import { concatMap, map } from "rxjs/operators";
+import { ImportTranslationsFromRepoParam } from "./dto/import-translations-from-repo-param";
+
+const MyOctokit = Octokit.plugin(retry);
 
 const logger = new Logger("GitHubService");
 
+function parseJsonContentFile(
+  fileContentData: components["schemas"]["content-file"]
+) {
+  return JSON.parse(Buffer.from(fileContentData.content, "base64").toString());
+}
+
+function extractResponseData<T>(response): T {
+  return response.data as T;
+}
+
 @Injectable()
 export class GitHubService {
-  private githubApp: GithubApp;
+  private octokit: Octokit;
+  private readonly githubAppId: string;
+  private readonly githubAppPrivateKey: string;
 
   constructor(private configService: ConfigService) {
-    const githubAppId = this.configService.get<string>("GITHUB_APP_ID");
-    const githubAppPrivateKey = this.configService.get<string>(
+    this.githubAppId = this.configService.get<string>("GITHUB_APP_ID");
+    this.githubAppPrivateKey = this.configService.get<string>(
       "GITHUB_APP_PRIVATE_KEY"
     );
-    logger.log(`GitHubService: ${githubAppId}`);
 
-    this.githubApp = new GithubApp({
-      appId: githubAppId,
-      privateKey: githubAppPrivateKey,
+    this.octokit = new MyOctokit({
+      authStrategy: createAppAuth,
+      auth: {
+        appId: this.githubAppId,
+        privateKey: this.githubAppPrivateKey,
+      },
     });
-  }
-
-  getRepoInstallationAccessToken(
-    owner: string,
-    repo: string
-  ): Observable<{
-    token: string;
-    expires_at: string;
-  }> {
-    return from(
-      this.githubApp.octokit.request("GET /repos/{owner}/{repo}/installation", {
-        owner,
-        repo,
-      })
-    ).pipe(
-      map((result) => result.data),
-      concatMap((installation) =>
-        this.githubApp.octokit.request(
-          "POST /app/installations/{installation_id}/access_tokens",
-          { installation_id: installation.id }
-        )
-      ),
-      map((result) => result.data)
-    );
-  }
-
-  async getRemoteJSONFile(owner: string, repo: string, path: string) {
-    return this.getInstallationClient(owner, repo).pipe(
-      concatMap((installationClient) => {
-        return installationClient.repos.getContent({
-          owner,
-          repo,
-          path,
-        });
-      }),
-      map((response) => response.data as components["schemas"]["content-file"]),
-      map((data) => JSON.parse(Buffer.from(data.content, "base64").toString()))
-    );
   }
 
   createRemoteBranch(owner: string, repo: string, branchName: string) {
     const newBranchName = `refs/heads/${branchName}`;
     return this.getInstallationClient(owner, repo).pipe(
       concatMap((installationClient) =>
-        zip(
+        zip([
           of(installationClient),
           installationClient.repos.listCommits({
             owner,
             repo,
-          })
-        )
+          }),
+        ])
       ),
-      concatMap(([installationClient, commits]) =>
-        zip(of(installationClient), of(commits.data[0].sha))
-      ),
+      map(([installationClient, commits]) => [
+        installationClient,
+        commits.data[0].sha,
+      ]),
       concatMap(([installationClient, lastSHA]) =>
         installationClient.git.createRef({
           owner,
@@ -108,14 +89,12 @@ export class GitHubService {
           })
         )
       ),
-      concatMap(([installationClient, response]) =>
-        zip(
-          of(installationClient),
-          of(response.data as components["schemas"]["content-file"])
-        )
-      ),
+      map(([installationClient, response]) => [
+        installationClient,
+        response.data as components["schemas"]["content-file"],
+      ]),
       concatMap(([installationClient, fileData]) =>
-        installationClient.repos.createOrUpdateFileContents({
+        (installationClient as Octokit).repos.createOrUpdateFileContents({
           owner: param.owner,
           repo: param.repo,
           path: param.filePath,
@@ -135,10 +114,13 @@ export class GitHubService {
   }) {
     return this.getInstallationClient(param.owner, param.repo).pipe(
       concatMap((installationClient) =>
-        zip(
+        zip([
           of(installationClient),
-          installationClient.repos.get({ owner: param.owner, repo: param.repo })
-        )
+          installationClient.repos.get({
+            owner: param.owner,
+            repo: param.repo,
+          }),
+        ])
       ),
       map(([installationClient, response]) => [
         installationClient,
@@ -156,28 +138,83 @@ export class GitHubService {
     );
   }
 
+  importTranslationsFromRepo({
+    owner,
+    repo,
+    translationsLoadPath,
+  }: ImportTranslationsFromRepoParam) {
+    const installationClient$ = this.getInstallationClient(owner, repo);
+    const langDirs$ = installationClient$.pipe(
+      concatMap((installationClient) =>
+        installationClient.repos.getContent({
+          owner,
+          repo,
+          path: translationsLoadPath,
+        })
+      ),
+      map(
+        (response) =>
+          response.data as components["schemas"]["content-directory"]
+      )
+    );
+
+    const applyGetContent = (octokit: Octokit, owner: string, repo: string) => (
+      path: string
+    ) => octokit.repos.getContent({ owner, repo, path });
+
+    return forkJoin([installationClient$, langDirs$]).pipe(
+      concatMap(([installationClient, langDirs]) => {
+        const getContent = applyGetContent(installationClient, owner, repo);
+        return forkJoin(
+          langDirs.reduce((previousValue, currentValue) => {
+            previousValue[currentValue.name] = this.getLanguageFiles(
+              getContent,
+              currentValue.path
+            );
+
+            return previousValue;
+          }, {})
+        );
+      })
+    );
+  }
+
+  private getLanguageFiles(getContent, langFolderPath: string) {
+    return from(getContent(langFolderPath)).pipe(
+      map((response) =>
+        extractResponseData<components["schemas"]["content-file"][]>(response)
+      ),
+      concatMap((fileData) =>
+        forkJoin([
+          ...fileData.map((data) =>
+            forkJoin({
+              namespace: of(data.name),
+              content: from(getContent(data.path)).pipe(
+                map(extractResponseData),
+                map(parseJsonContentFile)
+              ),
+            })
+          ),
+        ])
+      )
+    );
+  }
+
   private getInstallationClient(
     owner: string,
     repo: string
   ): Observable<Octokit> {
-    return from(
-      this.githubApp.octokit.request("GET /repos/{owner}/{repo}/installation", {
-        owner,
-        repo,
-      })
-    ).pipe(
+    return from(this.octokit.apps.getRepoInstallation({ owner, repo })).pipe(
       map((result) => result.data),
-      concatMap((installation) =>
-        this.githubApp.octokit.request(
-          "POST /app/installations/{installation_id}/access_tokens",
-          { installation_id: installation.id }
-        )
-      ),
-      map((result) => result.data.token),
       map(
-        (installationAccessToken) =>
-          new Octokit({
-            auth: installationAccessToken,
+        (installation) =>
+          new MyOctokit({
+            authStrategy: createAppAuth,
+            auth: {
+              appId: this.githubAppId,
+              privateKey: this.githubAppPrivateKey,
+              installationId: installation.id,
+            },
           })
       )
     );
