@@ -22,7 +22,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "concurrently \"jest --config ./apps/gateway/test/jest-e2e.json\" \"jest --config ./apps/translations/test/jest-e2e.json\"",
     "prettier": "prettier --write \"apps/**/*.ts\"",
-    "pretypeorm": "(rm ./ormconfig.json || :) && ts-node -r tsconfig-paths/register scripts/write-type-orm-config.ts",
+    "pretypeorm": "(rm ../server-refactored/translations/ormconfig.json || :) && ts-node -r tsconfig-paths/register scripts/write-type-orm-config.ts",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:migration:generate": "yarn run typeorm migration:generate -n",
     "typeorm:migration:run": "yarn run typeorm migration:run"
