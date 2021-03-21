@@ -29,8 +29,8 @@ services:
   translations-service:
     container_name: translations-service
     build:
-      context: ./server
-      dockerfile: ./translations.Dockerfile
+      context: ./server/translations
+      dockerfile: ./Dockerfile
     image: enco164/interpres/translations-service
     ports:
       - 8091:8091

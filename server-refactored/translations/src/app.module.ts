@@ -15,8 +15,8 @@ import { ImportExportModule } from "./import-export/import-export.module";
       username: process.env.TRANSLATIONS_DB_USERNAME,
       password: process.env.TRANSLATIONS_DB_PASSWORD,
       database: process.env.TRANSLATIONS_DB_DATABASE,
-      // autoLoadEntities: true,
-      // synchronize: true, //process.env.NODE_ENV !== 'production',
+      autoLoadEntities: true,
+      synchronize: true, //process.env.NODE_ENV !== 'production',
 
       // entities: ["**/*.entity{.ts,.js}"],
       //
