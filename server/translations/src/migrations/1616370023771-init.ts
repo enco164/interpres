@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class init1616263237766 implements MigrationInterface {
-  name = "init1616263237766";
+export class init1616370023771 implements MigrationInterface {
+  name = "init1616370023771";
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`CREATE TABLE "translation"
@@ -14,8 +14,9 @@ export class init1616263237766 implements MigrationInterface {
                                  "value"     character varying NOT NULL,
                                  CONSTRAINT "PK_7aef875e43ab80d34a0cdd39c70" PRIMARY KEY ("id")
                              )`);
-    await queryRunner.query(`CREATE
-    UNIQUE INDEX "IDX_9c4a43f092da170f834707dbcd" ON "translation" ("projectId", "key", "lang", "namespace") `);
+    await queryRunner.query(
+      `CREATE UNIQUE INDEX "IDX_9c4a43f092da170f834707dbcd" ON "translation" ("projectId", "key", "lang", "namespace") `
+    );
     await queryRunner.query(`CREATE TABLE "project"
                              (
                                  "id"   SERIAL            NOT NULL,
@@ -27,12 +28,10 @@ export class init1616263237766 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "translation" DROP CONSTRAINT "FK_ab3ce305a27bbcddf9e5880a237"`
-    );
+    await queryRunner.query(`ALTER TABLE "translation"
+        DROP CONSTRAINT "FK_ab3ce305a27bbcddf9e5880a237"`);
     await queryRunner.query(`DROP TABLE "project"`);
-    await queryRunner.query(`DROP
-    INDEX "IDX_9c4a43f092da170f834707dbcd"`);
+    await queryRunner.query(`DROP INDEX "IDX_9c4a43f092da170f834707dbcd"`);
     await queryRunner.query(`DROP TABLE "translation"`);
   }
 }
