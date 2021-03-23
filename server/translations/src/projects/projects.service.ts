@@ -47,10 +47,7 @@ export class ProjectsService {
       throwIfEmpty(
         () => new NotFoundException(`Project with id ${id} not found`)
       ),
-      map((project) => {
-        project.name = updateProjectDto.name;
-        return project;
-      }),
+      map((project) => this.projectRepository.merge(project, updateProjectDto)),
       concatMap((project) => this.projectRepository.save(project))
     );
   }

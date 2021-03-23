@@ -44,6 +44,7 @@ export class ProjectsController {
 
   @Put(":id")
   update(@Param("id") id: string, @Body() updateProjectDto: UpdateProjectDto) {
+    logger.log(`PUT /projects/${id} ${JSON.stringify(updateProjectDto)}`);
     return this.projectsService.update(+id, updateProjectDto);
   }
 

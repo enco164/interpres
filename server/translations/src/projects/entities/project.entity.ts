@@ -9,6 +9,18 @@ export class Project {
   @Column()
   name: string;
 
+  @Column()
+  githubOwner: string;
+
+  @Column()
+  githubRepo: string;
+
+  @Column()
+  lngLoadPath: string;
+
+  @Column({ type: "text", array: true, nullable: true })
+  languages: string[] | null;
+
   @OneToMany(() => Translation, (translation) => translation.project)
   translations: Promise<Translation[]>;
 }
