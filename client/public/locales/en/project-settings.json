@@ -1,0 +1,10 @@
+{
+  "formLabels": {
+    "name": "Name",
+    "owner": "Github Owner",
+    "repo": "Github Repo",
+    "lngLoadPath": "Languages Load Path",
+    "languages": "Languages",
+    "saveBtn": "Save"
+  }
+}
