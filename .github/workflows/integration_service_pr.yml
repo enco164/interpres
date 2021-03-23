@@ -1,9 +1,9 @@
-name: Server-PR
+name: IntegrationService-PR
 
 on:
   pull_request:
     paths:
-      - 'server/**'
+      - 'server/integration/**'
 
 jobs:
   build-and-test:
@@ -31,16 +31,16 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: cd server && yarn install
+        run: cd server/integration && yarn install
 
       - name: Typescript Checks
-        run: cd server && yarn run lint
+        run: cd server/integration && yarn run lint
 
       - name: Build
-        run: cd server && yarn build
+        run: cd server/integration && yarn build
 
       - name: Run Unit Tests
-        run: cd server && yarn run test --ci
+        run: cd server/integration && yarn run test --ci
 
 #      - name: Run docker-compose for server e2e tests
 #        run: docker-compose up -d db
