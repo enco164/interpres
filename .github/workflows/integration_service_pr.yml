@@ -1,0 +1,52 @@
+name: IntegrationService-PR
+
+on:
+  pull_request:
+    paths:
+      - 'server/integration/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: cd server/integration && yarn install
+
+      - name: Typescript Checks
+        run: cd server/integration && yarn run lint
+
+      - name: Build
+        run: cd server/integration && yarn build
+
+      - name: Run Unit Tests
+        run: cd server/integration && yarn run test --ci
+
+#      - name: Run docker-compose for server e2e tests
+#        run: docker-compose up -d db
+#
+#      - name: Run e2e Tests
+#        run: cd server && yarn run test:e2e --ci
+#
+#      - name: Stop docker-compose for server e2e tests
+#        run: docker-compose down
