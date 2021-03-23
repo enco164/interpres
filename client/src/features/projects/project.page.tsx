@@ -1,15 +1,16 @@
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import ImportExportIcon from "@material-ui/icons/ImportExport";
+import SettingsIcon from "@material-ui/icons/Settings";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import { AppLayout } from "../../layout/app-layout";
 import { ImportExportPage } from "../import-export/import-export.page";
 import { TranslationsPage } from "../translations/translations.page";
 import { ProjectOverview } from "./project-overview";
-import { Link } from "react-router-dom";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import AssignmentIcon from "@material-ui/icons/Assignment";
-import ImportExportIcon from "@material-ui/icons/ImportExport";
+import { ProjectSettingsPage } from "./project-settings.page";
 
 export const ProjectPage: React.FC = () => {
   const { t } = useTranslation(["project"]);
@@ -34,6 +35,12 @@ export const ProjectPage: React.FC = () => {
         </ListItemIcon>
         <ListItemText primary={t("menu.import_export")} />
       </ListItem>
+      <ListItem button component={Link} to={`${url}/settings`}>
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary={t("menu.settings")} />
+      </ListItem>
     </List>
   );
 
@@ -48,6 +55,9 @@ export const ProjectPage: React.FC = () => {
         </Route>
         <Route path={`${path}/import-export`}>
           <ImportExportPage />
+        </Route>
+        <Route path={`${path}/settings`}>
+          <ProjectSettingsPage />
         </Route>
       </Switch>
     </AppLayout>

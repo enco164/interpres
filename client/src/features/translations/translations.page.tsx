@@ -8,7 +8,7 @@ import {
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useProjectIdParam } from "../../hooks/use-project-id-param";
 
 import { useAppDispatch } from "../../state/store";
 import { SelectedTranslationKeysEditor } from "./selected-translation-keys-editor";
@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
 export const TranslationsPage: React.FC = () => {
   const { t } = useTranslation(["project-translations"]);
   const dispatch = useAppDispatch();
-  const { params } = useRouteMatch<{ projectId: string }>();
+  const projectId = useProjectIdParam();
 
   const { selectedKey, selectedNamespace } = useSelector(
     selectTranslationsSlice
@@ -48,13 +48,13 @@ export const TranslationsPage: React.FC = () => {
 
   useEffect(() => {
     const promise = dispatch(
-      fetchTranslationsByProjectId({ projectId: +params.projectId })
+      fetchTranslationsByProjectId({ projectId: +projectId })
     );
 
     return () => {
       promise.abort();
     };
-  }, [dispatch, params]);
+  }, [dispatch, projectId]);
 
   const classes = useStyles();
 
