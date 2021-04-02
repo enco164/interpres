@@ -1,12 +1,13 @@
 {
   "import_header": "Import translations",
   "export_header": "Export translations",
-  "import_form": {
-    "language_input_label": "Language",
-    "submit_button_label": "Import"
-  },
   "export_form": {
     "language_input_label": "Language",
     "submit_button_label": "Export"
+  },
+  "import": {
+    "description": "Import translations from GitHub repository.",
+    "button_label": "Import",
+    "confirm_message": "Importing translations from repository will override your current work. Are you sure you want to import?"
   }
 }

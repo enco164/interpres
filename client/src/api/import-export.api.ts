@@ -1,4 +1,4 @@
-import { BaseApiClient, JSONApiResponse } from "../core/api";
+import { BaseApiClient, JSONApiResponse, VoidApiResponse } from "../core/api";
 import { Translation } from "../domain/translation";
 import { readJsonFile } from "../util";
 import { ExportTranslationsDto } from "./dto/export-translations.dto";
@@ -42,7 +42,7 @@ class ImportExportApiClient extends BaseApiClient {
       `${BASE_URL}/projects/${param.projectId}/github-import`,
       { ...init, method: "POST" }
     );
-    return new JSONApiResponse(response).value();
+    return new VoidApiResponse(response).value();
   }
 }
 
