@@ -1,3 +1,4 @@
+import { ClientProxyFactory } from "@nestjs/microservices";
 import { Test, TestingModule } from "@nestjs/testing";
 import { ImportExportService } from "../import-export/import-export.service";
 import { TranslationRepository } from "../translations/translation.repository";
@@ -19,6 +20,10 @@ describe("ProjectsController", () => {
         TranslationsService,
         { provide: ProjectRepository, useFactory: repositoryMockFactory },
         { provide: TranslationRepository, useFactory: repositoryMockFactory },
+        {
+          provide: "INTEGRATION_SERVICE",
+          useFactory: () => ClientProxyFactory.create({}),
+        },
       ],
     }).compile();
 
