@@ -1,4 +1,5 @@
 import { Controller, Get, Logger, Query } from "@nestjs/common";
+import { MessagePattern } from "@nestjs/microservices";
 import { AppService } from "./app.service";
 import { GitHubService } from "./git-hub/git-hub.service";
 
@@ -26,5 +27,15 @@ export class AppController {
       repo,
       translationsLoadPath,
     });
+  }
+
+  @MessagePattern({ cmd: "import" })
+  accumulate(data: {
+    owner: string;
+    repo: string;
+    translationsLoadPath: string;
+  }) {
+    logger.log(`CMD[import] ${JSON.stringify(data)}`);
+    return this.githubService.importTranslationsFromRepo(data);
   }
 }

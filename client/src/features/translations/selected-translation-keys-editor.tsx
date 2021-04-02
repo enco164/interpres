@@ -37,8 +37,12 @@ export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEdit
   return (
     <List>
       {translationKeys.map((translationKey) => (
-        <Paper className={classes.paper} variant="outlined">
-          <ListItem key={translationKey} className={classes.listItem}>
+        <Paper
+          className={classes.paper}
+          variant="outlined"
+          key={translationKey}
+        >
+          <ListItem className={classes.listItem}>
             <ListItemText
               disableTypography
               primary={

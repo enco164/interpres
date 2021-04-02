@@ -1,7 +1,8 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { ImportExportApi } from "../../api/import-export.api";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
 import { useAppDispatch } from "../../state/store";
 import { ExportForm } from "./export-form";
@@ -46,6 +47,10 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
     [dispatch, projectId]
   );
 
+  const handleGithubImport = useCallback(async () => {
+    await ImportExportApi.importGithubToProject({ projectId: +projectId });
+  }, [projectId]);
+
   return (
     <Grid container>
       <Grid item xs={6}>
@@ -59,6 +64,9 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
           {t("export_header")}
         </Typography>
         <ExportForm onSubmit={handleExport} />
+      </Grid>
+      <Grid item>
+        <Button onClick={handleGithubImport}>TEST</Button>
       </Grid>
     </Grid>
   );

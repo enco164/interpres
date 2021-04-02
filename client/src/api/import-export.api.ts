@@ -2,6 +2,7 @@ import { BaseApiClient, JSONApiResponse } from "../core/api";
 import { Translation } from "../domain/translation";
 import { readJsonFile } from "../util";
 import { ExportTranslationsDto } from "./dto/export-translations.dto";
+import { ImportFromGithubDto } from "./dto/import-from-github.dto";
 import { ImportTranslationsDto } from "./dto/import-translations.dto";
 
 const BASE_URL = "/api/translation-service";
@@ -32,6 +33,14 @@ class ImportExportApiClient extends BaseApiClient {
     const response = await this.fetchApi(
       `${BASE_URL}/projects/${param.projectId}/export?lang=${param.lang}`,
       init
+    );
+    return new JSONApiResponse(response).value();
+  }
+
+  async importGithubToProject(param: ImportFromGithubDto, init?: RequestInit) {
+    const response = await this.fetchApi(
+      `${BASE_URL}/projects/${param.projectId}/github-import`,
+      { ...init, method: "POST" }
     );
     return new JSONApiResponse(response).value();
   }
