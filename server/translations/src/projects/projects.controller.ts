@@ -55,7 +55,7 @@ export class ProjectsController {
 
   @Post(":id/import")
   importFile(@Param("id") id: string, @Body() importFileDto: ImportFileDto) {
-    logger.log(`POST /projects/${id}/export ${JSON.stringify(importFileDto)}`);
+    logger.log(`POST /projects/${id}/import ${JSON.stringify(importFileDto)}`);
     return this.projectsService.importFileToProject(+id, importFileDto);
   }
 
@@ -63,5 +63,11 @@ export class ProjectsController {
   exportTranslations(@Param("id") id: string, @Query("lang") lang: string) {
     logger.log(`GET /projects/${id}/export?lang=${lang}`);
     return this.projectsService.exportTranslations(+id, lang);
+  }
+
+  @Post(":id/github-import")
+  importGithubToProject(@Param("id") id: string) {
+    logger.log(`POST /projects/${id}/github-import`);
+    return this.projectsService.importGithubToProject(+id);
   }
 }

@@ -72,4 +72,8 @@ export class TranslationsService {
       .newDocument;
     return this.translationRepository.save(patchedTranslation);
   }
+
+  removeTranslations(translations: Translation[]) {
+    return this.translationRepository.remove(translations);
+  }
 }

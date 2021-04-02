@@ -28,8 +28,6 @@ const mapLngCodeToLngOption = (code: string) => ({
 
 const allLngs = ISO6391.getAllCodes().map(mapLngCodeToLngOption);
 
-console.log(allLngs);
-
 interface ProjectSettingsPageProps {}
 
 export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
