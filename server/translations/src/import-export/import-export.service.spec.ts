@@ -27,7 +27,7 @@ describe("ImportExportService", () => {
       },
     };
 
-    const result = service.importFile(testObject);
+    const result = service.getKeyValues(testObject);
 
     expect(result).toEqual([
       { key: "key", value: "value" },

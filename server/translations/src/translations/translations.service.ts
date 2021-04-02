@@ -37,12 +37,11 @@ export class TranslationsService {
     return this.translationRepository.findOne(id);
   }
 
-  findByProjectIdAndLang(projectId: number, lang: string) {
+  findByProjectId(projectId: number) {
     return from(
       this.translationRepository.find({
         where: {
           projectId,
-          lang,
         },
       })
     );

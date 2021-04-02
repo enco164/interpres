@@ -14,10 +14,11 @@ class ImportExportApiClient extends BaseApiClient {
   }
 
   async importGithubToProject(param: ImportFromGithubDto, init?: RequestInit) {
-    const response = await this.fetchApi(
-      `${BASE_URL}/projects/${param.projectId}/github-import`,
-      { ...init, method: "POST" }
-    );
+    const response = await this.fetchApi(`${BASE_URL}/import-export/import`, {
+      ...init,
+      method: "POST",
+      body: JSON.stringify(param),
+    });
     return new VoidApiResponse(response).value();
   }
 }
