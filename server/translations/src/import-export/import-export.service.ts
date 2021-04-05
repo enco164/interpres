@@ -46,18 +46,22 @@ export class ImportExportService {
   }
 
   exportTranslations(projectId: number) {
-    return this.translationsService.findByProjectId(projectId).pipe(
-      map((projectTranslations) =>
-        projectTranslations.reduce((acc, translation) => {
-          if (!acc[translation.lang]) {
-            acc[translation.lang] = {};
+    return forkJoin([
+      this.projectsService.findOne(projectId),
+      this.translationsService
+        .findByProjectId(projectId)
+        .pipe(map((translations) => this.prepareExportPayload(translations))),
+    ]).pipe(
+      concatMap(([project, payload]) =>
+        this.integrationServiceClient.send(
+          { cmd: "export" },
+          {
+            owner: project.githubOwner,
+            repo: project.githubRepo,
+            translationsLoadPath: project.lngLoadPath,
+            payload,
           }
-          if (!acc[translation.lang][translation.namespace]) {
-            acc[translation.lang][translation.namespace] = [];
-          }
-          acc[translation.lang][translation.namespace].push(translation);
-          return acc;
-        }, {})
+        )
       )
     );
   }
@@ -90,6 +94,43 @@ export class ImportExportService {
     return Object.keys(object).flatMap((key) =>
       this.getPlainKeyValues(key, object[key])
     );
+  }
+
+  private prepareExportPayload(projectTranslations: Translation[]) {
+    const grouped = this.groupTranslationsByLangAndNamespace(
+      projectTranslations
+    );
+    return Object.entries(grouped).reduce((rootAcc, [lang, langValue]) => {
+      rootAcc[lang] = Object.entries(langValue).reduce(
+        (langAcc, [ns, nsValue]) => {
+          langAcc[ns] = nsValue.reduce((nsAcc, translation) => {
+            nsAcc[translation.key] = translation.value;
+
+            return nsAcc;
+          }, {} as Record<string, string>);
+
+          return langAcc;
+        },
+        {} as Record<string, Record<string, string>>
+      );
+
+      return rootAcc;
+    }, {} as Record<string, Record<string, Record<string, string>>>);
+  }
+
+  private groupTranslationsByLangAndNamespace(
+    projectTranslations: Translation[]
+  ) {
+    return projectTranslations.reduce((acc, translation) => {
+      if (!acc[translation.lang]) {
+        acc[translation.lang] = {};
+      }
+      if (!acc[translation.lang][translation.namespace]) {
+        acc[translation.lang][translation.namespace] = [];
+      }
+      acc[translation.lang][translation.namespace].push(translation);
+      return acc;
+    }, {} as Record<string, Record<string, Translation[]>>);
   }
 
   private getPlainKeyValues(

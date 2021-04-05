@@ -4,12 +4,14 @@ import { createAppAuth } from "@octokit/auth-app";
 import { components } from "@octokit/openapi-types/dist-types/generated/types";
 import { retry } from "@octokit/plugin-retry";
 import { Octokit } from "@octokit/rest";
-import { forkJoin, from, Observable, of, zip } from "rxjs";
+import { createPullRequest } from "octokit-plugin-create-pull-request";
+import { forkJoin, from, Observable, of } from "rxjs";
 import { concatMap, map } from "rxjs/operators";
+import { ExportTranslationsToRepo } from "./dto/export-translations-to-repo";
 
 import { ImportTranslationsFromRepoParam } from "./dto/import-translations-from-repo-param";
 
-const MyOctokit = Octokit.plugin(retry);
+const MyOctokit = Octokit.plugin(retry, createPullRequest);
 
 const logger = new Logger("GitHubService");
 
@@ -42,101 +44,6 @@ export class GitHubService {
         privateKey: this.githubAppPrivateKey,
       },
     });
-  }
-
-  createRemoteBranch(owner: string, repo: string, branchName: string) {
-    const newBranchName = `refs/heads/${branchName}`;
-    return this.getInstallationClient(owner, repo).pipe(
-      concatMap((installationClient) =>
-        zip([
-          of(installationClient),
-          installationClient.repos.listCommits({
-            owner,
-            repo,
-          }),
-        ])
-      ),
-      map(([installationClient, commits]) => [
-        installationClient,
-        commits.data[0].sha,
-      ]),
-      concatMap(([installationClient, lastSHA]) =>
-        installationClient.git.createRef({
-          owner,
-          repo,
-          ref: newBranchName,
-          sha: lastSHA,
-        })
-      )
-    );
-  }
-
-  commitUpdatedFile(param: {
-    owner: string;
-    repo: string;
-    filePath: string;
-    branchName: string;
-    fileContent: string;
-  }) {
-    return this.getInstallationClient(param.owner, param.repo).pipe(
-      concatMap((installationClient) =>
-        zip(
-          of(installationClient),
-          installationClient.repos.getContent({
-            owner: param.owner,
-            repo: param.repo,
-            path: param.filePath,
-            ref: param.branchName,
-          })
-        )
-      ),
-      map(([installationClient, response]) => [
-        installationClient,
-        response.data as components["schemas"]["content-file"],
-      ]),
-      concatMap(([installationClient, fileData]) =>
-        (installationClient as Octokit).repos.createOrUpdateFileContents({
-          owner: param.owner,
-          repo: param.repo,
-          path: param.filePath,
-          branch: param.branchName,
-          message: `Update ${param.filePath}`,
-          sha: fileData.sha,
-          content: Buffer.from(param.fileContent).toString("base64"),
-        })
-      )
-    );
-  }
-
-  createPullRequest(param: {
-    owner: string;
-    repo: string;
-    branchName: string;
-  }) {
-    return this.getInstallationClient(param.owner, param.repo).pipe(
-      concatMap((installationClient) =>
-        zip([
-          of(installationClient),
-          installationClient.repos.get({
-            owner: param.owner,
-            repo: param.repo,
-          }),
-        ])
-      ),
-      map(([installationClient, response]) => [
-        installationClient,
-        response.data,
-      ]),
-      concatMap(([installationClient, responseData]) =>
-        (installationClient as Octokit).pulls.create({
-          owner: param.owner,
-          repo: param.repo,
-          head: param.branchName,
-          base: responseData.default_branch,
-          title: "Title",
-        })
-      )
-    );
   }
 
   importTranslationsFromRepo({
@@ -180,6 +87,48 @@ export class GitHubService {
     );
   }
 
+  exportTranslationsToRepo({
+    owner,
+    repo,
+    payload,
+    translationsLoadPath,
+  }: ExportTranslationsToRepo) {
+    const files = this.getFilesChanges(payload, translationsLoadPath);
+
+    return this.getInstallationClient(owner, repo).pipe(
+      concatMap((installationClient) =>
+        installationClient.createPullRequest({
+          owner,
+          repo,
+          title: `Export from interpress ${new Date().toLocaleDateString()}`,
+          body: `Export from interpress ${new Date().toLocaleDateString()}`,
+          head: `interpres/export_${new Date().toLocaleDateString()}`,
+          changes: [
+            {
+              files,
+              commit: `Export from interpress ${new Date().toLocaleDateString()}`,
+            },
+          ],
+        })
+      )
+    );
+  }
+
+  private getFilesChanges(
+    payload: Record<string, Record<string, Record<string, string>>>,
+    translationsLoadPath: string
+  ) {
+    return Object.entries(payload).reduce((filesAcc, [lang, langVal]) => {
+      const changes = this.getNamespaceFileChanges(
+        translationsLoadPath,
+        lang,
+        langVal
+      );
+      filesAcc = Object.assign({}, filesAcc, changes);
+      return filesAcc;
+    }, {});
+  }
+
   private getLanguageFiles(getContent, langFolderPath: string) {
     return from(getContent(langFolderPath)).pipe(
       map((response) =>
@@ -219,5 +168,18 @@ export class GitHubService {
           })
       )
     );
+  }
+
+  private getNamespaceFileChanges(
+    pathPrefix: string,
+    lang: string,
+    langVal: Record<string, Record<string, string>>
+  ) {
+    return Object.entries(langVal).reduce((nsAcc, [ns, jsonFile]) => {
+      const filePath = [pathPrefix, lang, ns].join("/").substring(1);
+      const fileContent = JSON.stringify(jsonFile, null, 2).concat("\n");
+      nsAcc[filePath] = fileContent;
+      return nsAcc;
+    }, {});
   }
 }
