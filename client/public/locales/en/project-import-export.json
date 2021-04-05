@@ -1,13 +1,9 @@
 {
+  "import.confirm_message": "Importing translations from repository will override your current work. Are you sure you want to import?",
+  "import.button_label": "Import",
   "import_header": "Import translations",
+  "import.description": "Import translations from GitHub repository.",
+  "export_form.submit_button_label": "Export",
   "export_header": "Export translations",
-  "export_form": {
-    "language_input_label": "Language",
-    "submit_button_label": "Export"
-  },
-  "import": {
-    "description": "Import translations from GitHub repository.",
-    "button_label": "Import",
-    "confirm_message": "Importing translations from repository will override your current work. Are you sure you want to import?"
-  }
+  "export_form.language_input_label": "Language"
 }
