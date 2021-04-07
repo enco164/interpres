@@ -34,7 +34,12 @@ export const ConfirmBase: React.FC<ConfirmBaseProps> = ({
       {title && <DialogTitle>{title}</DialogTitle>}
       <DialogContent>{content}</DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} color="primary" variant="outlined">
+        <Button
+          onClick={onCancel}
+          color="primary"
+          variant="outlined"
+          type="reset"
+        >
           {cancelLabel}
         </Button>
         <Button
@@ -43,6 +48,7 @@ export const ConfirmBase: React.FC<ConfirmBaseProps> = ({
           variant="contained"
           disableElevation
           autoFocus
+          type="submit"
         >
           {okLabel}
         </Button>
