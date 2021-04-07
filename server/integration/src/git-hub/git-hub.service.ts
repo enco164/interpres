@@ -96,6 +96,7 @@ export class GitHubService {
     translationsLoadPath,
   }: ExportTranslationsToRepo) {
     const filesChanges = this.getFilesChanges(payload, translationsLoadPath);
+    const commitTime = new Date().getTime();
     return this.getInstallationClient(owner, repo).pipe(
       concatMap((installationClient) =>
         installationClient.createPullRequest({
@@ -103,11 +104,11 @@ export class GitHubService {
           repo,
           title,
           body: description,
-          head: `interpres/export_${new Date().toLocaleDateString()}`,
+          head: `interpres/export_${commitTime}`,
           changes: [
             {
               files: filesChanges,
-              commit: `Export from interpress ${new Date().toLocaleDateString()}`,
+              commit: `Export from Interpres ${commitTime}`,
             },
           ],
         })

@@ -1,58 +1,55 @@
 import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
+  FormHelperText,
+  Grid,
+  TextareaAutosize,
+  TextField,
 } from "@material-ui/core";
-import { Form, Formik } from "formik";
+import { FormikProps } from "formik";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import * as yup from "yup";
 
 interface ExportFormProps {
-  onSubmit: (values: { lang: string }) => void;
+  formik: FormikProps<{ title: string; description: string }>;
+  labels: {
+    title_label: string;
+    description_label: string;
+    description_helper: string;
+  };
 }
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}));
+const textareaStyle = { maxWidth: "100%", minWidth: "100%", width: "100%" };
 
-export const ExportForm: React.FC<ExportFormProps> = ({ onSubmit }) => {
-  const { t } = useTranslation(["project-import-export"]);
-  const classes = useStyles();
-  const initialValues: { lang: string } = {
-    lang: "en",
-  };
+export const validationSchema = yup
+  .object()
+  .shape({ title: yup.string().required() });
+
+export const ExportForm: React.FC<ExportFormProps> = ({ formik, labels }) => {
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {(formik) => (
-        <Form>
-          <Box>
-            <FormControl className={classes.formControl}>
-              <InputLabel>{t("export_form.language_input_label")}</InputLabel>
-              <Select
-                id="lang"
-                name="lang"
-                value={formik.values.lang}
-                onChange={formik.handleChange}
-              >
-                <MenuItem value={"en"}>en</MenuItem>
-                <MenuItem value={"sr"}>sr</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <Box>
-            <Button variant="contained" color="primary" type="submit">
-              {t("export_form.submit_button_label")}
-            </Button>
-          </Box>
-        </Form>
-      )}
-    </Formik>
+    <Grid container spacing={1}>
+      <Grid item>
+        <TextField
+          id="title"
+          value={formik.values.title}
+          onChange={formik.handleChange}
+          label={labels.title_label}
+          variant="outlined"
+          size="small"
+          error={Boolean(formik.errors.title && formik.touched.title)}
+          helperText={formik.errors.title}
+        />
+      </Grid>
+
+      <Grid item xs={12} container direction="column">
+        <TextareaAutosize
+          id="description"
+          placeholder={labels.description_label}
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          rowsMin={10}
+          style={textareaStyle}
+        />
+        <FormHelperText>{labels.description_helper}</FormHelperText>
+      </Grid>
+    </Grid>
   );
 };

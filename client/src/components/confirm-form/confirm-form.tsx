@@ -7,6 +7,7 @@ interface ConfirmFormProps<Values extends FormikValues = FormikValues>
   initialValues: Values;
   renderForm: (formik: FormikProps<Values>) => JSX.Element;
   onSubmit: (values: Values) => void | Promise<any>;
+  validationSchema?: any | (() => any);
 }
 
 export function ConfirmForm<T>(props: ConfirmFormProps<T>) {
@@ -16,6 +17,7 @@ export function ConfirmForm<T>(props: ConfirmFormProps<T>) {
       props.onSubmit(values);
       formikHelpers.resetForm();
     },
+    validationSchema: props.validationSchema,
   });
 
   return (
