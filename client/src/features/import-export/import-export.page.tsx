@@ -1,16 +1,9 @@
 import { Box, Button, Grid, Typography } from "@material-ui/core";
-import { unwrapResult } from "@reduxjs/toolkit";
-import React, { useCallback } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { Confirm } from "../../components";
+import { Confirm, ConfirmForm } from "../../components";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
-import { useAppDispatch } from "../../state/store";
-import { ExportForm } from "./export-form";
-import {
-  exportTranslations,
-  selectIsImportingTranslations,
-} from "./import-export.slice";
+import { ExportForm, validationSchema } from "./export-form";
 import { useImportExportPage } from "./use-import-export-page";
 
 interface ImportExportPageProps {}
@@ -18,40 +11,31 @@ interface ImportExportPageProps {}
 export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
   const { t } = useTranslation(["project-import-export"]);
   const projectId = useProjectIdParam();
-  const dispatch = useAppDispatch();
-
-  const isImportingTranslations = useSelector(selectIsImportingTranslations);
 
   const {
     isImportConfirmOpen,
+    isExportConfirmOpen,
+    isImportingTranslations,
+    isExportingTranslations,
     openImportConfirm,
+    openExportConfirm,
     closeImportConfirm,
+    closeExportConfirm,
     handleImportTranslations,
+    handleExportTranslations,
   } = useImportExportPage(+projectId);
-
-  const handleExport = useCallback(
-    async (values: { lang: string }) => {
-      try {
-        const result = unwrapResult(
-          await dispatch(
-            exportTranslations({ lang: values.lang, projectId: +projectId })
-          )
-        );
-        console.log(result);
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    [dispatch, projectId]
-  );
 
   if (isImportingTranslations) {
     return <Typography>Importing translations to project...</Typography>;
   }
 
+  if (isExportingTranslations) {
+    return <Typography>Exporting translations to GitHub...</Typography>;
+  }
+
   return (
     <>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={6}>
           <Typography variant="h6" component="h6" gutterBottom>
             {t("import_header")}
@@ -71,7 +55,16 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
           <Typography variant="h6" component="h6">
             {t("export_header")}
           </Typography>
-          <ExportForm onSubmit={handleExport} />
+          <Typography>{t("export.description")}</Typography>
+          <Box my={2}>
+            <Button
+              onClick={openExportConfirm}
+              variant="contained"
+              color="primary"
+            >
+              {t("export.button_label")}
+            </Button>
+          </Box>
         </Grid>
       </Grid>
       <Confirm
@@ -82,6 +75,35 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
           closeImportConfirm();
           handleImportTranslations();
         }}
+      />
+      <ConfirmForm
+        title={t("export.confirm.title")}
+        open={isExportConfirmOpen}
+        onCancel={closeExportConfirm}
+        initialValues={{
+          title: "",
+          description: "",
+        }}
+        onSubmit={(values) => {
+          closeExportConfirm();
+          handleExportTranslations(values);
+        }}
+        validationSchema={validationSchema}
+        renderForm={(formik) => (
+          <>
+            <Box mb={2}>
+              <Typography>{t("export.confirm.message")}</Typography>
+            </Box>
+            <ExportForm
+              formik={formik}
+              labels={{
+                title_label: t("export.confirm.title_label"),
+                description_label: t("export.confirm.description_label"),
+                description_helper: t("export.confirm.description_helper"),
+              }}
+            />
+          </>
+        )}
       />
     </>
   );

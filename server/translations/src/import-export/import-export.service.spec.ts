@@ -1,6 +1,11 @@
+import { ClientProxyFactory } from "@nestjs/microservices";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Project } from "../projects/entities/project.entity";
+import { ProjectRepository } from "../projects/project.repository";
+import { ProjectsService } from "../projects/projects.service";
 import { Translation } from "../translations/entities/translation.entity";
+import { TranslationRepository } from "../translations/translation.repository";
+import { TranslationsService } from "../translations/translations.service";
 import { ImportExportService } from "./import-export.service";
 
 describe("ImportExportService", () => {
@@ -8,7 +13,17 @@ describe("ImportExportService", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ImportExportService],
+      providers: [
+        ImportExportService,
+        ProjectsService,
+        ProjectRepository,
+        TranslationsService,
+        TranslationRepository,
+        {
+          provide: "INTEGRATION_SERVICE",
+          useFactory: () => ClientProxyFactory.create({}),
+        },
+      ],
     }).compile();
 
     service = module.get<ImportExportService>(ImportExportService);
@@ -27,7 +42,7 @@ describe("ImportExportService", () => {
       },
     };
 
-    const result = service.importFile(testObject);
+    const result = service.getKeyValues(testObject);
 
     expect(result).toEqual([
       { key: "key", value: "value" },

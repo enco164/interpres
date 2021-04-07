@@ -13,12 +13,14 @@ type ImportExportState = {
   importStatus: RequestStatus;
   exportStatus: RequestStatus;
   isImportConfirmOpen: boolean;
+  isExportConfirmOpen: boolean;
 };
 
 const initialState: ImportExportState = {
   importStatus: RequestStatus.IDLE,
   exportStatus: RequestStatus.IDLE,
   isImportConfirmOpen: false,
+  isExportConfirmOpen: false,
 };
 
 export const importTranslations = createAsyncThunk<void, ImportFromGithubDto>(
@@ -43,6 +45,12 @@ export const importExportSlice = createSlice({
     closeImportConfirm: (state) => {
       state.isImportConfirmOpen = false;
     },
+    openExportConfirm: (state) => {
+      state.isExportConfirmOpen = true;
+    },
+    closeExportConfirm: (state) => {
+      state.isExportConfirmOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,13 +62,24 @@ export const importExportSlice = createSlice({
       })
       .addCase(importTranslations.fulfilled, (state) => {
         state.importStatus = RequestStatus.FULFILLED;
+      })
+      .addCase(exportTranslations.pending, (state) => {
+        state.exportStatus = RequestStatus.PENDING;
+      })
+      .addCase(exportTranslations.rejected, (state) => {
+        state.exportStatus = RequestStatus.REJECTED;
+      })
+      .addCase(exportTranslations.fulfilled, (state) => {
+        state.exportStatus = RequestStatus.FULFILLED;
       });
   },
 });
 
 export const {
-  openImportConfirm,
+  closeExportConfirm,
   closeImportConfirm,
+  openExportConfirm,
+  openImportConfirm,
 } = importExportSlice.actions;
 
 export const selectImportExportSlice = (state: RootState) =>
@@ -69,4 +88,9 @@ export const selectImportExportSlice = (state: RootState) =>
 export const selectIsImportingTranslations = createSelector(
   selectImportExportSlice,
   (state) => state.importStatus === RequestStatus.PENDING
+);
+
+export const selectIsExportingTranslations = createSelector(
+  selectImportExportSlice,
+  (state) => state.exportStatus === RequestStatus.PENDING
 );

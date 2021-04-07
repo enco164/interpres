@@ -1,6 +1,8 @@
 import { Controller, Get, Logger, Query } from "@nestjs/common";
 import { MessagePattern } from "@nestjs/microservices";
 import { AppService } from "./app.service";
+import { ExportTranslationsToRepo } from "./git-hub/dto/export-translations-to-repo";
+import { ImportTranslationsFromRepoParam } from "./git-hub/dto/import-translations-from-repo-param";
 import { GitHubService } from "./git-hub/git-hub.service";
 
 const logger = new Logger("AppController");
@@ -30,12 +32,14 @@ export class AppController {
   }
 
   @MessagePattern({ cmd: "import" })
-  accumulate(data: {
-    owner: string;
-    repo: string;
-    translationsLoadPath: string;
-  }) {
+  importFromRepo(data: ImportTranslationsFromRepoParam) {
     logger.log(`CMD[import] ${JSON.stringify(data)}`);
     return this.githubService.importTranslationsFromRepo(data);
+  }
+
+  @MessagePattern({ cmd: "export" })
+  exportToRepo(data: ExportTranslationsToRepo) {
+    logger.log(`CMD[export] ${JSON.stringify(data)}`);
+    return this.githubService.exportTranslationsToRepo(data);
   }
 }
