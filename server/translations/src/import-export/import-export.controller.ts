@@ -21,8 +21,6 @@ export class ImportExportController {
 
   @Post("export")
   exportTranslations(@Body() exportTranslationsDto: ExportTranslationsDto) {
-    return this.importExportService.exportTranslations(
-      exportTranslationsDto.projectId
-    );
+    return this.importExportService.exportTranslations(exportTranslationsDto);
   }
 }

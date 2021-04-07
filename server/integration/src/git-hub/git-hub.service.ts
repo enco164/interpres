@@ -90,22 +90,23 @@ export class GitHubService {
   exportTranslationsToRepo({
     owner,
     repo,
+    title,
+    description,
     payload,
     translationsLoadPath,
   }: ExportTranslationsToRepo) {
-    const files = this.getFilesChanges(payload, translationsLoadPath);
-
+    const filesChanges = this.getFilesChanges(payload, translationsLoadPath);
     return this.getInstallationClient(owner, repo).pipe(
       concatMap((installationClient) =>
         installationClient.createPullRequest({
           owner,
           repo,
-          title: `Export from interpress ${new Date().toLocaleDateString()}`,
-          body: `Export from interpress ${new Date().toLocaleDateString()}`,
+          title,
+          body: description,
           head: `interpres/export_${new Date().toLocaleDateString()}`,
           changes: [
             {
-              files,
+              files: filesChanges,
               commit: `Export from interpress ${new Date().toLocaleDateString()}`,
             },
           ],
@@ -177,8 +178,7 @@ export class GitHubService {
   ) {
     return Object.entries(langVal).reduce((nsAcc, [ns, jsonFile]) => {
       const filePath = [pathPrefix, lang, ns].join("/").substring(1);
-      const fileContent = JSON.stringify(jsonFile, null, 2).concat("\n");
-      nsAcc[filePath] = fileContent;
+      nsAcc[filePath] = JSON.stringify(jsonFile, null, 2).concat("\n");
       return nsAcc;
     }, {});
   }

@@ -8,6 +8,7 @@ import { ProjectsService } from "../projects/projects.service";
 import { TranslationDTO } from "../translations/dto/translation.dto";
 import { Translation } from "../translations/entities/translation.entity";
 import { TranslationsService } from "../translations/translations.service";
+import { ExportTranslationsDto } from "./dto/export-translations.dto";
 
 @Injectable()
 export class ImportExportService {
@@ -45,7 +46,7 @@ export class ImportExportService {
     );
   }
 
-  exportTranslations(projectId: number) {
+  exportTranslations({ projectId, title, description }: ExportTranslationsDto) {
     return forkJoin([
       this.projectsService.findOne(projectId),
       this.translationsService
@@ -58,6 +59,8 @@ export class ImportExportService {
           {
             owner: project.githubOwner,
             repo: project.githubRepo,
+            title,
+            description,
             translationsLoadPath: project.lngLoadPath,
             payload,
           }
@@ -103,11 +106,7 @@ export class ImportExportService {
     return Object.entries(grouped).reduce((rootAcc, [lang, langValue]) => {
       rootAcc[lang] = Object.entries(langValue).reduce(
         (langAcc, [ns, nsValue]) => {
-          langAcc[ns] = nsValue.reduce((nsAcc, translation) => {
-            nsAcc[translation.key] = translation.value;
-
-            return nsAcc;
-          }, {} as Record<string, string>);
+          langAcc[ns] = this.buildJsonTreeFromTranslations(nsValue);
 
           return langAcc;
         },
