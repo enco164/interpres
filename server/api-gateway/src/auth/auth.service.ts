@@ -11,4 +11,9 @@ export class AuthService {
   validateGithubUser(profile: Profile) {
     return this.userService.findOrCreateGithubUser(profile);
   }
+
+  getUserProfile(user) {
+    this.logger.log(`getUserProfile ${JSON.stringify(user)}`);
+    return user;
+  }
 }

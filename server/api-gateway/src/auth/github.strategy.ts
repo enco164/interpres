@@ -1,5 +1,6 @@
 import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
 import { PassportStrategy } from "@nestjs/passport";
 import { Profile, Strategy } from "passport-github2";
 import { AuthService } from "./auth.service";
@@ -10,7 +11,8 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
 
   constructor(
     private authService: AuthService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private jwtService: JwtService
   ) {
     super({
       clientID: configService.get<string>("GITHUB_CLIENT_ID"),
@@ -23,10 +25,12 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
 
   async validate(accessToken: string, refreshToken: any, profile: Profile) {
     const user = await this.authService.validateGithubUser(profile).toPromise();
-
     if (!user) {
       throw new UnauthorizedException();
     }
-    return user;
+    const payload = { userId: user.id };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
   }
 }
