@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { UserModule } from "../user/user.module";
+import { UserManagementModule } from "../user-management/user-management.module";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { GithubStrategy } from "./github.strategy";
@@ -10,7 +10,7 @@ import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
   imports: [
-    UserModule,
+    UserManagementModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

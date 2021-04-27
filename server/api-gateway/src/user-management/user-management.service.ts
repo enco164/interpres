@@ -3,21 +3,21 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Profile } from "passport-github2";
 
 @Injectable()
-export class UserService {
+export class UserManagementService {
   constructor(
     @Inject("USER_SERVICE") private userMicroserviceClient: ClientProxy
   ) {}
 
   findOrCreateGithubUser(profile: Profile) {
     return this.userMicroserviceClient.send<Profile>(
-      { cmd: "findOrCreateGithubUser" },
+      { cmd: "userProfile/findOrCreateGithubUser" },
       { profile }
     );
   }
 
-  findUser(userId: string) {
+  findUserProfile(userId: string) {
     return this.userMicroserviceClient.send<Profile>(
-      { cmd: "findUser" },
+      { cmd: "userProfile/findUserProfile" },
       { userId }
     );
   }

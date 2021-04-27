@@ -1,19 +1,19 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { Profile } from "passport-github2";
-import { UserService } from "../user/user.service";
+import { UserManagementService } from "../user-management/user-management.service";
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
-  constructor(private userService: UserService) {}
+  constructor(private userManagementService: UserManagementService) {}
 
   validateGithubUser(profile: Profile) {
-    return this.userService.findOrCreateGithubUser(profile);
+    return this.userManagementService.findOrCreateGithubUser(profile);
   }
 
   getUserProfile(user: { userId: string }) {
     this.logger.log(`getUserProfile ${JSON.stringify(user)}`);
-    return this.userService.findUser(user.userId);
+    return this.userManagementService.findUserProfile(user.userId);
   }
 }

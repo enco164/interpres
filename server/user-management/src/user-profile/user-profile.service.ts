@@ -1,14 +1,14 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { FindOrCreateGithubUserDto } from "./dto/find-or-create-github-user-dto";
-import { FindUserRequest } from "./dto/find-user.request";
-import { User } from "./entities/user.entity";
-import { UserRepository } from "./user.repository";
+import { FindUserProfileRequest } from "./dto/find-user-profile-request";
+import { UserProfileEntity } from "./entities/user-profile.entity";
+import { UserProfileRepository } from "./user-profile.repository";
 
 @Injectable()
-export class UserService {
-  private readonly logger = new Logger(UserService.name);
+export class UserProfileService {
+  private readonly logger = new Logger(UserProfileService.name);
 
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserProfileRepository) {}
 
   async findOrCreateGithubUser(
     findOrCreateGithubUserDto: FindOrCreateGithubUserDto
@@ -24,7 +24,7 @@ export class UserService {
     });
 
     if (!user) {
-      user = new User();
+      user = new UserProfileEntity();
       user.provider = profile.provider;
       user.providerId = profile.id;
       user.displayName = profile.displayName;
@@ -35,7 +35,7 @@ export class UserService {
     return user;
   }
 
-  findUser(findUserDto: FindUserRequest) {
+  findUserProfile(findUserDto: FindUserProfileRequest) {
     return this.userRepository.findOne(findUserDto.userId);
   }
 }

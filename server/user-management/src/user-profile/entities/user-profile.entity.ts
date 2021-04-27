@@ -1,8 +1,8 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({name: "user_profile"})
 @Index(["provider", "providerId"], { unique: true })
-export class User {
+export class UserProfileEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
