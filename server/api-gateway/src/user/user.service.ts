@@ -14,4 +14,11 @@ export class UserService {
       { profile }
     );
   }
+
+  findUser(userId: string) {
+    return this.userMicroserviceClient.send<Profile>(
+      { cmd: "findUser" },
+      { userId }
+    );
+  }
 }

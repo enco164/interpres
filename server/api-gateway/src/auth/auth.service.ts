@@ -12,8 +12,8 @@ export class AuthService {
     return this.userService.findOrCreateGithubUser(profile);
   }
 
-  getUserProfile(user) {
+  getUserProfile(user: { userId: string }) {
     this.logger.log(`getUserProfile ${JSON.stringify(user)}`);
-    return user;
+    return this.userService.findUser(user.userId);
   }
 }

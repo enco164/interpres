@@ -14,8 +14,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_USER: user
-      POSTGRES_DB: translation
+      POSTGRES_USER: postgres
 
   reverse-proxy:
     container_name: reverse-proxy
