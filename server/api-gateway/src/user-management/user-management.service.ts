@@ -5,7 +5,8 @@ import { Profile } from "passport-github2";
 @Injectable()
 export class UserManagementService {
   constructor(
-    @Inject("USER_SERVICE") private userMicroserviceClient: ClientProxy
+    @Inject("USER_MANAGEMENT_SERVICE")
+    private userMicroserviceClient: ClientProxy
   ) {}
 
   findOrCreateGithubUser(profile: Profile) {

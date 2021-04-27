@@ -6,7 +6,7 @@ import { UserManagementService } from "./user-management.service";
   imports: [
     ClientsModule.register([
       {
-        name: "USER_SERVICE",
+        name: "USER_MANAGEMENT_SERVICE",
         transport: Transport.TCP,
         options: { port: 8085 },
       },
