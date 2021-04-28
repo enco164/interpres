@@ -4,7 +4,7 @@ import { Translation } from "../domain/translation";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 
-const BASE_URL = "/api/translation-service/projects";
+const BASE_URL = "/api/projects";
 
 class ProjectsApiClient extends BaseApiClient {
   async getProjects() {
