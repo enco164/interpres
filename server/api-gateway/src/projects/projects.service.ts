@@ -11,7 +11,7 @@ export class ProjectsService {
 
   getProjects() {
     return this.coreMicroserviceClient.send<ProjectDto[]>(
-      { cmd: "core/getProjects" },
+      { cmd: "projects/getProjects" },
       {}
     );
   }

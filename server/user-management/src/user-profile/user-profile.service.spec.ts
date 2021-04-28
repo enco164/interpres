@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { UserProfileService } from "./user-profile.service";
-import { repositoryMockFactory } from "../../../translations/src/util/testing";
+import { repositoryMockFactory } from "../../../core/src/util/testing";
 import { UserProfileRepository } from "./user-profile.repository";
 
 describe("UserProfileService", () => {
