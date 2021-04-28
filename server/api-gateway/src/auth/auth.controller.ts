@@ -16,7 +16,9 @@ export class AuthController {
   @UseGuards(GithubAuthGuard)
   @Get("github/callback")
   async loginCallback(@Res() res, @Request() req) {
-    return res.redirect(`/auth/success?accessToken=${req.user.accessToken}`);
+    return res.redirect(
+      `/api/auth/success?accessToken=${req.user.accessToken}`
+    );
   }
 
   @UseGuards(JwtAuthGuard)
