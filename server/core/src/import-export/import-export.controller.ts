@@ -1,5 +1,4 @@
-import { Body, Controller, Logger, Post } from "@nestjs/common";
-import { ExportTranslationsDto } from "./dto/export-translations.dto";
+import { Body, Controller, Logger } from "@nestjs/common";
 import { ImportTranslationsDto } from "./dto/import-translations.dto";
 import { ImportExportService } from "./import-export.service";
 import { MessagePattern } from "@nestjs/microservices";
@@ -24,10 +23,5 @@ export class ImportExportController {
       body,
     });
     return this.importExportService.prepareExportPayload(body.translations);
-  }
-
-  @Post("export")
-  exportTranslations(@Body() exportTranslationsDto: ExportTranslationsDto) {
-    return this.importExportService.exportTranslations(exportTranslationsDto);
   }
 }

@@ -1,16 +1,5 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Logger,
-  Param,
-  Post,
-  Put,
-} from "@nestjs/common";
+import { Body, Controller, Logger } from "@nestjs/common";
 import { Operation } from "fast-json-patch";
-import { CreateTranslationDto } from "./dto/create-translation.dto";
-import { UpdateTranslationDto } from "./dto/update-translation.dto";
 import { TranslationsService } from "./translations.service";
 import { MessagePattern } from "@nestjs/microservices";
 import { GetTranslationsRequest } from "./dto/get-translations.request";
@@ -43,33 +32,5 @@ export class TranslationsController {
   @MessagePattern({ cmd: "translations/patchTranslation" })
   patch(@Body() body: { patches: Operation[]; id: string }) {
     return this.translationsService.patch(body.id, body.patches);
-  }
-
-  @Post()
-  create(@Body() createTranslationDto: CreateTranslationDto) {
-    return this.translationsService.create(createTranslationDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.translationsService.findAll();
-  }
-
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.translationsService.findOne(+id);
-  }
-
-  @Put(":id")
-  update(
-    @Param("id") id: string,
-    @Body() updateTranslationDto: UpdateTranslationDto
-  ) {
-    return this.translationsService.update(+id, updateTranslationDto);
-  }
-
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.translationsService.remove(+id);
   }
 }

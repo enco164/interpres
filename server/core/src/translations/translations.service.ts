@@ -4,7 +4,6 @@ import { Operation } from "fast-json-patch";
 import { from } from "rxjs";
 import { ProjectRepository } from "../projects/project.repository";
 import { CreateTranslationDto } from "./dto/create-translation.dto";
-import { UpdateTranslationDto } from "./dto/update-translation.dto";
 import { TranslationEntity } from "./entities/translation.entity";
 import { TranslationRepository } from "./translation.repository";
 
@@ -33,10 +32,6 @@ export class TranslationsService {
     return this.translationRepository.find();
   }
 
-  findOne(id: number) {
-    return this.translationRepository.findOne(id);
-  }
-
   findByProjectId(projectId: string) {
     return from(
       this.translationRepository.find({
@@ -45,20 +40,6 @@ export class TranslationsService {
         },
       })
     );
-  }
-
-  async update(id: number, updateTranslationDto: UpdateTranslationDto) {
-    const { projectId, ...translationAttributes } = updateTranslationDto;
-    const translation = await this.translationRepository.findOne(id);
-
-    // TODO: check how repository.merge works
-    Object.assign(translation, translationAttributes);
-
-    return this.translationRepository.save(translation);
-  }
-
-  remove(id: number) {
-    return this.translationRepository.delete(id);
   }
 
   async patch(id: string, patches: Operation[]) {

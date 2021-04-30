@@ -1,54 +1,17 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { ClientProxy } from "@nestjs/microservices";
+import { Injectable } from "@nestjs/common";
 import { merge } from "lodash/fp";
 import { forkJoin } from "rxjs";
-import { concatMap, map } from "rxjs/operators";
 import { ImportFileDto } from "../projects/dto/import-file.dto";
-import { ProjectsService } from "../projects/projects.service";
 import { TranslationDTO } from "../translations/dto/translation.dto";
 import { TranslationsService } from "../translations/translations.service";
-import { ExportTranslationsDto } from "./dto/export-translations.dto";
 import { ImportTranslationsDto } from "./dto/import-translations.dto";
 
 @Injectable()
 export class ImportExportService {
-  constructor(
-    private readonly projectsService: ProjectsService,
-    private readonly translationsService: TranslationsService,
-    @Inject("INTEGRATION_SERVICE") private integrationServiceClient: ClientProxy
-  ) {}
+  constructor(private readonly translationsService: TranslationsService) {}
 
   importTranslations({ parsedTranslations, projectId }: ImportTranslationsDto) {
     return this.importParsedTranslations(parsedTranslations, projectId);
-  }
-
-  exportTranslations({ projectId, title, description }: ExportTranslationsDto) {
-    return forkJoin([
-      this.projectsService.findOne(projectId),
-      this.translationsService
-        .findByProjectId(projectId)
-        .pipe(
-          map((translations) =>
-            this.prepareExportPayload(
-              translations.map((t) => TranslationDTO.from(t))
-            )
-          )
-        ),
-    ]).pipe(
-      concatMap(([project, payload]) =>
-        this.integrationServiceClient.send(
-          { cmd: "export" },
-          {
-            owner: project.githubOwner,
-            repo: project.githubRepo,
-            title,
-            description,
-            translationsLoadPath: project.lngLoadPath,
-            payload,
-          }
-        )
-      )
-    );
   }
 
   buildJsonTreeFromTranslations(translations: TranslationDTO[]) {
