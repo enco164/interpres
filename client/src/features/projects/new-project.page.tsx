@@ -26,16 +26,51 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
 
   return (
     <Container maxWidth="sm">
-      <Formik initialValues={{ name: "" }} onSubmit={onSubmit}>
+      <Formik
+        initialValues={{
+          name: "",
+          githubOwner: "",
+          githubRepo: "",
+          lngLoadPath: "",
+        }}
+        onSubmit={onSubmit}
+      >
         {(formik) => (
           <Form>
             <Grid container>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <TextField
                   id="name"
                   name="name"
                   label={t("project_name_input_label")}
                   value={formik.values.name}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="githubOwner"
+                  name="githubOwner"
+                  label={t("project_githubOwner_input_label")}
+                  value={formik.values.githubOwner}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid xs={6}>
+                <TextField
+                  id="githubRepo"
+                  name="githubRepo"
+                  label={t("project_githubRepo_input_label")}
+                  value={formik.values.githubRepo}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid xs={12}>
+                <TextField
+                  id="lngLoadPath"
+                  name="lngLoadPath"
+                  label={t("project_lngLoadPath_input_label")}
+                  value={formik.values.lngLoadPath}
                   onChange={formik.handleChange}
                 />
               </Grid>

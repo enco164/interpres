@@ -15,7 +15,7 @@ import { Project } from "../../domain/project";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
 import { RootState, useAppDispatch } from "../../state/store";
 import {
-  fetchProjects,
+  fetchProjectById,
   selectProjectById,
   updateProject,
 } from "./projects.slice";
@@ -39,12 +39,12 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
   );
 
   useEffect(() => {
-    const promise = dispatch(fetchProjects());
+    const promise = dispatch(fetchProjectById({ id: projectId }));
 
     return () => {
       promise.abort();
     };
-  }, [dispatch]);
+  }, [dispatch, projectId]);
 
   const handleSubmit = useCallback(
     (values: Project) => {

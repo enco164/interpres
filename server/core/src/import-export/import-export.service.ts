@@ -1,14 +1,14 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { merge } from "lodash/fp";
-import { forkJoin, from } from "rxjs";
-import { concatMap, map, throwIfEmpty } from "rxjs/operators";
+import { forkJoin } from "rxjs";
+import { concatMap, map } from "rxjs/operators";
 import { ImportFileDto } from "../projects/dto/import-file.dto";
 import { ProjectsService } from "../projects/projects.service";
 import { TranslationDTO } from "../translations/dto/translation.dto";
-import { TranslationEntity } from "../translations/entities/translation.entity";
 import { TranslationsService } from "../translations/translations.service";
 import { ExportTranslationsDto } from "./dto/export-translations.dto";
+import { ImportTranslationsDto } from "./dto/import-translations.dto";
 
 @Injectable()
 export class ImportExportService {
@@ -18,32 +18,8 @@ export class ImportExportService {
     @Inject("INTEGRATION_SERVICE") private integrationServiceClient: ClientProxy
   ) {}
 
-  importTranslations(projectId: string) {
-    return this.projectsService.findOne(projectId).pipe(
-      throwIfEmpty(
-        () => new NotFoundException(`Project with id ${projectId} not found`)
-      ),
-      concatMap((project) =>
-        forkJoin([
-          this.integrationServiceClient.send(
-            { cmd: "import" },
-            {
-              owner: project.githubOwner,
-              repo: project.githubRepo,
-              translationsLoadPath: project.lngLoadPath,
-            }
-          ),
-          from(project.translations).pipe(
-            concatMap((projectTranslations) =>
-              this.translationsService.removeTranslations(projectTranslations)
-            )
-          ),
-        ])
-      ),
-      concatMap(([dataFromGithub]) =>
-        this.importGithubData(dataFromGithub, projectId)
-      )
-    );
+  importTranslations({ parsedTranslations, projectId }: ImportTranslationsDto) {
+    return this.importParsedTranslations(parsedTranslations, projectId);
   }
 
   exportTranslations({ projectId, title, description }: ExportTranslationsDto) {
@@ -51,7 +27,13 @@ export class ImportExportService {
       this.projectsService.findOne(projectId),
       this.translationsService
         .findByProjectId(projectId)
-        .pipe(map((translations) => this.prepareExportPayload(translations))),
+        .pipe(
+          map((translations) =>
+            this.prepareExportPayload(
+              translations.map((t) => TranslationDTO.from(t))
+            )
+          )
+        ),
     ]).pipe(
       concatMap(([project, payload]) =>
         this.integrationServiceClient.send(
@@ -69,7 +51,7 @@ export class ImportExportService {
     );
   }
 
-  buildJsonTreeFromTranslations(translations: TranslationEntity[]) {
+  buildJsonTreeFromTranslations(translations: TranslationDTO[]) {
     return translations
       .map((translation) => this.translationToJsonTree(translation))
       .reduce(merge, {});
@@ -99,7 +81,7 @@ export class ImportExportService {
     );
   }
 
-  private prepareExportPayload(projectTranslations: TranslationEntity[]) {
+  public prepareExportPayload(projectTranslations: TranslationDTO[]) {
     const grouped = this.groupTranslationsByLangAndNamespace(
       projectTranslations
     );
@@ -118,7 +100,7 @@ export class ImportExportService {
   }
 
   private groupTranslationsByLangAndNamespace(
-    projectTranslations: TranslationEntity[]
+    projectTranslations: TranslationDTO[]
   ) {
     return projectTranslations.reduce((acc, translation) => {
       if (!acc[translation.lang]) {
@@ -129,7 +111,7 @@ export class ImportExportService {
       }
       acc[translation.lang][translation.namespace].push(translation);
       return acc;
-    }, {} as Record<string, Record<string, TranslationEntity[]>>);
+    }, {} as Record<string, Record<string, TranslationDTO[]>>);
   }
 
   private getPlainKeyValues(
@@ -144,7 +126,7 @@ export class ImportExportService {
     );
   }
 
-  private translationToJsonTree(translation: TranslationEntity) {
+  private translationToJsonTree(translation: TranslationDTO) {
     const tree = {};
     const keySlices = translation.key.split(".");
     let treePointer = tree;
@@ -176,10 +158,10 @@ export class ImportExportService {
     );
   }
 
-  private importGithubData(dataFromGithub: any, projectId: string) {
+  private importParsedTranslations(parsedTranslations: any, projectId: string) {
     return forkJoin(
-      Object.keys(dataFromGithub).reduce((acc, lang) => {
-        const filesForLng = dataFromGithub[lang];
+      Object.keys(parsedTranslations).reduce((acc, lang) => {
+        const filesForLng = parsedTranslations[lang];
         return {
           ...acc,
           [lang]: this.importFilesToProject(projectId, lang, filesForLng),

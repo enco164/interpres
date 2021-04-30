@@ -31,6 +31,7 @@ export class ProjectDto implements Readonly<ProjectDto> {
   public static async fromEntity(entity: ProjectEntity) {
     const translations = await entity.translations;
     return this.from({
+      id: entity.id,
       name: entity.name,
       githubOwner: entity.githubOwner,
       githubRepo: entity.githubRepo,

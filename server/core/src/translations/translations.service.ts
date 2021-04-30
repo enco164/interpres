@@ -61,7 +61,7 @@ export class TranslationsService {
     return this.translationRepository.delete(id);
   }
 
-  async patch(id: number, patches: Operation[]) {
+  async patch(id: string, patches: Operation[]) {
     const translation = await this.translationRepository.findOne(id);
     if (!translation) {
       throw new NotFoundException(`Translation with id ${id} not found`);

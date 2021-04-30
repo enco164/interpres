@@ -19,9 +19,14 @@ export const fetchProjects = createAsyncThunk("projects/fetchProjects", () =>
   ProjectsApi.getProjects()
 );
 
+export const fetchProjectById = createAsyncThunk<Project, { id: string }>(
+  "projects/fetchProjectById",
+  (arg, { signal }) => ProjectsApi.getProjectById(arg, { signal })
+);
+
 export const createProject = createAsyncThunk<Project, CreateProjectDto>(
   "projects/createProject",
-  (arg, { signal }) => ProjectsApi.postProject(arg, { signal })
+  (arg, { signal }) => ProjectsApi.createProject(arg, { signal })
 );
 
 export const updateProject = createAsyncThunk<Project, UpdateProjectDto>(
@@ -46,6 +51,9 @@ export const projectsSlice = createSlice({
           id: action.meta.arg.id,
           changes: action.payload,
         });
+      })
+      .addCase(fetchProjectById.fulfilled, (state, action) => {
+        entityAdapter.upsertOne(state, action);
       });
   },
 });

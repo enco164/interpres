@@ -1,17 +1,9 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Logger,
-  Param,
-  Post,
-  Put,
-} from "@nestjs/common";
+import { Body, Controller, Logger, Param } from "@nestjs/common";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 import { ProjectsService } from "./projects.service";
 import { MessagePattern } from "@nestjs/microservices";
+import { tap } from "rxjs/operators";
 
 @Controller("projects")
 export class ProjectsController {
@@ -21,32 +13,30 @@ export class ProjectsController {
 
   @MessagePattern({ cmd: "projects/getProjects" })
   getProjects() {
+    this.logger.verbose({ cmd: "projects/getProjects" });
     return this.projectsService.findAll();
   }
 
-  @Post()
+  @MessagePattern({ cmd: "projects/createProject" })
   create(@Body() createProjectDto: CreateProjectDto) {
+    this.logger.verbose({
+      cmd: "projects/createProject",
+      data: createProjectDto,
+    });
     return this.projectsService.create(createProjectDto);
   }
 
-  @Get(":id")
+  @MessagePattern({ cmd: "projects/updateProject" })
+  update(@Body() body: { id: string; updateProjectDto: UpdateProjectDto }) {
+    this.logger.verbose({
+      cmd: "projects/updateProject",
+      data: body,
+    });
+    return this.projectsService.update(body.id, body.updateProjectDto);
+  }
+
+  @MessagePattern({ cmd: "projects/getProjectById" })
   findOne(@Param("id") id: string) {
-    return this.projectsService.findOne(id);
-  }
-
-  @Get(":id/translations")
-  findTranslations(@Param("id") id: string) {
-    return this.projectsService.findProjectTranslations(id);
-  }
-
-  @Put(":id")
-  update(@Param("id") id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    this.logger.log(`PUT /projects/${id} ${JSON.stringify(updateProjectDto)}`);
-    return this.projectsService.update(id, updateProjectDto);
-  }
-
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.projectsService.remove(id);
+    return this.projectsService.findOne(id).pipe(tap((a) => console.log(a)));
   }
 }

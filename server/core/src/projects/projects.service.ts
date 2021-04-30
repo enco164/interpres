@@ -5,7 +5,6 @@ import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 import { ProjectRepository } from "./project.repository";
 import { ProjectDto } from "./dto/project.dto";
-import { ProjectEntity } from "./entities/project.entity";
 
 @Injectable()
 export class ProjectsService {
@@ -23,39 +22,28 @@ export class ProjectsService {
   }
 
   create(createProjectDto: CreateProjectDto) {
-    return of(new ProjectEntity()).pipe(
-      map((p) => {
-        p.name = createProjectDto.name;
-        return p;
-      }),
+    const projectEntity = ProjectDto.from(createProjectDto).toEntity();
+    return of(projectEntity).pipe(
       concatMap((p) => this.projectRepository.save(p))
     );
   }
 
   findOne(id: string) {
-    return from(this.projectRepository.findOne(id));
+    return from(this.projectRepository.findOne(id)).pipe(
+      concatMap((project) => ProjectDto.fromEntity(project))
+    );
   }
 
   update(id: string, updateProjectDto: UpdateProjectDto) {
     return from(this.projectRepository.findOne(id)).pipe(
       throwIfEmpty(
-        () => new NotFoundException(`Project with id ${id} not found`)
+        () =>
+          new NotFoundException(
+            `Project with id ${updateProjectDto.id} not found`
+          )
       ),
       map((project) => this.projectRepository.merge(project, updateProjectDto)),
       concatMap((project) => this.projectRepository.save(project))
-    );
-  }
-
-  remove(id: string) {
-    return from(this.projectRepository.delete(id));
-  }
-
-  findProjectTranslations(projectId: string) {
-    return from(this.projectRepository.findOne(projectId)).pipe(
-      throwIfEmpty(
-        () => new NotFoundException(`Project with id ${projectId} not found`)
-      ),
-      concatMap((project) => project.translations)
     );
   }
 }

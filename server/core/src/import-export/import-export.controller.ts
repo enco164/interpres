@@ -2,21 +2,28 @@ import { Body, Controller, Logger, Post } from "@nestjs/common";
 import { ExportTranslationsDto } from "./dto/export-translations.dto";
 import { ImportTranslationsDto } from "./dto/import-translations.dto";
 import { ImportExportService } from "./import-export.service";
-
-const logger = new Logger("ImportExportController");
+import { MessagePattern } from "@nestjs/microservices";
+import { PrepareTranslationsRequest } from "./dto/prepare-translations.request";
 
 @Controller("import-export")
 export class ImportExportController {
+  private readonly logger = new Logger(ImportExportController.name);
+
   constructor(private readonly importExportService: ImportExportService) {}
 
-  @Post("import")
-  importGithubToProject(@Body() importTranslationsDto: ImportTranslationsDto) {
-    logger.log(
-      `POST /import-export/import, ${JSON.stringify(importTranslationsDto)}`
-    );
-    return this.importExportService.importTranslations(
-      importTranslationsDto.projectId
-    );
+  @MessagePattern({ cmd: "import-export/importTranslations" })
+  importTranslations(@Body() body: ImportTranslationsDto) {
+    this.logger.verbose({ cmd: "import-export/importTranslations", body });
+    return this.importExportService.importTranslations(body);
+  }
+
+  @MessagePattern({ cmd: "import-export/prepareTranslationForExport" })
+  prepareTranslationForExport(@Body() body: PrepareTranslationsRequest) {
+    this.logger.verbose({
+      cmd: "import-export/prepareTranslationForExport",
+      body,
+    });
+    return this.importExportService.prepareExportPayload(body.translations);
   }
 
   @Post("export")

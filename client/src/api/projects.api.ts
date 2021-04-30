@@ -1,6 +1,5 @@
 import { BaseApiClient, JSONApiResponse } from "../core/api";
 import { Project } from "../domain/project";
-import { Translation } from "../domain/translation";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 
@@ -12,14 +11,12 @@ class ProjectsApiClient extends BaseApiClient {
     return new JSONApiResponse<Project[]>(response).value();
   }
 
-  async getTranslationsByProjectId(projectId: number) {
-    const response = await this.fetchApi(
-      `${BASE_URL}/${projectId}/translations`
-    );
-    return new JSONApiResponse<Translation[]>(response).value();
+  async getProjectById(arg: { id: string }, init?: RequestInit) {
+    const response = await this.fetchApi(`${BASE_URL}/${arg.id}`, { ...init });
+    return new JSONApiResponse<Project>(response).value();
   }
 
-  async postProject(arg: CreateProjectDto, init?: RequestInit) {
+  async createProject(arg: CreateProjectDto, init?: RequestInit) {
     const response = await this.fetchApi(BASE_URL, {
       ...init,
       method: "POST",

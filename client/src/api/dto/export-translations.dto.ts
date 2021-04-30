@@ -1,5 +1,5 @@
 export interface ExportTranslationsDto {
-  projectId: number;
+  projectId: string;
   title: string;
   description: string;
 }

@@ -47,9 +47,7 @@ export const TranslationsPage: React.FC = () => {
   );
 
   useEffect(() => {
-    const promise = dispatch(
-      fetchTranslationsByProjectId({ projectId: +projectId })
-    );
+    const promise = dispatch(fetchTranslationsByProjectId({ projectId }));
 
     return () => {
       promise.abort();
