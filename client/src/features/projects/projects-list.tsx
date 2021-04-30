@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProjects, selectAllProjects } from "./projects.slice";
 import { useAppDispatch } from "../../state/store";
+import { LoginButton } from "../auth/login-button";
+import { useAuth } from "../auth/use-auth";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,6 +26,7 @@ export const ProjectsList: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const projects = useSelector(selectAllProjects);
+  const { authenticated } = useAuth();
 
   useEffect(() => {
     const fetchPromise = dispatch(fetchProjects());
@@ -33,9 +36,10 @@ export const ProjectsList: React.FC = () => {
   }, [dispatch]);
 
   const classes = useStyles();
-  console.log(projects);
+
   return (
     <Container className={classes.container}>
+      {!authenticated && <LoginButton />}
       <Typography variant="subtitle1">{t("recent_projects_header")}</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} lg={3}>

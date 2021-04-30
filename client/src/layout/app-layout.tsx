@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { LogoutButton } from "../features/auth/logout-button";
 
 const drawerWidth = 240;
 
@@ -133,6 +134,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           >
             Interpres
           </Typography>
+          <LogoutButton />
         </Toolbar>
       </AppBar>
       <Drawer

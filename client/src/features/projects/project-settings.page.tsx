@@ -118,6 +118,9 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
                     }
                     defaultValue={[]}
                     filterSelectedOptions
+                    getOptionSelected={(option, value) =>
+                      option.code === value.code
+                    }
                     onChange={(event, value) => {
                       formik.setFieldValue(
                         "languages",

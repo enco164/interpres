@@ -6,16 +6,19 @@ import { theme } from "./config/theme";
 import { store } from "./state/store";
 import { Suspense } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { AuthProvider } from "./features/auth/use-auth";
 
 export const AppProviders: React.FC = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Suspense fallback="loading">
-        <ReduxProvider store={store}>
-          <CssBaseline />
-          <Router>{children}</Router>
-        </ReduxProvider>
-      </Suspense>
-    </ThemeProvider>
+    <ReduxProvider store={store}>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <Suspense fallback="loading">
+            <CssBaseline />
+            <Router>{children}</Router>
+          </Suspense>
+        </ThemeProvider>
+      </AuthProvider>
+    </ReduxProvider>
   );
 };
