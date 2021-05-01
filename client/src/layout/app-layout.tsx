@@ -16,6 +16,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { UserProfileDropdown } from "../features/auth/user-profile-dropdown";
 import { useAppLayout } from "./use-app-layout";
 import MenuIcon from "@material-ui/icons/Menu";
+import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -107,6 +108,7 @@ interface AppLayoutProps {}
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
+  const { pathname } = useLocation();
   const theme = useTheme();
   const isLg = useMediaQuery(theme.breakpoints.up("lg"));
   const isInnerOpen = isLg ? true : open;
@@ -122,6 +124,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     }
   }, [menuItems]);
 
+  React.useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   const classes = useStyles({ open: isInnerOpen });
   return (
     <div className={classes.root}>
@@ -133,7 +139,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               aria-label="open drawer"
               onClick={handleToggleDrawerOpen}
               edge="start"
-              className={[classes.menuButton].join(" ")}
+              className={classes.menuButton}
             >
               <MenuIcon />
             </IconButton>
