@@ -22,6 +22,14 @@ describe("ImportExportService", () => {
           provide: "INTEGRATION_SERVICE",
           useFactory: () => ClientProxyFactory.create({}),
         },
+        {
+          provide: "IMPORT_EXPORT_SERVICE",
+          useFactory: () => ClientProxyFactory.create({}),
+        },
+        {
+          provide: "CORE_SERVICE",
+          useFactory: () => ClientProxyFactory.create({}),
+        },
       ],
     }).compile();
 
