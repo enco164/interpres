@@ -14,7 +14,7 @@ import {
   selectIsExportingTranslations,
 } from "./import-export.slice";
 
-export const useImportExportPage = (projectId: number) => {
+export const useImportExportPage = (projectId: string) => {
   const dispatch = useAppDispatch();
   const importExportSliceState = useSelector(selectImportExportSlice);
   const isImportingTranslations = useSelector(selectIsImportingTranslations);
@@ -38,9 +38,7 @@ export const useImportExportPage = (projectId: number) => {
 
   const handleImportTranslations = useCallback(async () => {
     try {
-      unwrapResult(
-        await dispatch(importTranslations({ projectId: +projectId }))
-      );
+      unwrapResult(await dispatch(importTranslations({ projectId })));
     } catch (e) {
       console.log(e);
     }

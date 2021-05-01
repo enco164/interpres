@@ -1,3 +1,3 @@
 export interface ImportFromGithubDto {
-  projectId: number;
+  projectId: string;
 }

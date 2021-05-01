@@ -33,6 +33,7 @@ export const ProjectsList: React.FC = () => {
   }, [dispatch]);
 
   const classes = useStyles();
+
   return (
     <Container className={classes.container}>
       <Typography variant="subtitle1">{t("recent_projects_header")}</Typography>

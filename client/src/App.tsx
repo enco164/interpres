@@ -5,6 +5,9 @@ import "./App.css";
 import { NewProjectPage } from "./features/projects/new-project.page";
 import { ProjectPage } from "./features/projects/project.page";
 import { ProjectsList } from "./features/projects/projects-list";
+import { AuthSuccessPage } from "./features/auth/auth-success.page";
+import { PrivateRoute } from "./features/auth/private-route";
+import { LoginPage } from "./features/auth/login.page";
 
 function App() {
   return (
@@ -13,12 +16,18 @@ function App() {
         <Route path="/" exact>
           <ProjectsList />
         </Route>
-        <Route path="/project/new" exact>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/auth/success">
+          <AuthSuccessPage />
+        </Route>
+        <PrivateRoute path="/project/new" exact>
           <NewProjectPage />
-        </Route>
-        <Route path="/project/:projectId">
+        </PrivateRoute>
+        <PrivateRoute path="/project/:projectId">
           <ProjectPage />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </AppProviders>
   );

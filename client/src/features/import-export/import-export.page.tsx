@@ -23,7 +23,7 @@ export const ImportExportPage: React.FC<ImportExportPageProps> = () => {
     closeExportConfirm,
     handleImportTranslations,
     handleExportTranslations,
-  } = useImportExportPage(+projectId);
+  } = useImportExportPage(projectId);
 
   if (isImportingTranslations) {
     return <Typography>Importing translations to project...</Typography>;

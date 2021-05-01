@@ -8,9 +8,15 @@ import {
   makeStyles,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import React from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { UserProfileDropdown } from "../features/auth/user-profile-dropdown";
+import { useAppLayout } from "./use-app-layout";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -41,14 +47,6 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
@@ -101,29 +99,51 @@ const useStyles = makeStyles((theme) => ({
   listItems: {
     flex: "1 1 auto",
   },
+  hide: {
+    display: "none",
+  },
 }));
 
-interface AppLayoutProps {
-  listItems: any;
-}
+interface AppLayoutProps {}
 
-export const AppLayout: React.FC<AppLayoutProps> = ({
-  children,
-  listItems,
-}) => {
+export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
+  const { pathname } = useLocation();
+  const theme = useTheme();
+  const isLg = useMediaQuery(theme.breakpoints.up("lg"));
+  const isInnerOpen = isLg ? true : open;
+
   const handleToggleDrawerOpen = () => {
     setOpen((o) => !o);
   };
+  const { menuItems } = useAppLayout();
 
-  const classes = useStyles({ open });
+  React.useEffect(() => {
+    if (!menuItems) {
+      setOpen(false);
+    }
+  }, [menuItems]);
+
+  React.useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const classes = useStyles({ open: isInnerOpen });
   return (
     <div className={classes.root}>
-      <AppBar
-        position="absolute"
-        className={`${classes.appBar} ${open && classes.appBarShift}`}
-      >
+      <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
+          {!isLg && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleToggleDrawerOpen}
+              edge="start"
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography
             component="h1"
             variant="h6"
@@ -133,23 +153,36 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           >
             Interpres
           </Typography>
+          <UserProfileDropdown />
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: `${classes.drawerPaper} ${!open && classes.drawerPaperClose}`,
-        }}
-        open={open}
-      >
-        <div className={classes.listItems}>{listItems}</div>
-        <Divider />
-        <div className={classes.toolbarIcon} onClick={handleToggleDrawerOpen}>
-          <IconButton className={classes.toolbarIconButton}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-      </Drawer>
+      {menuItems && (
+        <Drawer
+          variant={isLg ? "permanent" : "temporary"}
+          classes={{
+            paper: `${classes.drawerPaper} ${
+              !isInnerOpen && classes.drawerPaperClose
+            }`,
+          }}
+          open={isInnerOpen}
+          onClose={handleToggleDrawerOpen}
+        >
+          <div className={classes.listItems}>{menuItems}</div>
+          {!isLg && (
+            <>
+              <Divider />
+              <div
+                className={classes.toolbarIcon}
+                onClick={handleToggleDrawerOpen}
+              >
+                <IconButton className={classes.toolbarIconButton}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </div>
+            </>
+          )}
+        </Drawer>
+      )}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

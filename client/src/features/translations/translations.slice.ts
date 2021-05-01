@@ -6,7 +6,6 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import * as jsonpatch from "fast-json-patch";
-import { ProjectsApi } from "../../api/projects.api";
 import { TranslationsApi } from "../../api/translations.api";
 import { Translation } from "../../domain/translation";
 import { TranslationKeyTree } from "../../domain/translation-key-tree";
@@ -24,14 +23,13 @@ const initialState = entityAdapter.getInitialState({
 
 export const fetchTranslationsByProjectId = createAsyncThunk(
   "translations/fetchTranslationsByProjectId",
-  (arg: { projectId: number }) =>
-    ProjectsApi.getTranslationsByProjectId(arg.projectId)
+  (arg: { projectId: string }) => TranslationsApi.getByProjectId(arg.projectId)
 );
 
 const deepCopy = <T>(arg: T): T => JSON.parse(JSON.stringify(arg));
 
 export const patchTranslationValueById = createAsyncThunk<
-  void,
+  Translation,
   { translationId: number; value: string },
   { state: RootState }
 >("translations/patchTranslationValueById", async (arg, thunkAPI) => {
@@ -39,8 +37,10 @@ export const patchTranslationValueById = createAsyncThunk<
   if (!entity) {
     throw new Error(`Translation with id ${arg.translationId} not found`);
   }
-  let applied = { ...entity, value: arg.value };
-  let patches = jsonpatch.compare(deepCopy(entity), applied);
+
+  const applied = { ...entity, value: arg.value };
+  const patches = jsonpatch.compare(deepCopy(entity), applied);
+
   return TranslationsApi.patchTranslation(
     { translationId: arg.translationId, patches },
     thunkAPI.signal
@@ -60,9 +60,16 @@ export const translationsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchTranslationsByProjectId.fulfilled, (state, action) => {
-      entityAdapter.setAll(state, action);
-    });
+    builder
+      .addCase(fetchTranslationsByProjectId.fulfilled, (state, action) => {
+        entityAdapter.setAll(state, action);
+      })
+      .addCase(patchTranslationValueById.fulfilled, (state, action) => {
+        entityAdapter.updateOne(state, {
+          id: action.meta.arg.translationId,
+          changes: action.payload,
+        });
+      });
   },
 });
 

@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Query } from "@nestjs/common";
+import { Controller, Logger } from "@nestjs/common";
 import { MessagePattern } from "@nestjs/microservices";
 import { AppService } from "./app.service";
 import { ExportTranslationsToRepo } from "./git-hub/dto/export-translations-to-repo";
@@ -13,23 +13,6 @@ export class AppController {
     private readonly appService: AppService,
     private readonly githubService: GitHubService
   ) {}
-
-  @Get("/import")
-  importTranslationsFromRepo(
-    @Query("owner") owner: string,
-    @Query("repo") repo: string,
-    @Query("translations-load-path") translationsLoadPath: string
-  ) {
-    logger.log(
-      `GET /import?owner=${owner}&repo=${repo}&translations-load-path=${translationsLoadPath}`
-    );
-
-    return this.githubService.importTranslationsFromRepo({
-      owner,
-      repo,
-      translationsLoadPath,
-    });
-  }
 
   @MessagePattern({ cmd: "import" })
   importFromRepo(data: ImportTranslationsFromRepoParam) {

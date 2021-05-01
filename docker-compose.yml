@@ -9,6 +9,7 @@ services:
     image: postgres
     volumes:
       - postgres_interpres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
     ports:
       - "5432:5432"
@@ -25,22 +26,22 @@ services:
     ports:
       - 3626:3626
 
-  translations-service:
-    container_name: translations-service
+  core-service:
+    container_name: core-service
     build:
-      context: ./server/translations
+      context: server/core
       dockerfile: ./Dockerfile
     image: enco164/interpres/translations-service
     ports:
-      - 8091:8091
+      - ${CORE_SERVICE_PORT}:${CORE_SERVICE_PORT}
     depends_on:
       - db
     environment:
-      TRANSLATIONS_DB_HOST: db
-      TRANSLATIONS_DB_PORT: 5432
-      TRANSLATIONS_DB_USERNAME: user
-      TRANSLATIONS_DB_PASSWORD: password
-      TRANSLATIONS_DB_DATABASE: translation
+      CORE_SERVICE_DB_HOST: ${CORE_SERVICE_DB_HOST}
+      CORE_SERVICE_DB_PORT: ${CORE_SERVICE_DB_PORT}
+      CORE_SERVICE_DB_USERNAME: ${CORE_SERVICE_DB_USERNAME}
+      CORE_SERVICE_DB_PASSWORD: ${CORE_SERVICE_DB_PASSWORD}
+      CORE_SERVICE_DB_DATABASE: ${CORE_SERVICE_DB_DATABASE}
 
   client:
     container_name: client

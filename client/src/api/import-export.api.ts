@@ -2,7 +2,7 @@ import { BaseApiClient, JSONApiResponse, VoidApiResponse } from "../core/api";
 import { ExportTranslationsDto } from "./dto/export-translations.dto";
 import { ImportFromGithubDto } from "./dto/import-from-github.dto";
 
-const BASE_URL = "/api/translation-service/import-export";
+const BASE_URL = "/api/import-export";
 
 class ImportExportApiClient extends BaseApiClient {
   async exportTranslations(param: ExportTranslationsDto, init?: RequestInit) {
