@@ -11,7 +11,8 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { LogoutButton } from "../features/auth/logout-button";
+import { UserProfileDropdown } from "../features/auth/user-profile-dropdown";
+import { useAppLayout } from "./use-app-layout";
 
 const drawerWidth = 240;
 
@@ -104,18 +105,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface AppLayoutProps {
-  listItems: any;
-}
+interface AppLayoutProps {}
 
-export const AppLayout: React.FC<AppLayoutProps> = ({
-  children,
-  listItems,
-}) => {
+export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const handleToggleDrawerOpen = () => {
     setOpen((o) => !o);
   };
+  const { menuItems } = useAppLayout();
+
+  React.useEffect(() => {
+    if (!menuItems) {
+      setOpen(false);
+    }
+  }, [menuItems]);
 
   const classes = useStyles({ open });
   return (
@@ -134,24 +137,28 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           >
             Interpres
           </Typography>
-          <LogoutButton />
+          <UserProfileDropdown />
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: `${classes.drawerPaper} ${!open && classes.drawerPaperClose}`,
-        }}
-        open={open}
-      >
-        <div className={classes.listItems}>{listItems}</div>
-        <Divider />
-        <div className={classes.toolbarIcon} onClick={handleToggleDrawerOpen}>
-          <IconButton className={classes.toolbarIconButton}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-      </Drawer>
+      {menuItems && (
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: `${classes.drawerPaper} ${
+              !open && classes.drawerPaperClose
+            }`,
+          }}
+          open={open}
+        >
+          <div className={classes.listItems}>{menuItems}</div>
+          <Divider />
+          <div className={classes.toolbarIcon} onClick={handleToggleDrawerOpen}>
+            <IconButton className={classes.toolbarIconButton}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+        </Drawer>
+      )}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

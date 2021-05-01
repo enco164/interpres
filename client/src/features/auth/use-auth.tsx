@@ -14,6 +14,7 @@ import {
 } from "./auth.slice";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../state/store";
+import { UserProfile } from "./user-profile";
 
 const authContext = createContext<AuthProviderValue>({
   authenticated: false,
@@ -28,7 +29,7 @@ interface AuthProviderValue {
   authenticated: boolean;
   login: (token: string) => void;
   logout: () => void;
-  user: any | null;
+  user: UserProfile | null;
 }
 
 const useAuthProvider = (): AuthProviderValue => {

@@ -7,6 +7,8 @@ import { store } from "./state/store";
 import { Suspense } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { AuthProvider } from "./features/auth/use-auth";
+import { AppLayoutProvider } from "./layout/use-app-layout";
+import { AppLayout } from "./layout/app-layout";
 
 export const AppProviders: React.FC = ({ children }) => {
   return (
@@ -15,7 +17,11 @@ export const AppProviders: React.FC = ({ children }) => {
         <ThemeProvider theme={theme}>
           <Suspense fallback="loading">
             <CssBaseline />
-            <Router>{children}</Router>
+            <AppLayoutProvider>
+              <Router>
+                <AppLayout>{children}</AppLayout>
+              </Router>
+            </AppLayoutProvider>
           </Suspense>
         </ThemeProvider>
       </AuthProvider>

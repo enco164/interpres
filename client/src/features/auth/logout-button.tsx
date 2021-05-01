@@ -11,13 +11,12 @@ export const LogoutButton: React.FC<LogoutButtonProps> = () => {
   return (
     <Button
       variant="outlined"
-      color="secondary"
       onClick={() => {
         logout();
         history.push("/");
       }}
     >
-      Logout
+      Sign out
     </Button>
   );
 };
