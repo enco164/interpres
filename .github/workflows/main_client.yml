@@ -2,10 +2,10 @@ name: Build & Publish Client docker image
 
 on:
   push:
-#    branches:
-#      - main
-#    paths:
-#      - 'client/**'
+    branches:
+      - main
+    paths:
+      - 'client/**'
 
 jobs:
   build-docker-and-publish:
