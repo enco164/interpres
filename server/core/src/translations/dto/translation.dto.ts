@@ -2,7 +2,7 @@ import { TranslationEntity } from "../entities/translation.entity";
 
 export class TranslationDTO implements Readonly<TranslationDTO> {
   id: string;
-  projectId: number;
+  projectId: string;
   lang: string;
   namespace: string;
   key: string;

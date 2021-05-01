@@ -6,7 +6,7 @@ import { ProjectEntity } from "../../projects/entities/project.entity";
 @Index(["projectId", "key", "lang", "namespace"], { unique: true })
 export class TranslationEntity extends BaseEntity {
   @Column()
-  projectId: number;
+  projectId: string;
 
   @Column()
   lang: string;

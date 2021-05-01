@@ -1,12 +1,11 @@
 import { ClientProxyFactory } from "@nestjs/microservices";
 import { Test, TestingModule } from "@nestjs/testing";
-import { Project } from "../projects/entities/project.entity";
 import { ProjectRepository } from "../projects/project.repository";
 import { ProjectsService } from "../projects/projects.service";
-import { TranslationEntity } from "../translations/entities/translation.entity";
 import { TranslationRepository } from "../translations/translation.repository";
 import { TranslationsService } from "../translations/translations.service";
 import { ImportExportService } from "./import-export.service";
+import { TranslationDTO } from "../translations/dto/translation.dto";
 
 describe("ImportExportService", () => {
   let service: ImportExportService;
@@ -52,35 +51,31 @@ describe("ImportExportService", () => {
   });
 
   it("should build JSON tree from translations", () => {
-    const project = new Project();
-    const translations: TranslationEntity[] = [
-      {
-        id: 1,
+    const translations: TranslationDTO[] = [
+      TranslationDTO.from({
+        id: "1",
         key: "key",
         value: "value",
         lang: "en",
-        projectId: 1,
-        project: Promise.resolve(project),
+        projectId: "1",
         namespace: "ns1",
-      },
-      {
-        id: 2,
+      }),
+      TranslationDTO.from({
+        id: "2",
         key: "key1.key2",
         value: "value2",
         lang: "en",
-        projectId: 1,
-        project: Promise.resolve(project),
+        projectId: "1",
         namespace: "ns1",
-      },
-      {
-        id: 3,
+      }),
+      TranslationDTO.from({
+        id: "3",
         key: "key1.key3",
         value: "value3",
         lang: "en",
-        projectId: 1,
-        project: Promise.resolve(project),
+        projectId: "1",
         namespace: "ns1",
-      },
+      }),
     ];
     const result = service.buildJsonTreeFromTranslations(translations);
     expect(result).toEqual({
