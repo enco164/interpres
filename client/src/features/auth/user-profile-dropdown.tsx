@@ -16,6 +16,10 @@ interface UserProfileDropdownProps {}
 const useStyles = makeStyles((theme) => ({
   popover: { marginTop: theme.spacing(2) },
   avatar: { cursor: "pointer" },
+  dropdownAvatar: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
 }));
 
 export const UserProfileDropdown: React.FC<UserProfileDropdownProps> = () => {
@@ -77,7 +81,7 @@ export const UserProfileDropdown: React.FC<UserProfileDropdownProps> = () => {
       >
         <Box p={2} textAlign="center">
           <Box display="flex" justifyContent="center" mb={2}>
-            <Avatar src={user?.photo}>
+            <Avatar src={user?.photo} className={classes.dropdownAvatar}>
               {user?.displayName[0].toUpperCase()}
             </Avatar>
           </Box>

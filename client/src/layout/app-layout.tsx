@@ -8,11 +8,14 @@ import {
   makeStyles,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import React from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { UserProfileDropdown } from "../features/auth/user-profile-dropdown";
 import { useAppLayout } from "./use-app-layout";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const drawerWidth = 240;
 
@@ -43,14 +46,6 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
@@ -103,12 +98,19 @@ const useStyles = makeStyles((theme) => ({
   listItems: {
     flex: "1 1 auto",
   },
+  hide: {
+    display: "none",
+  },
 }));
 
 interface AppLayoutProps {}
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const isLg = useMediaQuery(theme.breakpoints.up("lg"));
+  const isInnerOpen = isLg ? true : open;
+
   const handleToggleDrawerOpen = () => {
     setOpen((o) => !o);
   };
@@ -120,14 +122,22 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     }
   }, [menuItems]);
 
-  const classes = useStyles({ open });
+  const classes = useStyles({ open: isInnerOpen });
   return (
     <div className={classes.root}>
-      <AppBar
-        position="absolute"
-        className={`${classes.appBar} ${open && classes.appBarShift}`}
-      >
+      <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
+          {!isLg && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleToggleDrawerOpen}
+              edge="start"
+              className={[classes.menuButton].join(" ")}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography
             component="h1"
             variant="h6"
@@ -142,21 +152,29 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       </AppBar>
       {menuItems && (
         <Drawer
-          variant="permanent"
+          variant={isLg ? "permanent" : "temporary"}
           classes={{
             paper: `${classes.drawerPaper} ${
-              !open && classes.drawerPaperClose
+              !isInnerOpen && classes.drawerPaperClose
             }`,
           }}
-          open={open}
+          open={isInnerOpen}
+          onClose={handleToggleDrawerOpen}
         >
           <div className={classes.listItems}>{menuItems}</div>
-          <Divider />
-          <div className={classes.toolbarIcon} onClick={handleToggleDrawerOpen}>
-            <IconButton className={classes.toolbarIconButton}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
+          {!isLg && (
+            <>
+              <Divider />
+              <div
+                className={classes.toolbarIcon}
+                onClick={handleToggleDrawerOpen}
+              >
+                <IconButton className={classes.toolbarIconButton}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </div>
+            </>
+          )}
         </Drawer>
       )}
       <main className={classes.content}>
