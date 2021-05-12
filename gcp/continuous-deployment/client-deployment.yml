@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+spec:
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - image: interpres/client
+          imagePullPolicy: IfNotPresent
+          name: client
+          ports:
+            - containerPort: 80
+              protocol: TCP

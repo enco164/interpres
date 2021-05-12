@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - image: interpres/api-gateway
+          imagePullPolicy: IfNotPresent
+          name: api-gateway
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: jwt-secret
+            - name: GITHUB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: github-auth-secret
+                  key: github_client_id
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: github-auth-secret
+                  key: github_client_secret
+            - name: BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: BASE_URL
+            - name: USER_MANAGEMENT_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_SERVICE_HOST
+            - name: USER_MANAGEMENT_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_SERVICE_PORT
+            - name: CORE_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_HOST
+            - name: CORE_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_PORT
+            - name: INTEGRATION_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: INTEGRATION_SERVICE_HOST
+            - name: INTEGRATION_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: INTEGRATION_SERVICE_PORT

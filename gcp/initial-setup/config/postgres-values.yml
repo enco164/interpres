@@ -1,0 +1,4 @@
+persistence:
+  size: 100Mi
+initdbScripts:
+  "init.sql": "create database core;create database user_management;"

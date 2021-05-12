@@ -14,6 +14,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
         useFactory: async (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
+            host: configService.get<string>("CORE_SERVICE_HOST"),
             port: +configService.get<string>("CORE_SERVICE_PORT"),
           },
         }),

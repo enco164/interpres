@@ -51,3 +51,11 @@ services:
     image: enco164/interpres/client
     ports:
       - 3000:80
+
+  user-management:
+    container_name: user-management
+    build:
+      context: server/user-management
+      dockerfile: ./Dockerfile
+    ports:
+    - 8085:8085

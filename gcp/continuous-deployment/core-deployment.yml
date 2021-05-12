@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core
+spec:
+  selector:
+    matchLabels:
+      app: core
+  template:
+    metadata:
+      labels:
+        app: core
+    spec:
+      containers:
+        - image: interpres/core
+          name: core
+#          change to IfNotPresent
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8091
+              protocol: TCP
+          env:
+            - name: CORE_SERVICE_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_DB_HOST
+            - name: CORE_SERVICE_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_DB_PORT
+            - name: CORE_SERVICE_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_DB_USERNAME
+            - name: CORE_SERVICE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-postgresql
+                  key: postgresql-password
+            - name: CORE_SERVICE_DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_DB_DATABASE
+            - name: CORE_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: CORE_SERVICE_PORT

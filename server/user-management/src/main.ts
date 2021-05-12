@@ -1,6 +1,6 @@
-import {NestFactory} from "@nestjs/core";
-import {MicroserviceOptions, Transport} from "@nestjs/microservices";
-import {AppModule} from "./app.module";
+import { NestFactory } from "@nestjs/core";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { AppModule } from "./app.module";
 
 const PORT = +process.env.USER_MANAGEMENT_SERVICE_PORT;
 
@@ -10,11 +10,14 @@ async function bootstrap() {
     {
       transport: Transport.TCP,
       options: {
+        host: "0.0.0.0",
         port: PORT,
       },
     }
   );
-  await app.listen(() => `user-management microservice is listening at port ${PORT}`);
+  await app.listen(() =>
+    console.log(`user-management microservice is listening at port ${PORT}!`)
+  );
 }
 
 bootstrap();

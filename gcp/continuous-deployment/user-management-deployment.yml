@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management
+spec:
+  selector:
+    matchLabels:
+      app: user-management
+  template:
+    metadata:
+      labels:
+        app: user-management
+    spec:
+      containers:
+        - image: interpres/user-management
+          name: user-management
+#          change to IfNotPresent
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8085
+              protocol: TCP
+          env:
+            - name: USER_MANAGEMENT_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_DB_HOST
+            - name: USER_MANAGEMENT_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_DB_PORT
+            - name: USER_MANAGEMENT_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_DB_USERNAME
+            - name: USER_MANAGEMENT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-postgresql
+                  key: postgresql-password
+            - name: USER_MANAGEMENT_DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_DB_DATABASE
+            - name: USER_MANAGEMENT_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: USER_MANAGEMENT_SERVICE_PORT
