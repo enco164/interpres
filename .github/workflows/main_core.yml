@@ -22,7 +22,7 @@ jobs:
           node-version: '14'
 
       - name: Determine Docker Tag
-        run: echo "DOCKER_TAG=${{ github.run_id }}-${{ github.sha }}"  >> $GITHUB_ENV
+        run: echo "DOCKER_TAG=${{ github.sha }}"  >> $GITHUB_ENV
       - run: |-
           echo DOCKER_TAG:  $DOCKER_TAG
 
@@ -35,7 +35,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build -t interpres/core:latest interpres/core:$DOCKER_TAG ./server/core
+          docker build -t interpres/core:latest -t interpres/core:$DOCKER_TAG ./server/core
 
       - name: Push docker image
         run: |
