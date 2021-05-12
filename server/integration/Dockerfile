@@ -4,8 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
-RUN yarn install
-RUN yarn run build
+RUN yarn install --frozen-lockfile && yarn run build
 
 
 FROM node:14 as production
@@ -16,7 +15,7 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app
 COPY yarn.lock /usr/src/app
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 COPY --from=build /usr/src/app/dist ./dist
 

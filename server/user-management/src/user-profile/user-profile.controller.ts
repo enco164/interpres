@@ -16,7 +16,7 @@ export class UserProfileController {
   ) {
     this.logger.verbose(
       JSON.stringify(
-        {cmd: "findOrCreateGithubUser", payload: findOrCreateGithubUserDto},
+        { cmd: "findOrCreateGithubUser", payload: findOrCreateGithubUserDto },
         null,
         2
       )

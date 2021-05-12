@@ -133,7 +133,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     <div className={classes.root}>
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          {!isLg && (
+          {!isLg && menuItems && (
             <IconButton
               color="inherit"
               aria-label="open drawer"

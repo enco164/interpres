@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: integration
+spec:
+  selector:
+    app: integration
+  ports:
+    - name: integration
+      protocol: TCP
+      port: 8092
+      targetPort: 8092

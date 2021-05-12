@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-resource-api
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+#    kubernetes.io/ingress.global-static-ip-name: "web-static-ip"
+#    cert-manager.io/issuer: "letsencrypt-production"
+#    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  #  tls:
+  #    - hosts:
+  #        - interpres.milenkovic.xyz
+  #      secretName: letsencrypt-production
+  rules:
+    - http:
+        paths:
+          - path: /api(/|$)(.*)
+            backend:
+              serviceName: api-gateway
+              servicePort: 8080

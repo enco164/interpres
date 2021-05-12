@@ -1,14 +1,14 @@
-CLUSTER_NAME=interpres-164-cluster
-GCLOUD_PROJECT=$(gcloud config get-value project)
-INSTANCE_ZONE=$(gcloud config get-value compute/zone)
+#!/usr/bin/env bash
 
-cd ./scripts
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install postgres -f ./config/postgres-values.yml bitnami/postgresql
+helm install ingress-nginx ingress-nginx/ingress-nginx
 
-echo "Create cluster"
-./create-cluster.sh
 
+./scripts/create-jwt-secret.sh
 echo ""
-./create-service-account.sh
-
+./scripts/create-github-auth-secret.sh
 echo ""
-./create-nginx-ingress.sh
+./scripts/create-github-client-secret.sh

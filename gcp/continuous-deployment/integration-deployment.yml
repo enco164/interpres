@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration
+spec:
+  selector:
+    matchLabels:
+      app: integration
+  template:
+    metadata:
+      labels:
+        app: integration
+    spec:
+      containers:
+        - image: interpres/integration
+          name: integration
+#          change to IfNotPresent
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8092
+              protocol: TCP
+          env:
+            - name: INTEGRATION_SERVICE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interpres-config
+                  key: INTEGRATION_SERVICE_PORT
+            - name: GITHUB_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: github-client-secret
+                  key: github-app-id
+            - name: GITHUB_APP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: github-client-secret
+                  key: github-app-private-key

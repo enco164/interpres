@@ -1,7 +1,21 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: interpres-164-config
+  name: interpres-config
 data:
-  GCP_PROJECT_ID: interpres-164
-  TRANSLATION_SERVICE_URI: http://translation-service-service:8091
+  BASE_URL: "http://localhost"
+  INTEGRATION_SERVICE_HOST: "integration"
+  INTEGRATION_SERVICE_PORT: "8092"
+  CORE_SERVICE_HOST: "core"
+  CORE_SERVICE_PORT: "8091"
+  CORE_SERVICE_DB_HOST: "postgres-postgresql"
+  CORE_SERVICE_DB_PORT: "5432"
+  CORE_SERVICE_DB_DATABASE: "core"
+  CORE_SERVICE_DB_USERNAME: "postgres"
+  CORE_SERVICE_DB_PASSWORD: "xwK86NCsqR"
+  USER_MANAGEMENT_SERVICE_HOST: "user-management"
+  USER_MANAGEMENT_DB_HOST: "postgres-postgresql"
+  USER_MANAGEMENT_DB_PORT: "5432"
+  USER_MANAGEMENT_DB_USERNAME: "postgres"
+  USER_MANAGEMENT_DB_DATABASE: "user_management"
+  USER_MANAGEMENT_SERVICE_PORT: "8085"
