@@ -35,8 +35,8 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build ./client --tag interpres/client:$DOCKER_TAG
+          docker build ./client --tag interpres/client:latest interpres/client:$DOCKER_TAG
 
       - name: Push docker image
         run: |
-          docker push interpres/client:$DOCKER_TAG
+          docker push --all-tags interpres/client
