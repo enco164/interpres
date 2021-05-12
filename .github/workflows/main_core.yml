@@ -35,7 +35,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build ./server/core --tag interpres/core:latest interpres/core:$DOCKER_TAG
+          docker build -t interpres/core:latest interpres/core:$DOCKER_TAG ./server/core
 
       - name: Push docker image
         run: |

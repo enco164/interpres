@@ -35,7 +35,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build ./server/user-management --tag interpres/user-management:latest interpres/user-management:$DOCKER_TAG
+          docker build -t interpres/user-management:latest -t interpres/user-management:$DOCKER_TAG ./server/user-management
 
       - name: Push docker image
         run: |

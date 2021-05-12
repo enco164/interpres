@@ -35,7 +35,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build ./server/integration --tag interpres/integration:latest nterpres/integration:$DOCKER_TAG
+          docker build ./server/integration --tag interpres/integration:latest interpres/integration:$DOCKER_TAG
 
       - name: Push docker image
         run: |

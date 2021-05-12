@@ -35,7 +35,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build ./server/api-gateway --tag interpres/api-gateway:latest interpres/api-gateway:$DOCKER_TAG
+          docker build -t interpres/api-gateway:latest -t interpres/api-gateway:$DOCKER_TAG ./server/api-gateway
 
       - name: Push docker image
         run: |
