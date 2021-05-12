@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'server/api-gateway/**'
+#    paths:
+#      - 'server/api-gateway/**'
 
 jobs:
   build-docker-and-publish:

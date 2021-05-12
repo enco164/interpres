@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'server/integration/**'
+#    paths:
+#      - 'server/integration/**'
 
 jobs:
   build-docker-and-publish:

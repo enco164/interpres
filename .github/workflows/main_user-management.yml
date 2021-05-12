@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'server/user-management/**'
+#    paths:
+#      - 'server/user-management/**'
 
 jobs:
   build-docker-and-publish:
