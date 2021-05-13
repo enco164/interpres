@@ -1,6 +1,10 @@
-/dist
-/node_modules
-/npm-debug.log
-/Dockerfile
-/yarn-error.log
-/.env
+.dockerignore
+node_modules
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+.npmrc
+yarn-error.log
+dist
+.env

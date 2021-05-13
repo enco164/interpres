@@ -1,25 +1,21 @@
-FROM node AS development
+FROM node AS build
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile && yarn build
 
-RUN yarn build
+FROM node:14-alpine AS production
 
-FROM node:current-alpine as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn install --frozen-lockfile
-
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/dist ./dist
 
 CMD ["node", "dist/main"]

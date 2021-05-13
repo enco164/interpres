@@ -17,6 +17,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
 
+
   reverse-proxy:
     container_name: reverse-proxy
     build:
@@ -26,36 +27,85 @@ services:
     ports:
       - 3626:3626
 
-  core-service:
-    container_name: core-service
+
+  api-gateway:
+    container_name: api-gateway
     build:
-      context: server/core
+      context: server/api-gateway
       dockerfile: ./Dockerfile
-    image: enco164/interpres/translations-service
+    image: interpres/api-gateway
     ports:
-      - ${CORE_SERVICE_PORT}:${CORE_SERVICE_PORT}
-    depends_on:
-      - db
+      - 8080:8080
     environment:
-      CORE_SERVICE_DB_HOST: ${CORE_SERVICE_DB_HOST}
-      CORE_SERVICE_DB_PORT: ${CORE_SERVICE_DB_PORT}
-      CORE_SERVICE_DB_USERNAME: ${CORE_SERVICE_DB_USERNAME}
-      CORE_SERVICE_DB_PASSWORD: ${CORE_SERVICE_DB_PASSWORD}
-      CORE_SERVICE_DB_DATABASE: ${CORE_SERVICE_DB_DATABASE}
+      JWT_SECRET: ${JWT_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      BASE_URL: ${BASE_URL}
+      USER_MANAGEMENT_SERVICE_HOST: ${USER_MANAGEMENT_SERVICE_HOST}
+      USER_MANAGEMENT_SERVICE_PORT: ${USER_MANAGEMENT_SERVICE_PORT}
+      CORE_SERVICE_HOST: ${CORE_SERVICE_HOST}
+      CORE_SERVICE_PORT: ${CORE_SERVICE_PORT}
+      INTEGRATION_SERVICE_HOST: ${INTEGRATION_SERVICE_HOST}
+      INTEGRATION_SERVICE_PORT: ${INTEGRATION_SERVICE_PORT}
+
 
   client:
     container_name: client
     build:
-      context: ./client
+      context: client
       dockerfile: ./Dockerfile
-    image: enco164/interpres/client
+    image: interpres/client
     ports:
       - 3000:80
+
+
+  core:
+    container_name: core
+    build:
+      context: server/core
+      dockerfile: ./Dockerfile
+    image: interpres/core
+    ports:
+      - 8091:8091
+    depends_on:
+      - db
+    environment:
+      CORE_SERVICE_PORT: ${CORE_SERVICE_PORT}
+      CORE_SERVICE_DB_HOST: ${CORE_SERVICE_DB_HOST}
+      CORE_SERVICE_DB_PORT: ${CORE_SERVICE_DB_PORT}
+      CORE_SERVICE_DB_USERNAME: ${CORE_SERVICE_DB_USERNAME}
+      CORE_SERVICE_DB_PASSWORD: ${DB_PASSWORD}
+      CORE_SERVICE_DB_DATABASE: ${CORE_SERVICE_DB_DATABASE}
+
+
+  integration:
+    container_name: integration
+    build:
+      context: server/integration
+      dockerfile: ./Dockerfile
+    image: interpres/integration
+    ports:
+    - 8092:8092
+    environment:
+      INTEGRATION_SERVICE_PORT: ${INTEGRATION_SERVICE_PORT}
+      GITHUB_APP_ID: ${GITHUB_APP_ID}
+      GITHUB_APP_PRIVATE_KEY: ${GITHUB_APP_PRIVATE_KEY}
+
 
   user-management:
     container_name: user-management
     build:
       context: server/user-management
       dockerfile: ./Dockerfile
+    image: interpres/user-management
     ports:
-    - 8085:8085
+      - 8085:8085
+    depends_on:
+      - db
+    environment:
+      USER_MANAGEMENT_DB_HOST: ${USER_MANAGEMENT_DB_HOST}
+      USER_MANAGEMENT_DB_PORT: ${USER_MANAGEMENT_DB_PORT}
+      USER_MANAGEMENT_DB_USERNAME: ${USER_MANAGEMENT_DB_USERNAME}
+      USER_MANAGEMENT_DB_PASSWORD: ${DB_PASSWORD}
+      USER_MANAGEMENT_DB_DATABASE: ${USER_MANAGEMENT_DB_DATABASE}
+      USER_MANAGEMENT_SERVICE_PORT: ${USER_MANAGEMENT_SERVICE_PORT}

@@ -1,2 +1,10 @@
-/node_modules
+.dockerignore
+node_modules
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+.npmrc
+yarn-error.log
+dist
 .env

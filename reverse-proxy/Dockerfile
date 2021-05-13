@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM nginx:stable-alpine
 
 # Create the nginx setup
 RUN rm /etc/nginx/conf.d/default.conf
