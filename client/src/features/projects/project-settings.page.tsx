@@ -71,7 +71,7 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" gutterBottom>
-        Settings
+        {t("title")}
       </Typography>
       {project && (
         <Formik initialValues={project} onSubmit={handleSubmit}>
@@ -168,7 +168,7 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
         open={snackbarOpen}
         autoHideDuration={5000}
         onClose={handleSnackbarClose}
-        message="Saved"
+        message={t("savedSnackbarLabel")}
         action={
           <IconButton
             size="small"
