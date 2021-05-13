@@ -20,6 +20,9 @@ services:
 
   reverse-proxy:
     container_name: reverse-proxy
+    build:
+      context: ./reverse-proxy
+      dockerfile: ./Dockerfile
     image: interpres/reverse-proxy
     ports:
       - 3626:3626
@@ -27,6 +30,9 @@ services:
 
   api-gateway:
     container_name: api-gateway
+    build:
+      context: server/api-gateway
+      dockerfile: ./Dockerfile
     image: interpres/api-gateway
     ports:
       - 8080:8080
@@ -45,6 +51,9 @@ services:
 
   client:
     container_name: client
+    build:
+      context: client
+      dockerfile: ./Dockerfile
     image: interpres/client
     ports:
       - 3000:80
@@ -52,6 +61,9 @@ services:
 
   core:
     container_name: core
+    build:
+      context: server/core
+      dockerfile: ./Dockerfile
     image: interpres/core
     ports:
       - 8091:8091
@@ -68,6 +80,9 @@ services:
 
   integration:
     container_name: integration
+    build:
+      context: server/integration
+      dockerfile: ./Dockerfile
     image: interpres/integration
     ports:
     - 8092:8092
@@ -79,6 +94,9 @@ services:
 
   user-management:
     container_name: user-management
+    build:
+      context: server/user-management
+      dockerfile: ./Dockerfile
     image: interpres/user-management
     ports:
       - 8085:8085

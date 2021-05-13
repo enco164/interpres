@@ -1,0 +1,42 @@
+name: Build & Publish reverse-proxy docker image
+
+on:
+  push:
+    branches:
+      - main
+#    paths:
+#      - 'reverse-proxy/**'
+
+jobs:
+  build-docker-and-publish:
+    runs-on: ubuntu-latest
+    environment: main
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Determine Docker Tag
+        run: echo "DOCKER_TAG=${{ github.sha }}"  >> $GITHUB_ENV
+      - run: |-
+          echo DOCKER_TAG:  $DOCKER_TAG
+
+      - name: DockerHub login
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: |
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+
+      - name: Build docker image
+        run: |
+          docker build -t interpres/reverse-proxy:latest -t interpres/reverse-proxy:$DOCKER_TAG ./server/core
+
+      - name: Push docker image
+        run: |
+          docker push --all-tags interpres/reverse-proxy
