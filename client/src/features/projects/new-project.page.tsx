@@ -1,12 +1,21 @@
-import { Button, Container, Grid, TextField } from "@material-ui/core";
+import {
+  Button,
+  Collapse,
+  Container,
+  Grid,
+  TextField,
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { CreateProjectDto } from "../../api/dto/create-project.dto";
+import { TestConnectionResultAlert } from "../../components";
+import { TestConnectionResult } from "../../domain/test-connection-result";
 import { useAppDispatch } from "../../state/store";
-import { createProject } from "./projects.slice";
+import { createProject, testConnection } from "./projects.slice";
 
 interface NewProjectPageProps {}
 
@@ -14,18 +23,37 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const [testConnectionResult, setTestConnectionResult] = useState<
+    TestConnectionResult | "ERROR" | null
+  >(null);
 
-  const onSubmit = async (values: CreateProjectDto) => {
-    try {
-      const result = unwrapResult(await dispatch(createProject(values)));
-      history.push(`/project/${result.id}`);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const onSubmit = useCallback(
+    async (values: CreateProjectDto) => {
+      try {
+        const result = unwrapResult(await dispatch(createProject(values)));
+        history.push(`/project/${result.id}`);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [dispatch, history]
+  );
+
+  const onTestConnection = useCallback(
+    async (values: CreateProjectDto) => {
+      setTestConnectionResult(null);
+      try {
+        const result = unwrapResult(await dispatch(testConnection(values)));
+        setTestConnectionResult(result);
+      } catch (e) {
+        setTestConnectionResult("ERROR");
+      }
+    },
+    [dispatch]
+  );
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Formik
         initialValues={{
           name: "",
@@ -37,8 +65,8 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
       >
         {(formik) => (
           <Form>
-            <Grid container>
-              <Grid xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
                 <TextField
                   id="name"
                   name="name"
@@ -47,7 +75,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
                   onChange={formik.handleChange}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} container direction={"column"}>
                 <TextField
                   id="githubOwner"
                   name="githubOwner"
@@ -56,7 +84,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
                   onChange={formik.handleChange}
                 />
               </Grid>
-              <Grid xs={6}>
+              <Grid item xs={6} container direction={"column"}>
                 <TextField
                   id="githubRepo"
                   name="githubRepo"
@@ -65,7 +93,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
                   onChange={formik.handleChange}
                 />
               </Grid>
-              <Grid xs={12}>
+              <Grid item xs={12} container direction={"column"}>
                 <TextField
                   id="lngLoadPath"
                   name="lngLoadPath"
@@ -74,8 +102,34 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
                   onChange={formik.handleChange}
                 />
               </Grid>
-              <Grid item>
-                <Button type="submit">{t("create_project_button")}</Button>
+              <Grid item xs={12}>
+                <Collapse in={Boolean(testConnectionResult)}>
+                  {testConnectionResult && testConnectionResult !== "ERROR" && (
+                    <TestConnectionResultAlert
+                      testConnectionResult={testConnectionResult}
+                    />
+                  )}
+                  {testConnectionResult && testConnectionResult === "ERROR" && (
+                    <Alert severity="error">Server error</Alert>
+                  )}
+                </Collapse>
+              </Grid>
+              <Grid item xs={12} container spacing={2} justify="flex-end">
+                <Grid item>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => onTestConnection(formik.values)}
+                  >
+                    {t("test_connection")}
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button type="submit" variant="contained" color="primary">
+                    {t("create_project_button")}
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Form>

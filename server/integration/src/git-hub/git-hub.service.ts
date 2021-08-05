@@ -116,6 +116,19 @@ export class GitHubService {
     );
   }
 
+  testConnection(data: {
+    name: string;
+    githubOwner: string;
+    githubRepo: string;
+    lngLoadPath: string;
+  }) {
+    const installationClient$ = this.getInstallationClient(
+      data.githubOwner,
+      data.githubRepo
+    );
+    return installationClient$;
+  }
+
   private getFilesChanges(
     payload: Record<string, Record<string, Record<string, string>>>,
     translationsLoadPath: string

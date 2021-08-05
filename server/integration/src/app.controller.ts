@@ -25,4 +25,15 @@ export class AppController {
     logger.log(`CMD[export] ${JSON.stringify(data)}`);
     return this.githubService.exportTranslationsToRepo(data);
   }
+
+  @MessagePattern({ cmd: "test-connection" })
+  testConnection(data: {
+    name: string;
+    githubOwner: string;
+    githubRepo: string;
+    lngLoadPath: string;
+  }) {
+    logger.log(`CMD[test-connection] ${JSON.stringify(data)}`);
+    return this.appService.testConnection(data);
+  }
 }

@@ -10,7 +10,9 @@ export class ProjectsService {
 
   constructor(
     @Inject("CORE_SERVICE")
-    private readonly coreMicroserviceClient: ClientProxy
+    private readonly coreMicroserviceClient: ClientProxy,
+    @Inject("INTEGRATION_SERVICE")
+    private readonly integrationMicroserviceClient: ClientProxy
   ) {}
 
   getProjects() {
@@ -38,6 +40,13 @@ export class ProjectsService {
     return this.coreMicroserviceClient.send(
       { cmd: "projects/getProjectById" },
       { id }
+    );
+  }
+
+  testProjectConnection(createProjectDto: CreateProjectDto) {
+    return this.integrationMicroserviceClient.send(
+      { cmd: "test-connection" },
+      { ...createProjectDto }
     );
   }
 }

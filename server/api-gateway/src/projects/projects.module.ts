@@ -10,6 +10,18 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
       {
         imports: [ConfigModule],
         inject: [ConfigService],
+        name: "INTEGRATION_SERVICE",
+        useFactory: async (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>("INTEGRATION_SERVICE_HOST"),
+            port: +configService.get<string>("INTEGRATION_SERVICE_PORT"),
+          },
+        }),
+      },
+      {
+        imports: [ConfigModule],
+        inject: [ConfigService],
         name: "CORE_SERVICE",
         useFactory: async (configService: ConfigService) => ({
           transport: Transport.TCP,
