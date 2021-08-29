@@ -2,10 +2,6 @@
 
 Implementacija
 
-- CI/CD (GitHub Actions) (Issue \#3)
-
-- OpenAPI (Issue \#4)
-
 - TypeORM (Issue \#6)
 \section{Objektno-relaciono preslikavanje}\label{sec:objektno-relaciono-preslikavanje}
 
@@ -21,7 +17,7 @@ obilazak mreže objekata, jer se umanjenjem broja potrebnih SQL upita za rekreir
 aplikacije.
 
 Preslikavanje rezultata SQL upita u objekte se postize uz pomoć tehnike zvane objektno-relaciono preslikavanje
-(eng. \textit{object-relational mapping}). Alati koji implementiraju tu tehniku se skraćeno zovu ORM alati. Uz pomoć ORM alata
+(eng. \textit{ORM - object-relational mapping}). Alati koji implementiraju tu tehniku se skraćeno zovu ORM alati. Uz pomoć ORM alata
 tabele su predstavljene klasama a relacije između tih tabela su predstavljene relacijama tih klasa. Aplikacija treba da
 radi sa klasama dok se ORM stara o fizičkim podacima unutar baze podataka. Odatle, aplikacija ne treba da se stara o
 načinu povezivanja na bazu podataka, kako da izgradi SQL upit ili kako da koristi mehanizme zaključavanja da bi se
@@ -59,31 +55,3 @@ export class Translation {
   // ... ostatak implementacije
 }
 \end{minted}
-
-\section{Kubernetes}\label{sec:kubernetes}
-
-Do nedavno, većina softverskih aplikacija je razvijana kao veliki monoliti, koji su funkcionisali kao jedan proces 
-ili kao mali broj procesa rasprostanjenih na više servera. Ovi zastareli sistemi su i dalje veoma rasprostranjeni. 
-Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko. Na kraju svakog razvojnog ciklus, programeri
-upakuju ceo sistem i predaju ga timu zaduženom za operacije, koji ga kasnije instalira i nadgleda. U slučaju hardverske
-greške, tim za operacije ručno migrira sistem na preostale servere koji su bez greške.
-
-Danas se ovako veliki monoliti rasčlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. S obzirom
-da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
-Ovakva osobina omogućava češće promene na komponentama. S druge strane, povećanjem broja komponenti koje treba 
-instalirati postaje sve teže konfigurisati, upravljati i očuvati ceo sistem u radnom stanju. Pored navedenog, mnogo 
-je teže shvatiti kako i gde postaviti ove komponente kako bi se postigla veća iskorišćenost resursa, a samim tim i 
-smanjiti cenu potrebnog hardvera. Odatle postoji potreba za automatizacijom, koja uključuje automatsku konfiguraciju,
-nadzor  i rešavanje problema. Iz ovih razloga je razvijen Kubernetes.
-
-Kubernetes omogućava programerima da sami instaliraju svoju aplikaciju, bez pomoći tima za operacije. Ali s druge 
-strane, nemaju samo programeri benefit. Ovaj alat takođe pomaže operacionom timu tako što automatski nadgleda, 
-i u slučaju greške pokreće nove instance aplikacija. To znači da se fokus operacionog tima preusmerava sa nadgledanja
-pojedinačnih aplikacija na nadgledanje i upravljanje infrastrukture i Kubernetes alata, dok se Kubernetes stara o samim
-aplikacijama.
-
-Kubernetes apstrahuje hardversku infrastrukturu i pruža privid da je ceo data centar jedan veliki resurs. To omogućava
-velikim kompanijama koje pružaju usluge računarstva u oblaku da ponude programerima jednostavnu platformu za pokretanje
-raznih tipova aplikacija, a da pritom njihovi administratori sistema ne znaju koje su aplikacije pokrenute na njihovom
-hardveru. Kako velike kompanije sve više prihvataju Kubernetes model kao jedan od boljih načina za pokretanje aplikacija,
-tako Kubernetes postaje standardan model za računarstvo u oblaku~\cite{KIA}.
