@@ -12,6 +12,54 @@ U ovom poglavlju će biti opisane tehnologije korišćene za razvoj rešenja.
 
 \section{Docker}\label{sec:docker}
 
+Pre korišćenja kontejnera, glavni naćin za izolovanje, organizaciju aplikacije i njenih zavisnosti je 
+bio postavljanje svake aplikacije na zasebnu virtuelnu mašinu. Takve mašine su pokretale više aplikacija 
+na istom fizičkom hardveru i takav proces se naziva virtuelizacija.
+
+Virtuelizacija je imala nekoliko nedostataka: 
+\begin{itemize}
+    \item Virtuelne mašine su bile glomazne
+    \item Pokretanjem više virtuelnih mašina uticalo je na performanse
+    \item Sam proces pokretanja je predugo trajao
+\end{itemize}
+
+Pomenuti nedostaci doveli su do nastanka nove tehnike korišćenja kontejnera (kontejnerizacije). 
+
+Kontejnerizacija je tip virtuelizacije koja dovodi virtuelizaciju na nivo operativnog 
+sistema. Kao sto virtuelizacija abstrahuje hardver, tako i kontejnerizacija abstrahuje 
+operativni sistem.
+
+Neke od prednosti kontejnerizacije su sledeće:
+\begin{itemize}
+    \item Kontejneri nemaju gostujući operativni sistem i koriste operativni sistem domaćina. 
+    Dele relevantne biblioteke i resurse onda kada je to potrebno.
+    \item Procesiranje i izvršavanje aplikacije je veoma brzo jer se komplajlirana aplikacija 
+    i biblioteke kontejnera izvršavaju na kernelu domaćina.
+    \item Pokretanje kontejnera traje samo delić sekunde. Takođe, kontejneri su lakši i brži 
+    od virtuelnih mašina.
+\end{itemize}
+
+Docker je platforma koja aplikaciju i sve njene zavisnosti pakuje u formi kontejnera. 
+Ovakav aspekt obezbeđuje da aplikacija radi na svim okruženjima.
+
+Svaka aplikacija se pokreće na zasebnom kontejneru i ima svoj skup zavisnosti i biblioteka. 
+Zbog toga možemo biti sigurni da svaka aplikacija radi nezavisno od ostalih aplikacija, 
+dajući programerima sigurnost da grade aplikacije koje neće posredovati međusobno.
+
+Docker fajl je tekstualni dokument koji sadrži sve komande koje korisnik može pokrenuti 
+u komandnoj liniji kako bi se sastavila Docker slika. Docker može izgraditi sliku automatski 
+na osnovu pročitanih instrukcija iz Docker fajla.
+
+Docker sliku možemo uporediti sa šablonom koji se koristi za kreiranje Docker kontejnera. 
+To su šabloni koji se ne mogu menjati i predstavljaju gradivni element kontejnera.
+Docker slike se čuvaju u Docker registrima. 
+
+Docker kontejner je pokrenuta instanca Docker slike. Sadrži sve što je potrebno da bi se 
+pokrenula aplikacija. To je u osnovi spremna aplikacija kreirana iz Docker slike, 
+što ujedno predstavlja i krajnji produkt Docker-a.~\cite{docker}
+
+Docker je trenutno najpopularnija implementacija kontejnera.
+
 \section{Kubernetes}\label{sec:kubernetes}
 
 Do nedavno, većina softverskih aplikacija je razvijana kao veliki monoliti, koji su funkcionisali kao jedan proces 
