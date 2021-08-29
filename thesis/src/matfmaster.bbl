@@ -10,6 +10,27 @@ Localazy,
 \newblock {https://localazy.com/}.
 \newblock {Internet prezentacija}.
 
+\bibitem{martinfowler_microservices}
+Džejms Luis i Martin Fauler,
+\newblock {Microservices}
+\newblock {https://martinfowler.com/articles/microservices.html}.
+
+\bibitem{martinfowler_software_component}
+Martin Fauler,
+\newblock {Software Component}
+\newblock {https://martinfowler.com/bliki/SoftwareComponent.html}.
+ 
+\bibitem{REST_Roy}
+Roy Thomas Fielding,
+\newblock {Architectural Styles and the Design of Network-based Software Architectures, Doktorska disertacija}.
+\newblock {University of California, Irvine, 2000}.
+
+\bibitem{REST_API}
+REST API Tutorial
+\newblock {https://restfulapi.net/}.
+\newblock {Internet prezentacija}.
+
+
 \bibitem{TypeORM}
 TypeORM,
 \newblock {https://typeorm.io/}.

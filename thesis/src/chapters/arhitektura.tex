@@ -1,3 +1,152 @@
 \chapter{Arhitektura i dizajn sistema}\label{ch:arhitektura}
 
-Arhitektura i dizajn sistema
+Funkcionalni zahtev da aplikacija bude u oblaku, opisan u poglavlju 
+\ref{sec:funkcionalni_zahtevi-aplikacija_u_oblaku}, nameće grubu sliku kako arhitektura sistema 
+treba da izgleda. Aplikacije na Vebu su dominantno bazirane po modelu klijent--server arhitekture. 
+Server u takvoj arhitekturi obezbeđuje uslugu klijentima koji je zahtevaju. Klijent--server 
+arhitektura je višenamenska i modularna, a sa ciljem unapređenja upotrebljivosti, interoperabilnosti, 
+fleksibilnosti i skalabilnosti. 
+
+Veb aplikacije su nezavisne od platforme jer zahtevaju samo Veb pregledač, dok se kod standardne 
+klijent--server arhitekture klijent se mora instalirati na platformi korisnika. Pored toga, 
+kod Veb aplikacija je protokol komunikacije definisan, koristi se HTTP, dok se kod klijent--server
+arhitekture protokol može izabrati po potrebi.
+
+Komponente klijent -- server arhitekture, prilagođene za Veb, se mogu grupisati u tri kategorije: 
+server, klijent i mreža. Uloga servera je da upravlja zajedničkim resursima, bazom podataka, da 
+izvršava poslovnu logiku, kao i da kontroliše pristup i bezbednost podataka. Posao klijenta je da 
+upravlja korisničkim interfejsom. Računarska mreža omogućava komunikaciju uzmeđu klijenta i servera, 
+a komunikacija mora pratiti neke standarde.
+
+\section{Arhitektura teških klijenata}\label{sec:arhitektura-spa}
+Odlike arhitekture teških klijenata je da server šalje klijentu podatke i meta podatke, i prepušta 
+mu da samostalno pripremi prezentaciju. // TODO: ref: PVeb.2014.04%20-%20arh.apl,veb.2.0.pdf
+Ovakvom karakteristikom se smanjuje opterećenje servera, jer više ne mora da priprema prezentaciju.
+Arhitektura teških klijenata podrazumeva intenzivno korišćenje JavaScript-a.
+
+Ekstremni oblik ove arhitekture je arhitektura jedne stranice (eng. SPA - Single Page Application).
+Arhitektura jedne stranice propisuje da se čitava aplikacija učitava kroz jednu stranicu. Primenom 
+ovih pravila se dobija potpuno odvojen klijent od servera. Klijent u ovom slučaju komunicira 
+sa serverom u pozadini radi preuzimanja podataka i izvođenja transakcija. S obzirom da prezentacija
+priprema na korisničkoj strani, korisnički interfejs ima bolji odziv, jer se ne prenosi kroz mrežu.
+
+\section{Mikroservisi}\label{sec:arhitektura-mikroservisi}
+
+Tradicionalan način razvijanja poslovnih aplikacija predstavlja razvoj takozvane monolitne arhitekture. 
+Jedan monolit bi sadržao svu biznis logiku koju izvršava aplikacija. Kako aplikacija raste vremenom, 
+tako raste i sam monolit, koji se sve teže održava. Problemi koji nastaju kod velikog monolita nisu 
+samo problemi održavanja, već je i skaliranje upitno. 
+
+Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" se sve češće pojavlje poslednjih 
+par godina kako bi opisao određeni način projektovanja softverskih aplikacija kao paketa usluga koji se 
+mogu odvojeno isporučiti. Iako ne postoji precizna definicija ovog arhitektonskog stila, postoje određene 
+zajedničke karakteristike u organizaciji oko poslovne logike, automatskog isporučivanja i decentralizovane 
+kontrole podataka.~\cite{martinfowler_microservices} 
+
+Mikroservisi predstavlja aplikaciju koja je struktuirana kao kolekcija slabo vezanih servisa. Glavna 
+ideja iza mikroservisne arhitekture je da se aplikacije lakše razvijaju i održavaju ako su podeljene 
+na manje delove koji rade nesmetano zajedno.
+
+Servisi se mogu posmatrati kao komponente sistema. Martin Fauler definiše komponente kao jedinice 
+softvera koje se mogu nezavisno zameniti i unaprediti.~\cite{martinfowler_software_component}.
+
+Biblioteke su kompnente koje su ulinkovane u program i pozivaju se pomoću funkcija koje se nalaze u 
+memoriji, dok su servisi komponente koje su van procesa i koje komuniciraju preko mreže.
+Servisi, naravno, mogu da koriste biblioteke. Glavni benefit ovakvog korišćenja servisa je da se mogu 
+nezavisno isporučiti, što nije slučaj ako imamo jednu aplikaciju koja je sastavljena od skupa biblioteka.
+Sa druge strane, daljinski pozivi, kao što su pozivi preko mreže, su skuplji, odnosno sporiji. 
+Druga loša strana je da se logika teže prebacuje iz jednog servisa u drugi, odnosno refaktorisanje je 
+otežano u tom smislu.
+
+Da bi se monoliti lakše razvijali, programeri se uglavnom podele po tehnologiji, na primer u tim za 
+bazu podataka, tim za biznis logiku i tim za korisnički interfejs. U arhitekturi mikroservisa je malo 
+drugačije. Timovi se organizju oko jednog servisa i sastavljeni su od progamera različitih tehnologija.
+To zači da su timovi nezavisni, kao i što su i sami servisi nezavisni, i organizovani su sa fokusom na 
+biznis logiku a ne na tehnologiju.
+
+Jedna zgodna posledica deljenja monolita na servise je da servisi ne moraju da budu razvijeni u istim 
+tehnologijama. Tako na primer, jedan servis može biti izgrađen u programskom jeziku C++ a drugi u 
+NodeJS, dokle god mogu da komuniciraju jedan sa drugim. Nekada je pogodnije koristiti drugi programski 
+jezik jer je u njemu lakše rešiti problem.
+
+Monolitne aplikacije preferiraju da imaju jednu bazu podataka za čuvanje podataka. Sa druge strane, kod 
+mikroservisnih aplikacija se odluka o bazi podataka prepušta samom servisu. Neke probleme koje servis 
+rešava je pogodnije rešiti SQL bazom podataka, dok je za neki drugi servis možda pogodnija graf baza.
+Iako i monolitne aplikacije mogu da koriste više tipova baza podataka, ova osobina je češća kod 
+mikroservisa. Decentralizovana odgovornost za čuvanje podataka ima i svoje implikacije na ažuriranje 
+podataka. Ovaj problem se može rešiti korišćenjem transakcija. Korišćenjem transakcija rešava se problem 
+konzistentnosti, ali sa druge strane se uvodi privremeno usko povezivanje između više servisa, što 
+smanjuje dostupnost. Zato, česta je odluka da se konzistentnost zameni eventualnom konzistentnošću, u 
+onim slučajevima gde je ona moguća. 
+
+% CAP Teorema
+
+\section{REST}\label{sec:arhitektura-rest}
+
+Interoperabilnost je sposobnost da različiti sistemi rade zajedno. Da bi se ovo postiglo potrebni su 
+standardi koje će sistemi poštovati. Kako u klijent -- server arhitekturi imamo dva različita sistema 
+(klijent i server), oni moraju poštovati određene standarde za komunikaciju. Jedan od takvih načina za 
+komunikaciju je i REST (eng. Representational State Transfer). REST je stil softverske arhitekture koji 
+definiše skup pravila koja treba da se poštuju tokom pravljenja mrežnih aplikacija. Prvi put je 
+predstavljen u doktorskoj disertaciji Roja Fildinga~\cite{REST_Roy}. Po REST-u, fokus se prebacuje sa 
+procedura na resurse (objekte). Za aplikaciju kažemo da je RESTful ako poštuje pravila REST-a.
+
+
+REST definiše šest pravila koja moraju da se ispoštuju~\cite{REST_API}:
+
+\begin{itemize}
+
+	\item \textbf{Klijent -- server}: Razdvajanjem korisničkog interfejsa od servera briga o podacima 
+	ostaje na serveru. Klijenti postaju lakši za portabilnost među raličitim sistemima, a server se može
+    lakše skalirati.
+	
+    \item \textbf{Sistem bez stanja (eng. Stateless)}: Svaki zahtev sa klijenta ka serveru mora da sadrži 
+	sve potrebne informacije da bi zahtev bio opslužen. Klijent se ne sme oslanjati na stanje servera. 
+    Zapravo, stanje na serveru se zabranjuje. Iz tog razloga stanje sesije se u potpunosti čuva na klijentu.
+	
+    \item \textbf{Keširanje}: Server u svom odgovoru sa nekim podacima mora eksplicitno da navede da li 
+    podaci mogu da se keširaju, ili ne. Ako server odgovori da su podaci kešabilni, klijent ih može 
+    koristiti kasnije ako je zahtev za podacima isti. Sever može napomenuti i vreme isteka keša.
+    
+    \item \textbf{Uniforman interfejs}: Uniformni interfejs definiše interfejs između klijnta i servera.
+    On pojednostavljuje i razdvaja arhitekturu, što omogućava da se svaki deo razvija samostalno. 
+    Četiri vodeća principa uniformnog interfejsa su:
+
+    \begin{enumerate}
+        \item \textbf{Zasnovanost na resursima}: Individualni resursi se mogu identifikovati u 
+        zahtevima koristeći URI kao identifikator resursa. Resursi kao takvi su konceptualno odvojeni 
+        od reprezentacije koja se vraća klijentima. Na primer, server ne šalje svoju bazu podataka, 
+        već radije, šalje HTML, XML ili JSON koji predstavljaju traženi zapis iz baze podataka.
+
+        \item \textbf{Manipulacija resursima kroz reprezentaciju}: Kada klijent sadrži reprezentaciju resursa,
+        uključujući meta podatke u prilogu, onda ima dvoljno podataka da izmeni ili obriše resurse 
+        sa servera, pod uslovom da ima ovlašćenje da to uradi.
+
+        \item \textbf{Samoopisne poruke}: Svaka poruka sadrži dovoljno informacija da opiše na koji 
+        način treba da bude obrađena. Na primer Internet media type (nekada poznat pod nazivom MIME) 
+        može sadržati informaciju o tome koji parser treba da se pozove. Odgovori eksplicitno 
+        označavaju da li imaju sposobnost keširanja.
+
+        \item \textbf{Hipermedija kao pokretač aplikacije (HATEOAS)}: Klijenti isporučuju stanje kroz telo sadržaja,
+        parametara upita, zaglavlja zahteva i traženog URI-a (ime resursa). Servisi isporučuju stanje 
+        kroz telo sadržaja, kodove u odgovoru i zaglavlje odgovora. To se tehnički naziva hipermedija 
+        (hiperlinkovi unutar hiperteksta). HATEOAS (eng. Hypermedia as the Engine of Application State) 
+        takođe znači da, tamo gde je potrebno, veze su sadržane unutar vraćenog tela 
+        (ili zaglavlja) odgovora, kako bi se isporučio URI za preuzimanje samog objekta ili srodnih 
+        objekata. Uniformni interfejs koji svaki REST servis mora pružiti je fundamentalna 
+        osnova za njegov dizajn.
+        
+        
+    \end{enumerate}
+    
+	\item \textbf{Slojevit sistem}: REST omogućava korišćenje slojevitih sistema, gde klijent ne zna 
+    eksplicitno da li komunicira sa krajnjim serverom ili sa posrednikom. Ovako se može povećati 
+    skalabilnost uvođenjem balansirnja opterećenja ili uvođenjem keširanja na strani servera. 
+	
+	\item \textbf{Kod na zahtev (opciono)}: Serveri mogu proširiti klijent slanjem koda koji će biti izvršen na 
+	klijentskoj strani. Ovo može uprostiti klijente jer se smanjuje broj funkcija koje je potrebno da 
+    klijent ima. Primer na Vebu bi bio slanje JavaScript koda. 
+
+\end{itemize}
+
+
