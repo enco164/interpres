@@ -1,0 +1,20 @@
+@startuml Izvoz prevoda
+|Korisnik|
+|Sistem|
+start
+:Prikazuje opcije za uvoz i izvoz prevoda;
+|Korisnik|
+:Bira akciju za izvoz prevoda;
+|Sistem|
+:Prikazuje modal sa formom za unos 
+naslova i opisa zahteva za promenu;
+|Korisnik|
+:Unosi naslov i opis u tekstualna polja;
+:Klikne na dugme OK;
+|Sistem|
+:Pokreće akciju izvoza projekta;
+|GitHub Aplikacija|
+:Kreiranje zahteva za promenu sa 
+izmenjenim fajlovima;
+stop
+@enduml
