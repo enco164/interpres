@@ -1,0 +1,22 @@
+@startuml Uvoz prevoda
+|Korisnik|
+|Sistem|
+start
+:Prikazuje opcije za uvoz i izvoz prevoda;
+|Korisnik|
+:Bira akciju za uvoz prevoda;
+|Sistem|
+:Prikazuje modal sa porukom da će se uvozom 
+projekta sve izmene koje nisu izvezene izgubiti;
+|Korisnik|
+if () is (OK) then
+|Sistem|
+:Uvozi prevode;
+:Zatvara modal;
+stop
+else (Cancel)
+|Sistem|
+:Zatvara modal;
+stop
+endif
+@enduml

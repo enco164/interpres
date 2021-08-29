@@ -1,0 +1,17 @@
+@startuml Kreiranje projekta
+|Korisnik|
+|Sistem|
+start
+:Prikazuje opciju za kreiranje novog projekta;
+|Korisnik|
+:Bira akciju za kreiranje novog projekta;
+|Sistem|
+:Prikazuje formu za unos podataka o projektu;
+|Korisnik|
+:Unosi podatke o projektu;
+:Klikne na dugme za kreiranje projekta;
+|Sistem|
+:Čuva projekat;
+:Korisniku vraća stranicu sa podacima o projektu;
+stop
+@enduml

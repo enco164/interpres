@@ -1,0 +1,25 @@
+@startuml Prijava korisnika
+autonumber
+
+actor Korisnik as user
+participant "Veb aplikacija" as browser
+participant Gateway as gw
+participant "GitHub IdP" as gh
+
+user -> browser : Klik na dugme za prijavu
+browser -> gw : Zahtev za prijavu
+gw -> user : Preusmeravanje na stranicu za prijavu (IDP)
+user -> gh : Zahtev za dobijanje stranice za prijavu (IDP)
+gh -> user : Stranica za prijavu
+user -> gh : Unos kredencijala
+gh -> browser : Kod za pristup (Uspešno prijavljivanje)
+browser -> gw : Kod za pristup
+gw -> gh : Kod za pristup
+gh -> gw : Podaci o korisniku
+gw -> gw : Generisanje JWT tokena
+gw -> browser : JWT token
+
+note over browser: Čuva JWT token \nza buduću komunikaciju
+
+browser -> user : Prikaz zaštićene stranice
+@enduml
