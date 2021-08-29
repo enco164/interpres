@@ -41,6 +41,11 @@ Marko Lukša,
 \newblock {Kubernetes in action}.
 \newblock {\em Manning}, 2017, 978-1-61729-372-6
 
+\bibitem{docker}
+Docker Explained – An Introductory Guide To Docker,
+\newblock {https://www.edureka.co/blog/docker-explained/}.
+\newblock {Internet prezentacija}.
+
 
 \bibitem{CI_CD}
 What is CI/CD?,
