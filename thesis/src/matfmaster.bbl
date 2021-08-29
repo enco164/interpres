@@ -41,4 +41,16 @@ Marko Lukša,
 \newblock {Kubernetes in action}.
 \newblock {\em Manning}, 2017, 978-1-61729-372-6
 
+
+\bibitem{CI_CD}
+What is CI/CD?,
+\newblock {https://www.redhat.com/en/topics/devops/what-is-ci-cd}.
+\newblock {Internet prezentacija}.
+
+
+\bibitem{GitHubActions}
+GitHub Actions,
+\newblock {https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions}.
+\newblock {Internet prezentacija}.
+
 \end{thebibliography}

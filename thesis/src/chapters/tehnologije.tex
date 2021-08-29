@@ -116,4 +116,151 @@ da bude u svakom trenutku, kao i promenljive iz okruženja. Kubernetes se stara 
 ispoštovani, i za to je zadužen Controller Manager, koji proverava konfiguraciju i upravlja ostalim 
 procesima. 
 
-\section{Kontinualna integracija i kontinualna isporuka}\label{sec:arhitektura-ci_cd}
+\section{Kontinualna integracija, isporuka i raspoređivanje}\label{sec:arhitektura-ci_cd}
+
+CI/CD je metod za često dostavljanje aplikacija korisnicima kroz predstavljanje automatizacije u 
+fazama razvoja aplikacije. Glavni koncept CI/CD su kontinualna integracija (eng. 
+\textit{continuous integration}), kontinualno dostavljanje (eng. \textit{continuous delivery}) i 
+kontinualno raspoređivanje (eng. \textit{continuous deployment}). CI/CD je rešenje za problem 
+koji nastaje prilikom integracije novog koda.
+
+CI/CD uvodi automatizaciju i kontinualno praćenje kroz životni ciklus aplikacije, 
+od integracije i testne faze do dostavljanja i raspoređivanja. Zajedno, ove povezane prakse 
+često se nazivaju “CI/CD tok” (eng. \textit{CI/CD pipeline}), a podržani su i od strane razvojnih 
+i od strane operativnih timova.
+
+\subsection{Razlika između CI i CD}
+Akronim CI/CD ima više različitih značenja. “CI” u CI/CD uvek označava kontinualnu integraciju, 
+koja predstavlja automatizovan proces za programere. Uspešan CI označava da su nove izmene koda 
+na aplikaciji regularno izgrađene, testirane i pripojene deljenom repozitorijumu. To je rešenje 
+za problem koji postoji onda kada ima previše grana u razvoju koje mogu dovesti do konflikata.
+
+“CD” u CI/CD označava kontinualno dostavljanje i/ili kontinualno raspoređivanje, koji su povezani 
+koncepti i mogu se koristiti naizmenično. I jedan i drugi tiču se automatizacije faza toka, međutim, 
+nekada se koriste i odvojeno u cilju prikaza količine automatizacije koja se odvija.
+
+Kontinualno dostavljanje obično znači da su izmene koje je programer napravio automatski testirane 
+i otpremljene na repozitorijum, gde se onda mogu rasporediti na produkciono okruženje od strane 
+operacionog tima. Može se smatrati odgovorom na slabu preglednost i komunikaciju između tima 
+programera i poslovnog tima. Iz tog razloga, svrha kontinualnog dostavljanja jeste da omogući 
+minimalne napore za raspoređivanje novog koda.
+
+Kontinualno raspoređivanje odnosi se na automatsko puštanje izmena sa repozitorijuma na produkciju. 
+Rešava problem preopterećenja operacionog tima manuelnim procesima koji usporavaju dostavljanje 
+aplikacije. Zasniva se na prednostima kontinualnog dostavljanja automatizacijom narednih faza u toku.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{ci-cd-flow-desktop}
+    \caption{CI/CD tok}
+\end{figure}
+
+Moguće je da CI/CD obuhvati povezane prakse kontinualne integracije i kontinualnog dostavljanja, 
+ili sve 3 povezane prakse kontinualne integracije, kontinualnog dostavljanja i kontinualnog 
+raspoređivanja. Dodatnu komplikaciju stvara to što se kontinualna isporuka može nekada koristiti 
+na način koji obuhvata procese kontinualnog raspoređivanja.
+
+CI/CD je u stvari proces, često predstavljen kao tok, koji obuhvata uvođenje visokog stepena 
+automatizacije i kontinualnog praćenja razvoja aplikacije.
+
+Od slučaja do slučaja, na šta se termini konkretno odnose zavisi od toga koliko je automatizacije 
+ugrađenou CI/CD tok. Mnoga preduzeća započinju dodavanjem CI, nakon čega uvode automatizaciju 
+dostavljanja i raspoređivanja.
+
+\subsection{Kontinualna integracija}
+U razvoju modernih aplikacija, cilj je da više programera istovremeno radi na različitim delovima 
+aplikacije. Međutim, ukoliko je organizacija postavljena tako da se spajanje koda sa svih grana 
+vrši u jednom danu, takav posao može biti monoton, manuelan i dugotrajan. To se dešava u slučajevima 
+kada programer vrši izmene na aplikaciji i na taj način povećava šansu za nastajanje konflikta sa 
+izmenama koje istovremeno prave drugi programeri.
+
+Kontinualna integracija (CI) pomaže programerima da spoje izmene na kodu na deljenu granu češće, 
+čak i na dnevnom nivou. Nakon spajanja izmenjenih delova koda, izmene se validiraju tako što se 
+automatski gradi aplikacija i pokreće se više nivoa automatskog testiranja. To znači da se testira 
+sve, od klasa i funkcija do različitih modula koji su deo aplikacije. Ako automatski testovi pronađu 
+konflikt između novog i postojećeg koda, CI nudi lako rešavanje konflikata.
+
+\subsection{Kontinualna dostavljanje}
+Nakon automatskog građenja aplikacije i testiranja u CI, kontinualno dostavljanje automatizuje 
+puštanje prethodno validiranog koda na repozitorijum. Kako bismo imali efektivan proces kontinualne 
+dostave, važno je da imamo već ugrađen CI u protoku. Cilj kontinualnog dostavljanja jeste postojanje 
+baze koda koja je uvek spremna za raspoređivanje na produkciono okruženje.
+
+U kontinualnom dostavljanju, svaka faza, počevši od spajanja izmenjenog koda do dostavljanja 
+verzija spremnih za produkciju, podrazumeva automatsko testiranje i automatizaciju raspoređivanja 
+koda. Na kraju tog procesa, operacioni tim je u mogućnosti da brzo i jednostavno rasporedi 
+aplikaciju na produkciju.
+
+\subsection{Kontinualno raspoređivanje}
+Poslednja faza CI/CD protoka je kontinualno raspoređivanje. Kao dodatak kontinualnom dostavljanju, 
+koji automatizuje isporuku verzija spremnih za produkciju, kontinualno raspoređivanje automatizuje 
+puštanje aplikacije u produkciju. U velikoj meri se oslanja na dobro osmišljeno automatsko testiranje.
+
+U praksi, kontinualno raspoređivanje znači da izmene na aplikaciji mogu biti na produkciji za samo 
+nekoliko minuta (pod pretpostavkom da su automatski testovi uspešno završeni).
+
+Sve povezane prakse CI/CD čine raspoređivanje aplikacije manje rizičnim, stoga je lakše pustiti 
+promene u aplikaciji u delovima, pre nego odjednom.~\cite{CI_CD}
+
+\subsection{GitHub Akcije}
+Za verzionisanje koda se može koristiti GitHub. Pored verzionisanja, on pruža i alate za automatizaciju 
+kontinualne integracije, isporue i raspoređivanja, kroz alat koji su nazvali \textit{Github Akcije} 
+(eng. \textit{Github Actions}). 
+GitHub Akcije su zasnovane na događajima, što znači da mogu da pokrenu niz komandi koje će se desiti 
+posle navedenog događaja. Na primer, svaki put kada neko napravi \textit{zahtev za promenu} 
+(eng. \textit{Pull Request}) nad repozitorijumu, može se automatski pokrenuti komanda koja pokreće 
+testove. 
+
+GitHub Akcije koriste YAML fajlove kako bi se definisale komponente toka rada. Ovi fajlovi se čuvaju 
+u repozitorijumu, u folderu pod nazivom \mbox{\texttt{.github/workflows}}.
+
+Komponente koje postoje u GitHub Akcijama su: 
+
+\begin{itemize}
+    \item Tok rada (eng. \textit{Workflow})
+    \item Događaj (eng. \textit{Event})
+    \item Posao (eng. \textit{Job})
+    \item Korak (eng. \textit{Step})
+    \item Akcija (eng. \textit{Action})
+    \item Izvršilac (eng. \textit{Runner})
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{overview-actions-design}
+    \caption{Prikaz interakcija komponenata GitHub Akcija}
+\end{figure}
+
+\subsubsection{Tok rada}
+Tok rada je automatizovana procedura koja se dodaje na repozitorijum. Tokovi radsa su sastavljeni 
+od jednog ili više poslova i mogu se pokrenuti na određeni događaj ili biti zakazani u određeno vreme. 
+Tok rada se može koristiti da se aplikacija izgradi, testira, spakuje, isporuči ili rasporedi na 
+različita okruženja.
+
+\subsubsection{Događaji}
+Događaj je specifična aktivnost koja pokreće tok rada. Na primer, aktivnost može nastati kad neko napravi 
+zahtev za promenu. Aktivnost ne mora da bude u okviru GitHub-a. Ona može doći preko poziva od strane 
+nekog eksternog sistema.
+
+\subsubsection{Posao}
+Posao predstavlja skup koraka koji treba da se izvrše nad istim izvršiocem. Tok rada sa više poslova 
+će pokrenuti ove poslove u paraleli. Naravno, tok rada se može podesiti tako da izvršava poslove 
+sekvencijalno. Na primer, tok rada može imati dva sekvencijalna posla koji izgrađuju i testiraju kod, 
+gde je posao za testiranje zavisan od toga da li kod uopšte može da se izgradi. Ako posao za izgradnju 
+ne uspe, posao za testiranje se neće ni pokretati.
+
+\subsubsection{Korak}
+Korak predstavlja jednu zadatak koji može pokrenuti komandu unutar posla. Korak može biti ili akcija ili 
+komandni skript. Svaki korak unutar posla se izvršava nad istim izvršiocem, što dozvoljava akcijama da 
+dele podatke između sebe.
+
+\subsubsection{Akcija}
+Akcije predstavljaju samostalne komande koje se mogu kombinovati u korake kako bi sačinile jedan posao.
+Akcije su najmanje portabilne jedinice građe toka rada. Korisnici mogu sami da naprave svoje akcije,
+ili da koriste akcije koje su napravljene od strane GitHub zajednice. 
+
+\subsubsection{Izvršilac}
+Izvršilac je mašina nad kojom se GitHub Akcije izvršavaju. Izvršilac osluškuje pokrenute poslove,
+pokreće jedan posao za drugim, i šalje izveštaje GitHub-u o napretku, logovima i rezultatima. Ove 
+mašine mogu da budu bazirane na Linux, Windows i macOS operativnim sistemima, a svaki posao 
+unutar toka rada se pokreće iz novog virtuelnog okruženja.~\cite{GitHubActions}
