@@ -184,8 +184,8 @@ iskorišćena je njegova funkcija migriranja baze podataka. Migracije služe
 za promenu sheme baze podataka u produkcionom okruženju. One osiguravanju da 
 će prebacivanje na novu verziju sheme biti sigurno i da neće doći do gubitka 
 podataka. Migracioni fajl sadrži klasu koja implementira 
-\codeword{MigrationInterface},a potrebno je implementirati dve metode: 
-\codeword{up} i \codeword{down}. Prva služi da se baza migrira na višu 
+\texttt{MigrationInterface},a potrebno je implementirati dve metode: 
+\texttt{up} i \texttt{down}. Prva služi da se baza migrira na višu 
 verziju, a druga služi ako je u nekom slučaju potreban povratak na prethodnu. 
 Unutar tih metoda treba napisati \textit{SQL} naredbe za migracije. Pored 
 ručnog pisanja migracija, \textit{TypeORM} pruža i mogućnost generisanja 
