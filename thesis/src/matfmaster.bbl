@@ -31,6 +31,16 @@ REST API Tutorial
 \newblock {Internet prezentacija}.
 
 
+\bibitem{nest_getting_started}
+Olususi Kayode Oluyemi, Getting Started with NestJS
+\newblock {\url{https://www.digitalocean.com/community/tutorials/getting-started-with-nestjs}}.
+\newblock {30.8.2021.}.
+
+\bibitem{nest}
+NestJS
+\newblock {\url{https://docs.nestjs.com/}}.
+\newblock {30.8.2021.}.
+
 \bibitem{TypeORM}
 TypeORM,
 \newblock {https://typeorm.io/}.

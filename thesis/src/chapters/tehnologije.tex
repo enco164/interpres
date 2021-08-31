@@ -7,6 +7,59 @@ U ovom poglavlju će biti opisane tehnologije korišćene za razvoj rešenja.
 \section{Material UI}\label{sec:material_ui}
 
 \section{NestJS}\label{sec:nestjs}
+Razvoj aplikacije na \textit{Node.js} platformi vremenom može postati kompleksan. Što se više svojstava 
+dodaje u aplikaciju, to baza koda postaje sve veća.
+
+\textit{NestJS} je radni okvir za građenje efikasne, skalabilne \textit{Node.js} aplikacije na serveru. 
+Pruža serverskom delu aplikacije modularnu strukturu za organizaciju koda u odvojene module i služi 
+za eliminisanje neorganizovane baze kodova.
+
+Korišćenjem \textit{NestJS} programerima se pruža mogućnost da koriste sve benefite JavaScript-a i uz
+to pišu kod za klijentski i serverski deo aplikacije u istom programskom jeziku. Sadrži komponente 
+funkcionalnog, objektno orijentisanog i funkcionalno reaktivnog programiranja.
+
+Inspirisan \textit{Angular}-om, \textit{NestJS} je napisan u programskom jeziku \textit{TypeScript} 
+i koristi \textit{Express.js}, koji ga čini kompatibilnim sa većinom \textit{Express} posredničnih 
+(eng. \textit{middleware}) softvera. Za razvoj podržava JavaScript i TypeScript, kao i PostgreSQL, 
+MongoDB i MySQL baze podataka.
+
+Osnovne gradivne komponente NestJS aplikacije su kontroleri, provajderi i moduli.
+
+Kao i kod većine radnih okvira, kontroleri u \textit{NestJS} su odgovorini za upravljanje svih dolaznih 
+zahteva i povratnih odgovora ka klijentskom delu aplikacije. \textit{NestJS} je struktuiran tako da je 
+mehanizam za usmeravanje, prikazan na slici \ref{fig:kontroler} sposoban da kontroliše koji kontroler 
+će biti zadužen za određeni zahtev.
+Kako bi se napravio osnovni kontroler, koriste se klase i dekoratori. Dekoratori pridruzuju meta 
+podatke klasama i omogućavaju \textit{Nest}-u da kreira mapu za rutiranje. Za definisanje HTTP 
+metoda za rute, koriste se dekoratori \texttt{@Get()}, \texttt{@Put()}, \texttt{@Post()} i \texttt{@Delete()}.~\cite{nest}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{kontroler}
+    \caption{Komponente sistema}
+    \label{fig:kontroler}
+\end{figure}
+  
+\textit{Nest} provajderi se mogu umetnuti u kontrolere ili u druge provajdere. Nazivaju se i servisi, 
+i dizajnirani su da abstrahuju bilo koji oblik složenosti i logike.
+Servisni provajder u \textit{Nest} je klasa sa specijalnim dekoratorm \texttt{@Injectable()}. 
+
+Moduli omogućavaju grupisanje povezanih fajlova. To su TypeScript fajlovi dekorisani sa 
+\texttt{@Module} dekoratorom, koji pruža meta podatke koje \textit{Nest} koristi za organizaciju 
+strukture aplikacije. Svaka \textit{Nest} aplikacija mora imati bar jedan modul - osnovni modul. 
+Preporučuje se da se velike aplikacije rastave na više modula kako bi se lakše kontrolisala 
+struktura aplikacije.
+
+Tri osnovna koncepta NestJS su:
+\begin{itemize}
+\item \textbf{DTO}: Objekat za prenos podataka (eng. \textit{Data transfer object}) je objekat 
+koji definiše kako će se podaci poslati preko mreže
+\item \textbf{Interfejsi} : \textit{TypeScript} interfejsi se koriste za proveru tipa i 
+definisanje tipova podataka koji se mogu proslediti kontroleru ili \textit{NestJS} servisu
+\item \textbf{Umetanje zavisnosti}: (eng. \textit{Dependency Injection}) je dizajn obrazac 
+koji se koristi za povećanje efikasnosti i modularnosti aplikaicje. Održava kod čistim i 
+lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih komponenata.~\cite{nest_getting_started}
+\end{itemize}
 
 \section{GitHub aplikacija}\label{sec:github_app}
 
