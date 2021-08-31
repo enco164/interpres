@@ -23,7 +23,7 @@ jobs:
           latexmk_use_xelatex: true
           latexmk_shell_escape: true
           extra_system_packages: py-pip
-          pre_compile: pip install Pygments
+          pre_compile: pip install Pygments jsx-lexer
 
       - name: Create Release
         id: create_release

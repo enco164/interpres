@@ -34,7 +34,7 @@ treba prevesti aplikaciju, ali i različita podešavanja za uvoz, odnosno izvoz 
 \section{Uvoz i izvoz prevoda}\label{sec:funkcionalni_zahtevi-uvoz_izvoz}
 
 Proces uvoza i izvoza prevoda iz sistema treba da bude što je više moguće automatizovan. Zapravo, integracija
-sa sistemom za kontrolu verzija, kao što je GitHub, bi pružala najudobniji rad. Integracija bi radila i za 
+sa sistemom za kontrolu verzija, kao što je \textit{GitHub}, bi pružala najudobniji rad. Integracija bi radila i za 
 uvoz prevoda, ali i za izvoz. 
 
 Prevodilac bi mogao preko dugmeta za sinhronizaciju da uveze nove promene 
@@ -42,8 +42,8 @@ koje su se pojavile na repozitorijumu. Promene koje mogu da se pojave na repozit
 ključeva ili brisanje postojećih. Za te potrebe, promene će se uvek preuzimati sa glavne grane iz sistema za 
 kontrolu verzija. 
 
-Izvoz prevoda bi isto moga da se uradi jednim klikom na dugme. U tom slučaju sistem bi napravio novi zahtev 
-za promenu (eng. Pull Request) na GitHub-u, koji bi zahtevao da odobrenje od strane progamera da se spoji sa 
+Izvoz prevoda bi isto mogao da se uradi jednim klikom na dugme. U tom slučaju sistem bi napravio novi zahtev 
+za promenu (eng. \textit{Pull Request}) na \textit{GitHub}-u, koji bi zahtevao da odobrenje od strane progamera da se spoji sa 
 glavnom granom koda.
 
 Ovakvim razdvajanjem dva tima mogu raditi nesmetano. Prevodioci će uvek imati najsvežiju verziju prevoda, 
@@ -65,7 +65,7 @@ aplikacija operativna, funkcionalna i upotrebljiva za ispunjavanje zahteva koris
 Računarstvo u oblaku pruža rešenja da aplikacija bude dostupna u skoro svakom trenutku.
 
 Aplikacije u oblaku su podrazumevano javno dostupne preko veb adrese. Kako bi se podaci zaštitili,
-potrebno je implementirati i sistem za autentikaciju. S obzirom da se već radi integracija sa GiHub-om, radi
-uvoza, odnosno izvoza prevoda, može se iskoristiti GitHub kao provajder identiteta (eng. Identity Provider).
-To zači da je potrebno da prevodici naprave svoje naloge na GitHub-u s kojima će se kasnije prijavljivati 
+potrebno je implementirati i sistem za autentikaciju. S obzirom da se već radi integracija sa \textit{GiHub}-om, radi
+uvoza, odnosno izvoza prevoda, može se iskoristiti \textit{GitHub} kao provajder identiteta (eng. \textit{Identity Provider}).
+To zači da je potrebno da prevodici naprave svoje naloge na \textit{GitHub}-u s kojima će se kasnije prijavljivati 
 na sistem.

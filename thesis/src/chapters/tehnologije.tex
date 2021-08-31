@@ -39,26 +39,26 @@ Neke od prednosti kontejnerizacije su sledeće:
     od virtuelnih mašina.
 \end{itemize}
 
-Docker je platforma koja aplikaciju i sve njene zavisnosti pakuje u formi kontejnera. 
+\textit{Docker} je platforma koja aplikaciju i sve njene zavisnosti pakuje u formi kontejnera. 
 Ovakav aspekt obezbeđuje da aplikacija radi na svim okruženjima.
 
 Svaka aplikacija se pokreće na zasebnom kontejneru i ima svoj skup zavisnosti i biblioteka. 
 Zbog toga možemo biti sigurni da svaka aplikacija radi nezavisno od ostalih aplikacija, 
 dajući programerima sigurnost da grade aplikacije koje neće posredovati međusobno.
 
-Docker fajl je tekstualni dokument koji sadrži sve komande koje korisnik može pokrenuti 
-u komandnoj liniji kako bi se sastavila Docker slika. Docker može izgraditi sliku automatski 
-na osnovu pročitanih instrukcija iz Docker fajla.
+\textit{Docker} fajl je tekstualni dokument koji sadrži sve komande koje korisnik može pokrenuti 
+u komandnoj liniji kako bi se sastavila \textit{Docker} slika. \textit{Docker} može izgraditi sliku automatski 
+na osnovu pročitanih instrukcija iz \textit{Docker} fajla.
 
-Docker sliku možemo uporediti sa šablonom koji se koristi za kreiranje Docker kontejnera. 
+\textit{Docker} sliku možemo uporediti sa šablonom koji se koristi za pravljenje \textit{Docker} kontejnera. 
 To su šabloni koji se ne mogu menjati i predstavljaju gradivni element kontejnera.
-Docker slike se čuvaju u Docker registrima. 
+\textit{Docker} slike se čuvaju u \textit{Docker} registrima. 
 
-Docker kontejner je pokrenuta instanca Docker slike. Sadrži sve što je potrebno da bi se 
-pokrenula aplikacija. To je u osnovi spremna aplikacija kreirana iz Docker slike, 
-što ujedno predstavlja i krajnji produkt Docker-a.~\cite{docker}
+\textit{Docker} kontejner je pokrenuta instanca \textit{Docker} slike. Sadrži sve što je potrebno da bi se 
+pokrenula aplikacija. To je u osnovi spremna aplikacija kreirana iz \textit{Docker} slike, 
+što ujedno predstavlja i krajnji produkt \textit{Docker}-a.~\cite{docker}
 
-Docker je trenutno najpopularnija implementacija kontejnera.
+\textit{Docker} je trenutno najpopularnija implementacija kontejnera.
 
 \section{Kubernetes}\label{sec:kubernetes}
 
@@ -68,28 +68,28 @@ Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko. Na kraju
 upakuju ceo sistem i predaju ga timu zaduženom za operacije, koji ga kasnije instalira i nadgleda. U slučaju hardverske
 greške, tim za operacije ručno migrira sistem na preostale servere koji su bez greške.
 
-Danas se ovako veliki monoliti rasčlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. S obzirom
+Danas se ovako veliki monoliti rasčlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. Obzirom
 da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
 Ovakva osobina omogućava češće promene na komponentama. S druge strane, povećanjem broja komponenti koje treba 
 instalirati postaje sve teže konfigurisati, upravljati i očuvati ceo sistem u radnom stanju. Pored navedenog, mnogo 
 je teže shvatiti kako i gde postaviti ove komponente kako bi se postigla veća iskorišćenost resursa, a samim tim i 
 smanjiti cenu potrebnog hardvera. Odatle postoji potreba za automatizacijom, koja uključuje automatsku konfiguraciju,
-nadzor  i rešavanje problema. Iz ovih razloga je razvijen Kubernetes.
+nadzor  i rešavanje problema. Iz ovih razloga je razvijen \textit{Kubernetes}.
 
-Kubernetes omogućava programerima da sami instaliraju svoju aplikaciju, bez pomoći tima za operacije. Ali s druge 
+\textit{Kubernetes} omogućava programerima da sami instaliraju svoju aplikaciju, bez pomoći tima za operacije. Ali s druge 
 strane, nemaju samo programeri benefit. Ovaj alat takođe pomaže operacionom timu tako što automatski nadgleda, 
 i u slučaju greške pokreće nove instance aplikacija. To znači da se fokus operacionog tima preusmerava sa nadgledanja
-pojedinačnih aplikacija na nadgledanje i upravljanje infrastrukture i Kubernetes alata, dok se Kubernetes stara o samim
+pojedinačnih aplikacija na nadgledanje i upravljanje infrastrukture i \textit{Kubernetes} alata, dok se \textit{Kubernetes} stara o samim
 aplikacijama.
 
-Kubernetes apstrahuje hardversku infrastrukturu i pruža privid da je ceo data centar jedan veliki resurs. To omogućava
+\textit{Kubernetes} apstrahuje hardversku infrastrukturu i pruža privid da je ceo data centar jedan veliki resurs. To omogućava
 velikim kompanijama koje pružaju usluge računarstva u oblaku da ponude programerima jednostavnu platformu za pokretanje
 raznih tipova aplikacija, a da pritom njihovi administratori sistema ne znaju koje su aplikacije pokrenute na njihovom
-hardveru. Kako velike kompanije sve više prihvataju Kubernetes model kao jedan od boljih načina za pokretanje aplikacija,
-tako Kubernetes postaje standardan model za računarstvo u oblaku~\cite{KIA}.
+hardveru. Kako velike kompanije sve više prihvataju \textit{Kubernetes} model kao jedan od boljih načina za pokretanje aplikacija,
+tako \textit{Kubernetes} postaje standardan model za računarstvo u oblaku~\cite{KIA}.
 
-Kubernetes je softver otvorenog koda koji služi za okestraciju kontejnera, a razvijen je od 
-strane Google-a. Pomaže pri upravljanju aplikacijama koje su razvijene u velikom broju 
+\textit{Kubernetes} je softver otvorenog koda koji služi za okestraciju kontejnera, a razvijen je od 
+strane \textit{Google}-a. Pomaže pri upravljanju aplikacijama koje su razvijene u velikom broju 
 kontejnera. Može da se primeni na različita okruženja za isporuku, kao što su fizički 
 hardver, virtuelne mašine ili oblak.
 
@@ -99,91 +99,91 @@ To je dalje dovelo do toga da se aplikacije sada nalaze u velikom broju kontejne
 tim kontejnerima, kroz različita oruženja, uz pomoć skripti ili alata koji su nastali u okviru 
 kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno.
 
-Prednosti korišćenja Kubernetes su mnogobrojne. Visoka dostupnost aplikacije je jedna od tih prednosti. 
+Prednosti korišćenja \textit{Kubernetes} su mnogobrojne. Visoka dostupnost aplikacije je jedna od tih prednosti. 
 To zači da će korisnici moći (skoro) uvek da pristupe aplikaciji. Druga prednost je horizontalna 
 skalabilnost aplikacije, odnosno po potrebi se lako dodaju novi čvorovi sistemu. Treća prednost koja 
-dolazi uz korišćenje Kubernetes je oporavak od otkazivanja, što praktično znači da, ako je došlo do 
-greške u infrastrukturi, Kubernetes ima mehanizme da bekapuje podatke i da nastavi sa radom od 
+dolazi uz korišćenje \textit{Kubernetes} je oporavak od otkazivanja, što praktično znači da, ako je došlo do 
+greške u infrastrukturi, \textit{Kubernetes} ima mehanizme da bekapuje podatke i da nastavi sa radom od 
 poslednjeg sačuvanog stanja.
 
 \subsection{Arhitektura Kubernetes-a}
-Arhitektura Kubernetes-a počinje od klastera. Klaster predstavlja skup čvorova. Svaki klaster sadrži
+Arhitektura \textit{Kubernetes}-a počinje od klastera. Klaster predstavlja skup čvorova. Svaki klaster sadrži
 jedan glavni čvor koji je povezan sa jednim ili više radnih čvora. Radni čvorovi na sebi imaju 
 takozvani "kublet" porces koji je pokrenut na njima. Ovaj proces služi da klaster moze da komunicira
 sa radnim čvorovima i izvšava određene poslove na njima, kao što je pokretanje procesa za aplikacije.
-Svaki radni čvor ima različite Docker kontejnere, različitih aplikacija, koje su isporučene na njemu.
+Svaki radni čvor ima različite \textit{Docker} kontejnere, različitih aplikacija, koje su isporučene na njemu.
 Raspored kontejnera u radnim čvorovima zavisi od opterećenja sistema. Ako je opterećenje za određeni 
-servis veće, Kubernetes može da pokrene veći broj kontejnera za taj servis. 
+servis veće, \textit{Kubernetes} može da pokrene veći broj kontejnera za taj servis. 
 
 Dok se aplikacija izvršava na radnim čvorovima, glavni čvor služi da se na njemu pokrenu bitni procesi 
-bez kojih Kubernetes ne može da radi. Jedan od tih procasa je {\em API Server}, koji služi za 
-komunikaciju sa različitim Kubernetes klijentima, kao što je korisnički interfejs ili alat u 
+bez kojih \textit{Kubernetes} ne može da radi. Jedan od tih procasa je {\em API Server}, koji služi za 
+komunikaciju sa različitim \textit{Kubernetes} klijentima, kao što je korisnički interfejs ili alat u 
 komandnoj liniji. Drugi proces koji se nalazi na glavnom čvoru je {\em Controller manager} koji 
-prati šta se dešava u klasteru,da li nešto treba da se popravi, ili da otkrije da je došlo do greške 
+prati šta se dešava u klasteru, da li nešto treba da se popravi, ili da otkrije da je došlo do greške 
 u kontejneru. Dalje, na glavnom čvoru se nalazi proces pod imenom {\em Scheduler} koji je zadužen 
 za podizanje kontejnera na različitim čvorovima u odnosu na opterećenje i dostupne resurse na svakom 
-čvoru. Scheduler je pametan proces koji odlučuje na kom čvoru će biti podignut koji kontejner. 
+čvoru. \textit{Scheduler} je pametan proces koji odlučuje na kom čvoru će biti podignut koji kontejner. 
 Još jedna bitna komponenta na glavnom čvoru je {\em etcd}, "ključ -- vrednost" skladište, koje služi 
-da čuva stanje Kubernetes klastera. On čuva sve konfiguracije za svaki čvor, aplikaciju, ali i statusne 
-podatke o svakom kontejneru. Poslednja, ali nimalo manje važna komponenta u arhitekturi Kubernetes-a, 
+da čuva stanje \textit{Kubernetes} klastera. On čuva sve konfiguracije za svaki čvor, aplikaciju, ali i statusne 
+podatke o svakom kontejneru. Poslednja, ali nimalo manje važna komponenta u arhitekturi \textit{Kubernetes}-a, 
 je virtuelna mreža. Preko nje čvorovi mogu međusobno da komuniciraju. 
 
 Može se primetiti da će glavni resursi biti raspoređeni na radne čvorove, jer oni služe za pokretanje 
 aplikacije. Za glavni čvor nije potrebno toliko resrursa, jer se na njemu pokrecu ne toliko zahtevni procesi 
-koji služe samo za rad Kubernetesa. Ako nekim slučajem dođe do otkazivanja radnog čvora, glavni čvor 
+koji služe samo za rad \textit{Kubernetesa}. Ako nekim slučajem dođe do otkazivanja radnog čvora, glavni čvor 
 će se pobrinuti da se podigne novi radni čvor sa istom konfiguracijom. S druge strane, ako dođe do 
 otkazivanja glavnog čvora, gubimo konekciju sa svim ostalim čvorovima. Iz tog razloga, u produkcionom 
 okruženju se uvek drži barem 2 pokrenuta glavna čvora, tako da, ako jedan padne, drugi preuzima 
 posao na sebe.
 
 \subsection{Osnovni koncepti Kubernetes-a}
-{\em Pod} u Kubernetes-u predstavnja najmanju jedinicu koja može da se konfiguriše i sa kojom može da 
+{\em Pod} u \textit{Kubernetes}-u predstavnja najmanju jedinicu koja može da se konfiguriše i sa kojom može da 
 se ostvari interakcija. On praktično predstavlja omotač oko kontejnera. U okviru jednog radnog čvora 
-može se naći više Pod-ova, a u jednom Pod-u se može naći više kontejnera. Uobičajeno je da se jedan 
-kontejner nalazi u jednom Pod-u, ali postoje slučajevi kada jedan kontejner zahteva pomoćne kontejnere 
-i tada se može naći više njih u jednom Pod-u. To zači da će jedna aplikacija, odnosno jedan servis, 
-biti u jednom Pod-u. Pod predstavlja abstrakciju za upravljanje nad kontejnerom koji se poreće unutar
-Pod-a. Na primer, ako se kontejner ugasi, Pod će ga ponovo podići za nas. 
+može se naći više \textit{Pod}-ova, a u jednom \textit{Pod}-u se može naći više kontejnera. Uobičajeno je da se jedan 
+kontejner nalazi u jednom \textit{Pod}-u, ali postoje slučajevi kada jedan kontejner zahteva pomoćne kontejnere 
+i tada se može naći više njih u jednom \textit{Pod}-u. To zači da će jedna aplikacija, odnosno jedan servis, 
+biti u jednom \textit{Pod}-u. \textit{Pod} predstavlja abstrakciju za upravljanje nad kontejnerom koji se poreće unutar
+\textit{Pod}-a. Na primer, ako se kontejner ugasi, \textit{Pod} će ga ponovo podići za nas. 
 
-Pod-ovi predstavljaju privremene komponente, što znači da često mogu da otkažu iz različitih razloga. 
-Na primer, kada je potrebno isporučiti novu verziju aplikacije, prvo će se kreirati novi Pod-ovi sa 
+\textit{Pod}-ovi predstavljaju privremene komponente, što znači da često mogu da otkažu iz različitih razloga. 
+Na primer, kada je potrebno isporučiti novu verziju aplikacije, prvo će se napraviti novi Pod-ovi sa 
 novom verzijom, a potom će se stari ukloniti. Pomenuta virtuelna mreža koja se nalazi nad celim 
-klasterom će svakom Pod-u dodeliti po jednu IP adresu. To znači da je svaki Pod zaseban server sa 
-svojom IP adresom preko koje međusobno komuniciraju.
+klasterom će svakom \textit{Pod}-u dodeliti po jednu \textit{IP} adresu. To znači da je svaki \textit{Pod} zaseban server sa 
+svojom \textit{IP} adresom preko koje međusobno komuniciraju.
 
-S obzirom da se Pod-ovi predstavljaju privremene komponente, i da se kreiranjem novog Pod-a dodeljuje 
-nova IP adresa, prirodno se uvodi pojam {\em Servisa}. Servis predstavlja zamenu za IP adrese, tako 
-da umesto da podovi komuniciraju međusobno preko IP adrese, oni mogu da komuniciraju preko Servisa 
-koji dalje prosleđuju komunikaciju Pod-u. Tako da, ako se Pod rekreira, ostali će znati da komuniciraju 
-s njim kada ponovo bude dostupan. Pored zamene IP adrese, Servisi služe i kao balanseri opterećenja. 
+Obzirom da se \textit{Pod}-ovi predstavljaju privremene komponente, i da se pravljenjem novog \textit{Pod}-a dodeljuje 
+nova \textit{IP} adresa, prirodno se uvodi pojam {\em Servisa}. Servis predstavlja zamenu za \textit{IP} adrese, tako 
+da umesto da podovi komuniciraju međusobno preko \textit{IP} adrese, oni mogu da komuniciraju preko Servisa 
+koji dalje prosleđuju komunikaciju \textit{Pod}-u. Tako da, ako se \textit{Pod} ponovo napravi, ostali će znati da komuniciraju 
+s njim kada ponovo bude dostupan. Pored zamene \textit{IP} adrese, Servisi služe i kao balanseri opterećenja. 
 
 \subsection{Konfiguracija Kubernetes-a}
-Konfigurisanje Kubernetes sistema se odvija deklarativno, uz pomoć YAML fajla. U njemu deklarišemo
-koji kontejner treba da se podgne, od koje Docker slike treba da se napravi, koliko Pod-ova treba 
-da bude u svakom trenutku, kao i promenljive iz okruženja. Kubernetes se stara da ovi zahtevi budu 
-ispoštovani, i za to je zadužen Controller Manager, koji proverava konfiguraciju i upravlja ostalim 
+Konfigurisanje \textit{Kubernetes} sistema se odvija deklarativno, uz pomoć \textit{YAML} fajla. U njemu deklarišemo
+koji kontejner treba da se podgne, od koje \textit{Docker} slike treba da se napravi, koliko \textit{Pod}-ova treba 
+da bude u svakom trenutku, kao i promenljive iz okruženja. \textit{Kubernetes} se stara da ovi zahtevi budu 
+ispoštovani, i za to je zadužen \textit{Controller Manager}, koji proverava konfiguraciju i upravlja ostalim 
 procesima. 
 
 \section{Kontinualna integracija, isporuka i raspoređivanje}\label{sec:arhitektura-ci_cd}
 
-CI/CD je metod za često dostavljanje aplikacija korisnicima kroz predstavljanje automatizacije u 
-fazama razvoja aplikacije. Glavni koncept CI/CD su kontinualna integracija (eng. 
+\textit{CI/CD} je metod za često dostavljanje aplikacija korisnicima kroz predstavljanje automatizacije u 
+fazama razvoja aplikacije. Glavni koncept \textit{CI/CD} su kontinualna integracija (eng. 
 \textit{continuous integration}), kontinualno dostavljanje (eng. \textit{continuous delivery}) i 
-kontinualno raspoređivanje (eng. \textit{continuous deployment}). CI/CD je rešenje za problem 
+kontinualno raspoređivanje (eng. \textit{continuous deployment}). \textit{CI/CD} je rešenje za problem 
 koji nastaje prilikom integracije novog koda.
 
-CI/CD uvodi automatizaciju i kontinualno praćenje kroz životni ciklus aplikacije, 
+\textit{CI/CD} uvodi automatizaciju i kontinualno praćenje kroz životni ciklus aplikacije, 
 od integracije i testne faze do dostavljanja i raspoređivanja. Zajedno, ove povezane prakse 
-često se nazivaju “CI/CD tok” (eng. \textit{CI/CD pipeline}), a podržani su i od strane razvojnih 
+često se nazivaju “\textit{CI/CD} tok” (eng. \textit{CI/CD pipeline}), a podržani su i od strane razvojnih 
 i od strane operativnih timova.
 
 \subsection{Razlika između CI i CD}
-Akronim CI/CD ima više različitih značenja. “CI” u CI/CD uvek označava kontinualnu integraciju, 
-koja predstavlja automatizovan proces za programere. Uspešan CI označava da su nove izmene koda 
+Akronim \textit{CI/CD} ima više različitih značenja. \textit{“CI”} u \textit{CI/CD} uvek označava kontinualnu integraciju, 
+koja predstavlja automatizovan proces za programere. Uspešan \textit{CI} označava da su nove izmene koda 
 na aplikaciji regularno izgrađene, testirane i pripojene deljenom repozitorijumu. To je rešenje 
 za problem koji postoji onda kada ima previše grana u razvoju koje mogu dovesti do konflikata.
 
-“CD” u CI/CD označava kontinualno dostavljanje i/ili kontinualno raspoređivanje, koji su povezani 
+\textit{“CD”} u \textit{CI/CD} označava kontinualno dostavljanje i/ili kontinualno raspoređivanje, koji su povezani 
 koncepti i mogu se koristiti naizmenično. I jedan i drugi tiču se automatizacije faza toka, međutim, 
 nekada se koriste i odvojeno u cilju prikaza količine automatizacije koja se odvija.
 
@@ -200,19 +200,19 @@ aplikacije. Zasniva se na prednostima kontinualnog dostavljanja automatizacijom 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.75\textwidth]{ci-cd-flow-desktop}
-    \caption{CI/CD tok}
+    \caption{\textit{CI/CD} tok}
 \end{figure}
 
-Moguće je da CI/CD obuhvati povezane prakse kontinualne integracije i kontinualnog dostavljanja, 
+Moguće je da \textit{CI/CD} obuhvati povezane prakse kontinualne integracije i kontinualnog dostavljanja, 
 ili sve 3 povezane prakse kontinualne integracije, kontinualnog dostavljanja i kontinualnog 
 raspoređivanja. Dodatnu komplikaciju stvara to što se kontinualna isporuka može nekada koristiti 
 na način koji obuhvata procese kontinualnog raspoređivanja.
 
-CI/CD je u stvari proces, često predstavljen kao tok, koji obuhvata uvođenje visokog stepena 
+\textit{CI/CD} je proces, često predstavljen kao tok, koji obuhvata uvođenje visokog stepena 
 automatizacije i kontinualnog praćenja razvoja aplikacije.
 
 Od slučaja do slučaja, na šta se termini konkretno odnose zavisi od toga koliko je automatizacije 
-ugrađenou CI/CD tok. Mnoga preduzeća započinju dodavanjem CI, nakon čega uvode automatizaciju 
+ugrađenou \textit{CI/CD} tok. Mnoga preduzeća započinju dodavanjem \textit{CI}, nakon čega uvode automatizaciju 
 dostavljanja i raspoređivanja.
 
 \subsection{Kontinualna integracija}
@@ -222,16 +222,16 @@ vrši u jednom danu, takav posao može biti monoton, manuelan i dugotrajan. To s
 kada programer vrši izmene na aplikaciji i na taj način povećava šansu za nastajanje konflikta sa 
 izmenama koje istovremeno prave drugi programeri.
 
-Kontinualna integracija (CI) pomaže programerima da spoje izmene na kodu na deljenu granu češće, 
+Kontinualna integracija (\textit{CI}) pomaže programerima da spoje izmene na kodu na deljenu granu češće, 
 čak i na dnevnom nivou. Nakon spajanja izmenjenih delova koda, izmene se validiraju tako što se 
 automatski gradi aplikacija i pokreće se više nivoa automatskog testiranja. To znači da se testira 
 sve, od klasa i funkcija do različitih modula koji su deo aplikacije. Ako automatski testovi pronađu 
-konflikt između novog i postojećeg koda, CI nudi lako rešavanje konflikata.
+konflikt između novog i postojećeg koda, \textit{CI} nudi lako rešavanje konflikata.
 
 \subsection{Kontinualna dostavljanje}
-Nakon automatskog građenja aplikacije i testiranja u CI, kontinualno dostavljanje automatizuje 
+Nakon automatskog građenja aplikacije i testiranja u \textit{CI}, kontinualno dostavljanje automatizuje 
 puštanje prethodno validiranog koda na repozitorijum. Kako bismo imali efektivan proces kontinualne 
-dostave, važno je da imamo već ugrađen CI u protoku. Cilj kontinualnog dostavljanja jeste postojanje 
+dostave, važno je da imamo već ugrađen \textit{CI} u protoku. Cilj kontinualnog dostavljanja jeste postojanje 
 baze koda koja je uvek spremna za raspoređivanje na produkciono okruženje.
 
 U kontinualnom dostavljanju, svaka faza, počevši od spajanja izmenjenog koda do dostavljanja 
@@ -240,29 +240,29 @@ koda. Na kraju tog procesa, operacioni tim je u mogućnosti da brzo i jednostavn
 aplikaciju na produkciju.
 
 \subsection{Kontinualno raspoređivanje}
-Poslednja faza CI/CD protoka je kontinualno raspoređivanje. Kao dodatak kontinualnom dostavljanju, 
+Poslednja faza \textit{CI/CD} protoka je kontinualno raspoređivanje. Kao dodatak kontinualnom dostavljanju, 
 koji automatizuje isporuku verzija spremnih za produkciju, kontinualno raspoređivanje automatizuje 
 puštanje aplikacije u produkciju. U velikoj meri se oslanja na dobro osmišljeno automatsko testiranje.
 
 U praksi, kontinualno raspoređivanje znači da izmene na aplikaciji mogu biti na produkciji za samo 
 nekoliko minuta (pod pretpostavkom da su automatski testovi uspešno završeni).
 
-Sve povezane prakse CI/CD čine raspoređivanje aplikacije manje rizičnim, stoga je lakše pustiti 
+Sve povezane prakse \textit{CI/CD} čine raspoređivanje aplikacije manje rizičnim, stoga je lakše pustiti 
 promene u aplikaciji u delovima, pre nego odjednom.~\cite{CI_CD}
 
 \subsection{GitHub Akcije}
-Za verzionisanje koda se može koristiti GitHub. Pored verzionisanja, on pruža i alate za automatizaciju 
-kontinualne integracije, isporue i raspoređivanja, kroz alat koji su nazvali \textit{Github Akcije} 
-(eng. \textit{Github Actions}). 
-GitHub Akcije su zasnovane na događajima, što znači da mogu da pokrenu niz komandi koje će se desiti 
+Za verzionisanje koda se može koristiti \textit{GitHub}. Pored verzionisanja, on pruža i alate za automatizaciju 
+kontinualne integracije, isporuke i raspoređivanja, kroz alat koji su nazvali \textit{GitHub Akcije} 
+(eng. \textit{GitHub Actions}). 
+\textit{GitHub Akcije} su zasnovane na događajima, što znači da mogu da pokrenu niz komandi koje će se desiti 
 posle navedenog događaja. Na primer, svaki put kada neko napravi \textit{zahtev za promenu} 
-(eng. \textit{Pull Request}) nad repozitorijumu, može se automatski pokrenuti komanda koja pokreće 
+(eng. \textit{Pull Request}) na repozitorijumu, može se automatski pokrenuti komanda koja pokreće 
 testove. 
 
-GitHub Akcije koriste YAML fajlove kako bi se definisale komponente toka rada. Ovi fajlovi 
+\textit{GitHub Akcije} koriste \textit{YAML} fajlove kako bi se definisale komponente toka rada. Ovi fajlovi 
 se čuvaju u repozitorijumu, u folderu pod nazivom \mbox{\texttt{.github/workflows}}.
 
-Komponente koje postoje u GitHub Akcijama su: 
+Komponente koje postoje u \textit{GitHub Akcijama} su: 
 
 \begin{itemize}
     \item Tok rada (eng. \textit{Workflow})
@@ -276,7 +276,7 @@ Komponente koje postoje u GitHub Akcijama su:
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{overview-actions-design}
-    \caption{Prikaz interakcija komponenata GitHub Akcija}
+    \caption{Prikaz interakcija komponenata \textit{GitHub Akcija}}
 \end{figure}
 
 \subsubsection{Tok rada}
@@ -287,7 +287,7 @@ različita okruženja.
 
 \subsubsection{Događaji}
 Događaj je specifična aktivnost koja pokreće tok rada. Na primer, aktivnost može nastati kad neko napravi 
-zahtev za promenu. Aktivnost ne mora da bude u okviru GitHub-a. Ona može doći preko poziva od strane 
+zahtev za promenu. Aktivnost ne mora da bude u okviru \textit{GitHub}-a. Ona može doći preko poziva od strane 
 nekog eksternog sistema.
 
 \subsubsection{Posao}
@@ -305,10 +305,10 @@ dele podatke između sebe.
 \subsubsection{Akcija}
 Akcije predstavljaju samostalne komande koje se mogu kombinovati u korake kako bi sačinile jedan posao.
 Akcije su najmanje portabilne jedinice građe toka rada. Korisnici mogu sami da naprave svoje akcije,
-ili da koriste akcije koje su napravljene od strane GitHub zajednice. 
+ili da koriste akcije koje su napravljene od strane \textit{GitHub} zajednice. 
 
 \subsubsection{Izvršilac}
-Izvršilac je mašina nad kojom se GitHub Akcije izvršavaju. Izvršilac osluškuje pokrenute poslove,
-pokreće jedan posao za drugim, i šalje izveštaje GitHub-u o napretku, logovima i rezultatima. Ove 
-mašine mogu da budu bazirane na Linux, Windows i macOS operativnim sistemima, a svaki posao 
+Izvršilac je mašina nad kojom se \textit{GitHub Akcije} izvršavaju. Izvršilac osluškuje pokrenute poslove,
+pokreće jedan posao za drugim, i šalje izveštaje \textit{GitHub}-u o napretku, logovima i rezultatima. Ove 
+mašine mogu da budu bazirane na \textit{Linux}, \textit{Windows} i \textit{macOS} operativnim sistemima, a svaki posao 
 unutar toka rada se pokreće iz novog virtuelnog okruženja.~\cite{GitHubActions}

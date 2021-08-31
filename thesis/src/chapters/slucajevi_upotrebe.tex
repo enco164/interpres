@@ -9,31 +9,31 @@
 
 \textbf{Kratak opis}: Korisnik se prijavljuje sa sopstvenim kredencijalima
 
-\textbf{Učesnici}: Korisnik, Veb aplikacija, Gateway, GitHub Identity Provider (IdP)
+\textbf{Učesnici}: Korisnik, Veb aplikacija, \textit{Gateway}, \textit{GitHub Identity Provider (IdP)}
 
 \textbf{Postuslov}: Korisnik je prijavljen
 
 \textbf{Glavni tok}:
 \begin{enumerate}
     \item Korisnik klikne na dugme za prijavu
-    \item Sistem šalje zahtev prema Gateway-u za prijavu
-    \item Gateway vraća preusmeravanje (302 Redirect) na stranicu za prijavu 
-    provajdera identiteta (u ovom slučaju GitHub)
+    \item Sistem šalje zahtev prema \textit{Gateway}-u za prijavu
+    \item \textit{Gateway} vraća preusmeravanje (302 \textit{Redirect}) na stranicu za prijavu 
+    provajdera identiteta (u ovom slučaju \textit{GitHub})
     \item Šalje se zahtev za dobijanje stranice za prijavu provajdera 
     identiteta
-    \item GitHub šalje stranicu za prijavu korisnika
+    \item \textit{GitHub} šalje stranicu za prijavu korisnika
     \item Korisnik unosi svoje kredencijale
     \item Korisnik šalje zahtev za prijavu klikom na dugme
-    \item GitHub dobija podatke za prijavu i nakon uspešnog prijavljivanja 
+    \item \textit{GitHub} dobija podatke za prijavu i nakon uspešnog prijavljivanja 
     šalje kod za pristup veb aplikaciji
-    \item Veb aplikacija prosleđuje Gateway-u kod za pristup
-    \item Gateway, uz zahtev za dobijanje podataka o korisniku, prosleđuje 
-    kod za pristup GitHub-u 
-    \item GitHub Gateway-u vraća podatke o korisniku
-    \item Na osnovu dobijenih podataka Gateway generiše JWT token
-    \item Gateway šalje JWT token Veb aplikaciji
+    \item Veb aplikacija prosleđuje \textit{Gateway}-u kod za pristup
+    \item \textit{Gateway}, uz zahtev za dobijanje podataka o korisniku, prosleđuje 
+    kod za pristup \textit{GitHub}-u 
+    \item \textit{GitHub Gateway}-u vraća podatke o korisniku
+    \item Na osnovu dobijenih podataka \textit{Gateway} generiše \textit{JWT} token
+    \item \textit{Gateway} šalje \textit{JWT} token Veb aplikaciji
     \item Veb aplikacija omogućava prikaz zaštićene stranice korisniku 
-    i čuva JWT token za buduće komunikacije
+    i čuva \textit{JWT} token za buduće komunikacije
 \end{enumerate}
 
 \begin{figure}[H]
@@ -44,56 +44,54 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%
-\section{Kreiranje projekta}
+\section{Pravljenje projekta}
 
-\textbf{Kratak opis}: Korisnik ima mogućnost da kreira novi projekat
+\textbf{Kratak opis}: Prevodilac ima mogućnost da napravi novi projekat
 
-\textbf{Učesnici}: Korisnik
+\textbf{Učesnici}: Prevodilac
 
-\textbf{Postuslov}: Projekat je kreiran
+\textbf{Postuslov}: Projekat je napravljen
 
 \textbf{Glavni tok}:
 \begin{enumerate}
-    \item Sistem prikazuje opciju za kreiranje novog projekta
-    \item Korisnik bira akciju za kreiranje novog projekta
+    \item Sistem prikazuje opciju za pravljenje novog projekta
+    \item Prevodilac bira akciju za pravljenje novog projekta
     \item Sistem prikazuje formu sa tekstualnim poljima za unos podataka o projektu
-    \item Korisnik unosi naziv projekta, vlasnika Github repozitorijuma, 
-    GitHub repozitorijum i putanju na kojoj će se čuvati podaci o projektu
-    \item Korisnik klikne na dugme za kreiranje projekta
+    \item Prevodilac unosi naziv projekta, vlasnika \textit{GitHub} repozitorijuma, 
+    \textit{GitHub} repozitorijum i putanju na kojoj će se čuvati podaci o projektu
+    \item Prevodilac klikne na dugme za pravljenje projekta
     \item Sistem čuva projekat
-    \item Sistem korisniku vraća stranicu sa podacima o projektu
+    \item Sistem prevodiocu vraća stranicu sa podacima o projektu
 \end{enumerate}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{kreiranje_projekta}
-    \caption{Dijagram aktivnosti - kreiranje projekta}
+    \caption{Dijagram aktivnosti - pravljenje projekta}
 \end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Uvoz prevoda}
 
-\textbf{Kratak opis}: Korisnik želi da uveze prevode sa GitHub-a
+\textbf{Kratak opis}: Prevodilac želi da uveze prevode sa \textit{GitHub}-a
 
-\textbf{Učesnici}: Korisnik
+\textbf{Učesnici}: Prevodilac
 
-\textbf{Postuslov}: Korisnik se nalazi na projektu u koji želi da uveze prevode
+\textbf{Postuslov}: Prevodilac se nalazi na projektu u koji želi da uveze prevode
 
 \textbf{Glavni tok}:
 \begin{enumerate}
-    \item Sistem prikazuje opcije za uvoz i izvoz projekta
-    \item Korisnik bira akciju za izvoz projekta
-    \item Sistem prikazuje modal sa porukom da će se uvozom projekta sve 
+    \item Sistem prikazuje opcije za uvoz i izvoz prevoda
+    \item Prevodilac bira akciju za uvoz prevoda
+    \item Sistem prikazuje modal sa porukom da će se uvozom prevoda sve 
     izmene koje nisu izvezene izgubiti
-    \item Korisnik unosi naziv projekta, vlasnika Github repozitorijuma, 
-    GitHub repozitorijum i putanju na kojoj će se čuvati podaci o projektu
-    \item Korisnik klikne na dugme "OK" ukoliko nema prevoda koji nisu sačuvani
+    \item Prevodilac klikne na dugme "\textit{OK}" ukoliko nema prevoda koji nisu sačuvani
     \item Sistem uvozi prevode
     \item Sistem zatvara modal
 \end{enumerate}
 
-\textbf{Alternativni tok}: Ukoliko korisnik u koraku 5. klikne na dugme "Cancel", 
+\textbf{Alternativni tok}: Ukoliko prevodilac u koraku 5. klikne na dugme "\textit{Cancel}", 
 sistem zatvara modal i prevodi neće biti uvezeni.
 
 \begin{figure}[H]
@@ -106,19 +104,19 @@ sistem zatvara modal i prevodi neće biti uvezeni.
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Izmena prevoda}
 
-\textbf{Kratak opis}: Korisnik vrši izmene kako bi dodao novi prevod ili izmenio postojeći
+\textbf{Kratak opis}: Prevodilac vrši izmene kako bi dodao novi prevod ili izmenio postojeći
 
-\textbf{Učesnici}: Korisnik
+\textbf{Učesnici}: Prevodilac
 
 \textbf{Postuslov}: Uspešno izvršena izmena prevoda
 
 \textbf{Glavni tok}:
 \begin{enumerate}
     \item Sistem prikazuje listu prevoda sa odgovarajućim ključevima
-    \item Korisnik klikne na željeni ključ za koji želi da unese ili izmeni prevod
+    \item Prevodilac klikne na željeni ključ za koji želi da unese ili izmeni prevod
     \item Sistem vraća tekstualna polja za unos za onoliko jezika koliko je u tom 
     trenutku dostupno za izabrani ključ
-    \item Korisnik unosi ili menja jedan ili više prevoda
+    \item Prevodilac unosi ili menja jedan ili više prevoda
     \item Prevod se automatski šalje na čuvanje u trenutku kada tekstualno polje izgubi fokus
     \item Sistem čuva izmenjeni prevod
 \end{enumerate}
@@ -133,25 +131,25 @@ sistem zatvara modal i prevodi neće biti uvezeni.
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Izvoz prevoda}
 
-\textbf{Kratak opis}: Korisnik želi da izveze prevode izabranog projekta i 
-na taj način kreira pull request na GitHub-u
+\textbf{Kratak opis}: Prevodilac želi da izveze prevode izabranog projekta i 
+na taj način praov \textit{Pull Request} na \textit{GitHub}-u
 
-\textbf{Učesnici}: Korisnik
+\textbf{Učesnici}: Prevodilac
 
-\textbf{Preduslov}: Korisnik se nalazi na projektu koji želi da izveze
+\textbf{Preduslov}: Prevodilac se nalazi na projektu koji želi da izveze
 
-\textbf{Postuslov}: Uspešno izvezen sadrđaj projekta
+\textbf{Postuslov}: Uspešno izvezen sadrđaj prevoda
 
 \textbf{Glavni tok}:
 \begin{enumerate}
     \item Sistem prikazuje opcije za uvoz i izvoz prevoda
-    \item Korisnik bira akciju za izvoz prevoda
+    \item Prevodilac bira akciju za izvoz prevoda
     \item Sistem prikazuje modal sa formom za unos naslova i opisa 
-    zahteva za promenu (eng. Pull Request)
-    \item Korisnik unosi naslov i opis u tekstualna polja
-    \item Korisnik klikne na dugme OK
-    \item Sistem pokreće akciju izvoza projekta
-    \item Na GitHub-u se kreira zahtev za promenu sa izmenjenim fajlovima za prevode
+    zahteva za promenu (eng. \textit{Pull Request})
+    \item Prevodilac unosi naslov i opis u tekstualna polja
+    \item Korisnik klikne na dugme \textit{OK}
+    \item Sistem pokreće akciju izvoza prevoda
+    \item Na \textit{GitHub}-u se pravi zahtev za promenu sa izmenjenim fajlovima za prevode
 \end{enumerate}
 
 \begin{figure}[H]
