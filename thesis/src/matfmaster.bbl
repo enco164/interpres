@@ -41,6 +41,12 @@ NestJS
 \newblock {\url{https://docs.nestjs.com/}}.
 \newblock {30.8.2021.}.
 
+
+\bibitem{github_apps}
+GitHub, GitHub Applications,
+\newblock {\url{https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps}}.
+\newblock {30.8.2021.}.
+
 \bibitem{TypeORM}
 TypeORM,
 \newblock {https://typeorm.io/}.

@@ -62,6 +62,27 @@ lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih kom
 \end{itemize}
 
 \section{GitHub aplikacija}\label{sec:github_app}
+Aplikacije na \textit{GitHub}-u mogu automatizovati i poboljšati tok razvoja. \textit{GitHub} 
+aplikacije se preporučuju za integrisanje sa \textit{GitHub}-om jer nude granularnije permisije 
+za pristup podacima. Rade samostalno, preduzimajući akcije putem \textit{API}-ja, koristeći 
+sopstveni identitet. 
+
+\textit{GitHub} aplikacije se mogu instalirati direktno na organizacione i korisničke naloge i 
+odobriti pristup specifičnim repozitorijima. Može ih instalirati vlasnik naloga organizacije 
+ili korisnik sa administratorskim dozvolama. 
+
+\textit{GitHub} aplikacije su sa ugrađenim \textit{Webhook}-ovima i suženim, specifičnim dozvolama. 
+Kada se postavi \textit{GitHub} aplikacija, može se izabrati kojim repozitorijumima će se pritupiti.
+
+\textit{GitHub} aplikacije su aplikacije koje se ne postavljaju se na \textit{GitHub}-u već za 
+njih mora da se obezbedi server. Sa \textit{GitHub}-a se samo dobiju ključevi za pristup i njihova
+biblioteka \textit{octokit} koja služi da pozove odgovarajuće interfejse kako bi izvršili neku 
+akciju nad repozitorijumom.
+
+Za poboljšanje rada na repozitorijumu, može se napraviti GitHub aplikacija koja sadrži više skripti 
+ili celu aplikaciju, i takvu aplikaciju uvezati sa mnoštvo drugih alata~\cite{github_apps}. Tako na 
+primer, može se povezati sistem za uređivanje prevoda koji bi mogao da otvori novi "zahtev za promenu"
+kad su prevodioci završili sa svojim ciklusom prevođenja.
 
 \section{Docker}\label{sec:docker}
 
