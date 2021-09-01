@@ -204,7 +204,51 @@ za obradu pretplate i tok izvršavanja će se nastaviti.
 Pisanje reaktivnog koda je umnogome olakšano jer je i sam \textit{NestJS} 
 napisan uz pomoć \textit{rx.js}. 
 
-\section{CI/CD}
+\section{Automatizacija}
+Kontinualna integracija, isporučivanje i isporuka je implementirana uz 
+pomoć \textit{GitHub}-a. Na glavnoj (\textit{"main"}) grani 
+je postavljeno pravilo zaštite, odnosno onemogućeno je direkto slanje 
+koda na tu granu. Za svaku izmenu koda potrebno otvoriti zahtev za 
+promenu. Pored toga, postavljeno je pravilo da, grana koju treba spojiti 
+na glavnu granu, mora sadržati sve izmene koje se nalaze na glavnoj grani.
 
+Na događaj otvaranja novog zahteva za izmenu koda, pokreće se niz 
+\textit{GitHub} akcija. Za klijentski deo i za svaki mikroservis 
+se pokreće naredba izgradnje i naredba testiranja. Uz navedena 
+ograničenja za spajanje grana, i sa ovom \textit{GitHub} akcijom, 
+osigurava se da će spojeni kod biti istestiran pre spajanja. To znači da 
+na glavnoj grani ne bi trebalo da se pojavi neka greška koja bi inače mogla 
+da se otkrije testiranjem.
+
+Kao i za zahtev za izmenu koda, kada se grana spoji u glavnu granu 
+postoji niz \textit{GitHub} akcija, za svaku komponentu po jedna akcija.
+Tu se izgrade \textit{Docker} slike koje se kasnije isporučuju na 
+\textit{Docker} javni registar. Potom, kada su sve slike isporučene na 
+\textit{Docker} registar, pokreće se \textit{GitHub} akcija koja započinje 
+raspoređivanje na \textit{Kubernetes}.
 
 \section{Produkciono okruženje}
+Razne kompanije pružaju usluge iznajmljivanja računara u oblaku. Neki od 
+njihovih proizvoda su \textit{Amazon Web Services}, \textit{Microsoft Azure}
+i \textit{Google Cloud Platform}. Sa druge strane, \textit{Kubernetes} je 
+nezavisan od platforme. Iako ga je moguće namestiti, taj posao je mukotrpan 
+pa je pametnije izabrati neki proizvod gde se \textit{Kubernetes} može 
+podići uz par klikova. 
+
+Kako je \textit{Google} razvio \textit{Kubernetes}, pretpostavka je da je 
+na \textit{Google Cloud Platform} uvek malo prednjači, pa je iz tog razloga 
+on izabran za Interpres.
+
+Podešavanje na \textit{Google Cloud Platform} je jednostavno. Preko 
+korisničkog interfejsa je potrebno napraviti klaster. Za klaster je 
+potrebno izabrati tip virtuelne mašine, kao i lokaciju servera na kojoj 
+će ta virtuelna mašina biti podignuta. Na dalje se sve može konfigurisati 
+i preko komandne linije uz \textit{Kubernetes}-ov alat \texttt{kubectl}.
+Preko ovog alata se izvršavaju komande sa pravljenje \textit{Pod}-ova.
+
+Potrebno je napomenuti da se korišćenje \textit{Google Cloud Platform}-e,
+naravno, naplaćuje. U trenutku pisanja ovog rada \textit{Google} za nove 
+korisnike obezbeđuje besplatnih 300\$, koji su dovoljni za testiranje.
+Svakako treba voditi računa prilikom podešavanja kako ne bi došlo do 
+nepotrebnih troškova.
+
