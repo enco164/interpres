@@ -1,15 +1,15 @@
 @startuml Izmena prevoda
-|Korisnik|
+|Prevodilac|
 |Sistem|
 start
 :Prikazuje listu prevoda sa 
 odgovarajućim ključevima;
-|Korisnik|
+|Prevodilac|
 :Klikne na željeni ključ za koji 
 želi da unese ili izmeni prevod;
 |Sistem|
 :Vraća polja za unos prevoda;
-|Korisnik|
+|Prevodilac|
 :Unosi ili menja prevod;
 :Prevod se automatski šalje na čuvanje 
 u trenutku kada tekstualno polje izgubi fokus;

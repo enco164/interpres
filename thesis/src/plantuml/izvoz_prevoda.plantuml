@@ -1,14 +1,14 @@
 @startuml Izvoz prevoda
-|Korisnik|
+|Prevodilac|
 |Sistem|
 start
 :Prikazuje opcije za uvoz i izvoz prevoda;
-|Korisnik|
+|Prevodilac|
 :Bira akciju za izvoz prevoda;
 |Sistem|
 :Prikazuje modal sa formom za unos 
 naslova i opisa zahteva za promenu;
-|Korisnik|
+|Prevodilac|
 :Unosi naslov i opis u tekstualna polja;
 :Klikne na dugme OK;
 |Sistem|

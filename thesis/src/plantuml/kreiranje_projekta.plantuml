@@ -1,13 +1,13 @@
 @startuml Kreiranje projekta
-|Korisnik|
+|Prevodilac|
 |Sistem|
 start
 :Prikazuje opciju za kreiranje novog projekta;
-|Korisnik|
+|Prevodilac|
 :Bira akciju za kreiranje novog projekta;
 |Sistem|
 :Prikazuje formu za unos podataka o projektu;
-|Korisnik|
+|Prevodilac|
 :Unosi podatke o projektu;
 :Klikne na dugme za kreiranje projekta;
 |Sistem|
