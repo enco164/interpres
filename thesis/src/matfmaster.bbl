@@ -30,6 +30,10 @@ REST API Tutorial
 \newblock {https://restfulapi.net/}.
 \newblock {Internet prezentacija}.
 
+\bibitem{react}
+React
+\newblock {\url{https://reactjs.org/}}.
+\newblock {30.8.2021.}.
 
 \bibitem{nest_getting_started}
 Olususi Kayode Oluyemi, Getting Started with NestJS

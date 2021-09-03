@@ -3,8 +3,75 @@
 U ovom poglavlju će biti opisane tehnologije korišćene za razvoj rešenja.
 
 \section{React}\label{sec:react}
+\textit{React} je \textit{Javascript} biblioteka za građenje korisničkog interfejsa. Koristi se za kreiranje modernih 
+reaktivnih korisničkih interfejsa koji se mogu izgraditi uz pomoć izolovanih delova koda. Ti delovi koda nazivaju 
+se komponente. Korišćenjem komponente omogućeno je deljenje aplikacije na nezavisne delove koji se prilikom razvoja 
+mogu iznova koristiti.~\cite{react}
 
-\section{Material UI}\label{sec:material_ui}
+Svaka komponenta sastoji se iz metode za renderovanje i sadrži podatke o tome šta je sve potrebno da se prikaže 
+krajnjem korisniku. Mogu biti klasne ili funkcijske. Funkcijske komponente kao ulazni parametar primaju svojstva 
+i vraćaju \textit{JSX} element. Sa druge strane, klasne komponente su definisane kao \textit{ES6} 
+klase i renderuju \textit{React} elemente koristeći \texttt{render()} metodu. 
+
+Kako bi komunicirale međusobno sa ostalim delovima aplikacije, komponente moraju imati svoje stanje (engl. \textit{state}) 
+i svostva (engl. \textit{properties - props}). Svojstva i stanje predstavljaju čist \textit{JavaScript} objekat. Izmena bilo kojeg 
+od ova dva objekta okida ponovno renderovanje komponente. 
+
+Svojstva čine \textit{React} komponente fleksibilnim i pogodnim za 
+ponovno korišćenje. Prosleđivanjem različitih svojstava, komponente se mogu ponašati i izgledati drugačije. Svojstva komponente 
+služe isključivo za prikaz i unutar same komponente se ne bi trebalo menjati. Protok informacija mora biti jednosmeran od višeg 
+nivoa komponente ka nižem. Stoga je komponenta sa višeg nivoa zadužena za prosleđivanje skupa svojstava.
+
+Stanje komponente se koristi za “pamćenje” podataka unutar same komponente. Možemo reći da je stanje privatno, jer se stanju 
+komponente ne može pristupiti iz roditeljske komponente. Može se promeniti na osnovu korisnikove interakcije ili neke druge 
+akcije unutar aplikacije. Za razliku od svojstava, stanjem se može upravljati unutar same komponente.
+
+\textit{React} kuke (engl. \textit{hooks}) služe za korišćenje stanja u funkcijskim komponentama. U teoriji, kuke su funkcije 
+koje se “kače” za stanja i životne cikluse unutar funkcijske komponente. Da bi se koristile \textit{React} kuke, moraju se 
+poštovati dva pravila:
+\begin{itemize}
+    \item Pozivanje kuka se mora vršiti sa najvišeg nivoa. To znači da se one ne smeju pozivati unutar petlji, 
+    postavljenih uslova ili ugnježdenih funkcija.
+    \item Pozivanje kuka se ne može vršiti iz običnih \textit{JavaScript} funkcija, već samo iz funkcija \textit{React} komponente.
+\end{itemize}
+
+Stanje svake komponente je potpuno nezavisno. Korišćenjem kuka, postiže se to da se logika sa stanjem može ponovo koristiti 
+(ali ne i samo stanje). Ustvari, svakim pozivom kuke dobijamo potpuno izlovano stanje, pa se stoga jedna kuka može koristiti 
+više puta unutar jedne komponente. Pored toga, kuke omogućavaju pravljenje kompozicije. Unutar jedne kuke je moguće zakačiti 
+drugu kuku i tako napraviti kompoziciju. 
+
+Pre uvođenja kuka, u \textit{React}-u se koristio obrazac zvan “komponente višeg reda” (eng. \textit{Higher-Order Components}). 
+Konkretno, komponenta višeg reda je funkcija koja za argument prihvata komponentu i vraća novu komponentu. Kako su i ulaz i 
+izlaz istog tipa (\textit{React} komponenta), lako se može zaključiti da se komponente višeg reda mogu komponovati, a logika i 
+stanje koje one dodaju se mogu iskoristiti na više različitih mesta. Iako je i dalje moguće koristiti ovaj obrazac, jer je 
+nezavisan od toga da li je komponenta napisana kao klasa ili kako funkcija, preporučuje se koršćenje kuka, kad god je moguće. 
+Naime, kuke imaju dve glavne osobine koje imaju i komponente višeg reda: ponovno korišćenje i kompoziciju. Glavna prednost kuka 
+u odnosu na komponente višeg reda je to što su zavisnoti eksplicitne kod kuka. Sa druge strane, kuke se mogu koristiti samo u 
+funcijskim komponentama pa je upotreba komponenti višeg reda opširnija.
+
+Glavna prednost \textit{React} kuka je enkapsulacija. Odgovornost za prikazivanje korisničkog interfejsa ostaje na samoj 
+komponenti, a logika prikaza za tu komponentu se prebacuje u kuku koja se vezuje za tu komponentu. Na taj način se štiti 
+od neželjenog pristupa unutrašnjim podacima od strane komponente i sakriva se kompleksnost. Uz sve navedeno, 
+testiranje postaje lakše jer se odvojeno mogu testirati prikaz korisničkog interfejsa od logike prikaza. 
+
+Prilikom razvoja aplikacije susrećemo se sa izazovima kao što je kreiranje konzistentnih komponenti koje izgledaju i funkcionišu 
+na isti način, ne samo unutar jedne aplikacije već i na mnogim drugim aplikacijama koje se razvijaju. Ispis identičnih stilova 
+komponenata iznova i izmena promenljivih vrednosti na više mesta u aplikaciji utiče na vreme razvoja aplikacije.
+
+Umesto da se stilovi koriste globalno, teži se ka tome da se postave standardizovane komponente sa ugrađenim funkcionalnostima i 
+stilovima kako bi se one mogle koristiti iznova i podešavati jednostavno u zavisnosti od slučaja u kojem se koriste.
+Jedna od popularnijih biblioteka za stilizovanje \textit{React} komponenata je \textit{Material-UI}. Ona predstavlja 
+implementaciju \textit{Google}-ovog \textit{Material Design}-a. Uz pomoć ove biblioteke komponente se mogu koristiti zasebno, 
+koristeći samo one stilove koji treba da budu prikazani.
+
+\textit{Material UI} biblioteka koristi \textit{CSS} u \textit{JS} (eng. \textit{CSS-in-JS}). Korišćenjem globalnih \textit{CSS} 
+fajlova, a zbog kaskadne prirode \textit{CSS}-a (\textit{Cascading Style Sheets}), stilovi se mogu učitati u bilo kom redosledu 
+i pregaziti neki drugi stil. Pisanjem \textit{CSS} u \textit{JavaScript}-u rešava problem zavisnosti jer se mogu koristiti 
+\textit{JavaScript} moduli. Na taj način se komponente mogu pokretati nezavisno, bez oslanjanja na eksterne \textit{CSS} fajlove. 
+Kako danas većina alata za izgradnju projekta podržava pronalaženje i brisanje koda koji se ne koristi, a samim tim i smanjuju 
+veličinu izgrađenog projekta, i ova tehnika se može primeniti na \textit{CSS} u \textit{JS}. Stilovi su opisani preko 
+\textit{JavaScript} objekata i kao takvi mogu da pristupe stanju komponente što povećava fleksibilnost pisanja samih stilova.
+
 
 \section{NestJS}\label{sec:nestjs}
 Razvoj aplikacije na \textit{Node.js} platformi vremenom može postati kompleksan. Što se više svojstava 
