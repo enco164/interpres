@@ -2,23 +2,23 @@
 
 \bibitem{BabelEdit}
 BabelEdit,
-\newblock {https://www.codeandweb.com/babeledit}.
-\newblock {Internet prezentacija}.
+\newblock {\url{https://www.codeandweb.com/babeledit}}.
+\newblock {30.8.2021.}.
 
 \bibitem{Localazy}
 Localazy,
-\newblock {https://localazy.com/}.
-\newblock {Internet prezentacija}.
+\newblock {\url{https://localazy.com/}}.
+\newblock {30.8.2021.}.
 
 \bibitem{martinfowler_microservices}
-Džejms Luis i Martin Fauler,
-\newblock {Microservices}
-\newblock {https://martinfowler.com/articles/microservices.html}.
+Džejms Luis i Martin Fauler, Microservices,
+\newblock {\url{https://martinfowler.com/articles/microservices.html}}.
+\newblock {30.8.2021.}.
 
 \bibitem{martinfowler_software_component}
-Martin Fauler,
-\newblock {Software Component}
-\newblock {https://martinfowler.com/bliki/SoftwareComponent.html}.
+Martin Fauler, Software Component,
+\newblock {\url{https://martinfowler.com/bliki/SoftwareComponent.html}}.
+\newblock {30.8.2021.}.
  
 \bibitem{REST_Roy}
 Roy Thomas Fielding,
@@ -27,8 +27,8 @@ Roy Thomas Fielding,
 
 \bibitem{REST_API}
 REST API Tutorial
-\newblock {https://restfulapi.net/}.
-\newblock {Internet prezentacija}.
+\newblock {\url{https://restfulapi.net/}}.
+\newblock {30.8.2021.}.
 
 \bibitem{react}
 React
@@ -45,7 +45,6 @@ NestJS
 \newblock {\url{https://docs.nestjs.com/}}.
 \newblock {30.8.2021.}.
 
-
 \bibitem{github_apps}
 GitHub, GitHub Applications,
 \newblock {\url{https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps}}.
@@ -53,8 +52,8 @@ GitHub, GitHub Applications,
 
 \bibitem{TypeORM}
 TypeORM,
-\newblock {https://typeorm.io/}.
-\newblock {Internet prezentacija}.
+\newblock {\url{https://typeorm.io/}}.
+\newblock {30.8.2021.}.
 
 \bibitem{KIA}
 Marko Lukša,
@@ -62,20 +61,20 @@ Marko Lukša,
 \newblock {\em Manning}, 2017, 978-1-61729-372-6
 
 \bibitem{docker}
-Docker Explained – An Introductory Guide To Docker,
-\newblock {https://www.edureka.co/blog/docker-explained/}.
-\newblock {Internet prezentacija}.
+Sahiti Kappagantula, Docker Explained – An Introductory Guide To Docker,
+\newblock {\url{https://www.edureka.co/blog/docker-explained/}}.
+\newblock {30.8.2021.}.
 
 
 \bibitem{CI_CD}
-What is CI/CD?,
-\newblock {https://www.redhat.com/en/topics/devops/what-is-ci-cd}.
-\newblock {Internet prezentacija}.
+Redhat, What is CI/CD?,
+\newblock {\url{https://www.redhat.com/en/topics/devops/what-is-ci-cd}}.
+\newblock {30.8.2021.}.
 
 
 \bibitem{GitHubActions}
-GitHub Actions,
-\newblock {https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions}.
-\newblock {Internet prezentacija}.
+GitHub, GitHub Actions,
+\newblock {\url{https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions}}.
+\newblock {30.8.2021.}.
 
 \end{thebibliography}
