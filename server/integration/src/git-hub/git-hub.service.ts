@@ -6,7 +6,7 @@ import { retry } from "@octokit/plugin-retry";
 import { Octokit } from "@octokit/rest";
 import { createPullRequest } from "octokit-plugin-create-pull-request";
 import { forkJoin, from, Observable, of } from "rxjs";
-import { concatMap, map } from "rxjs/operators";
+import { catchError, concatMap, map } from "rxjs/operators";
 import { ExportTranslationsToRepo } from "./dto/export-translations-to-repo";
 
 import { ImportTranslationsFromRepoParam } from "./dto/import-translations-from-repo-param";
@@ -121,12 +121,36 @@ export class GitHubService {
     githubOwner: string;
     githubRepo: string;
     lngLoadPath: string;
-  }) {
+  }): Observable<{
+    repoExists: boolean;
+    appInstalled: boolean;
+    foundLanguages: string[] | null;
+  }> {
     const installationClient$ = this.getInstallationClient(
       data.githubOwner,
       data.githubRepo
     );
-    return installationClient$;
+    return installationClient$.pipe(
+      concatMap((installationClient) =>
+        installationClient.repos.getContent({
+          owner: data.githubOwner,
+          repo: data.githubRepo,
+          path: data.lngLoadPath,
+        })
+      ),
+      map(
+        (response) =>
+          response.data as components["schemas"]["content-directory"]
+      ),
+      map((value) => ({
+        repoExists: true,
+        appInstalled: true,
+        foundLanguages: value.map((v) => v.name),
+      })),
+      catchError(() =>
+        of({ repoExists: false, appInstalled: false, foundLanguages: [] })
+      )
+    );
   }
 
   private getFilesChanges(

@@ -46,7 +46,7 @@ export class ProjectsController {
       })
       .pipe(
         catchError((err) => {
-          console.log(err);
+          this.logger.error(err);
           return of(err);
         })
       );
