@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useMemo } from "react";
-import { Translation } from "src/domain/translation";
+import { Translation } from "../../domain/translation";
 import { TranslationEditor } from "./translation-editor";
 
 interface SelectedTranslationKeysEditorProps {
