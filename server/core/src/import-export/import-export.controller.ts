@@ -22,6 +22,8 @@ export class ImportExportController {
       cmd: "import-export/prepareTranslationForExport",
       body,
     });
-    return this.importExportService.prepareExportPayload(body.translations);
+    return this.importExportService.prepareExportPayload(
+      body.translations.sort((a, b) => a.key.localeCompare(b.key))
+    );
   }
 }
