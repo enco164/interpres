@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useMemo } from "react";
-import { Translation } from "../../domain/translation";
+import { Translation } from "src/domain/translation";
 import { TranslationEditor } from "./translation-editor";
 
 interface SelectedTranslationKeysEditorProps {
@@ -54,6 +54,7 @@ export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEdit
                 <Box>
                   {translations
                     .filter((t) => t.key === translationKey)
+                    .sort((a, b) => a.lang.localeCompare(b.lang))
                     .map((translation) => (
                       <TranslationEditor
                         key={translation.key + translation.lang}
