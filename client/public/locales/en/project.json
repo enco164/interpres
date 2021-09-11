@@ -2,7 +2,7 @@
   "menu": {
     "overview": "Overview",
     "translations": "Translations",
-    "import_export": "Import / Export",
-    "settings": "Settings"
+    "settings": "Settings",
+    "import_export": "Import / Export"
   }
 }
