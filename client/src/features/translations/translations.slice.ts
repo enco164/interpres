@@ -47,6 +47,14 @@ export const patchTranslationValueById = createAsyncThunk<
   );
 });
 
+export const createTranslation = createAsyncThunk<
+  Translation,
+  Omit<Translation, "id">,
+  { state: RootState }
+>("translations/createTranslation", (arg, thunkAPI) =>
+  TranslationsApi.createTranslation(arg, thunkAPI.signal)
+);
+
 export const translationsSlice = createSlice({
   name: "translations",
   initialState,
@@ -69,6 +77,9 @@ export const translationsSlice = createSlice({
           id: action.meta.arg.translationId,
           changes: action.payload,
         });
+      })
+      .addCase(createTranslation.fulfilled, (state, action) => {
+        entityAdapter.addOne(state, action);
       });
   },
 });

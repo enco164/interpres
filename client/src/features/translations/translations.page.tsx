@@ -1,16 +1,21 @@
 import {
   Box,
   Grid,
+  List,
   ListSubheader,
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
 
-import { useAppDispatch } from "../../state/store";
+import { RootState, useAppDispatch } from "../../state/store";
+import {
+  fetchProjectById,
+  selectProjectById,
+} from "../projects/projects.slice";
 import { SelectedTranslationKeysEditor } from "./selected-translation-keys-editor";
 import { TranslationKeysTreeView } from "./translation-keys-tree-view";
 import {
@@ -37,6 +42,9 @@ export const TranslationsPage: React.FC = () => {
   const { t } = useTranslation(["project-translations"]);
   const dispatch = useAppDispatch();
   const projectId = useProjectIdParam();
+  const project = useSelector((state: RootState) =>
+    selectProjectById(state, projectId)
+  );
 
   const { selectedKey, selectedNamespace } = useSelector(
     selectTranslationsSlice
@@ -53,6 +61,19 @@ export const TranslationsPage: React.FC = () => {
       promise.abort();
     };
   }, [dispatch, projectId]);
+
+  useEffect(() => {
+    const promise = dispatch(fetchProjectById({ id: projectId }));
+
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch, projectId]);
+
+  const translationKeys = useMemo(() => {
+    const set = new Set(translations.map((t) => t.key));
+    return Array.from(set).sort();
+  }, [translations]);
 
   const classes = useStyles();
 
@@ -98,7 +119,31 @@ export const TranslationsPage: React.FC = () => {
         <Typography variant="h6" gutterBottom color="primary">
           {t("edit_translations_header")}
         </Typography>
-        <SelectedTranslationKeysEditor translations={translations} />
+        <List>
+          {translationKeys.map((translationKey) => {
+            const selectedTranslations = project?.languages.map(
+              (lang) =>
+                translations.find(
+                  (t) => t.key === translationKey && t.lang === lang
+                ) ?? {
+                  id: null,
+                  lang,
+                  key: translationKey,
+                  value: "",
+                  namespace: selectedNamespace,
+                }
+            );
+            if (!selectedTranslations) {
+              return null;
+            }
+            return (
+              <SelectedTranslationKeysEditor
+                translations={selectedTranslations}
+                translationKey={translationKey}
+              />
+            );
+          })}
+        </List>
       </Grid>
     </Grid>
   );
