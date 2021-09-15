@@ -8,7 +8,7 @@ arhitektura je višenamenska i modularna, a sa ciljem unapređenja upotrebljivos
 fleksibilnosti i skalabilnosti. 
 
 Veb aplikacije su nezavisne od platforme jer zahtevaju samo Veb pregledač, dok se kod standardne 
-klijent--server arhitekture klijent se mora instalirati na platformi korisnika. Pored toga, 
+klijent--server arhitekture klijent mora instalirati na platformi korisnika. Pored toga, 
 kod Veb aplikacija je protokol komunikacije definisan, koristi se \textit{HTTP}, dok se kod klijent--server
 arhitekture protokol može izabrati po potrebi.
 
@@ -20,10 +20,10 @@ a komunikacija mora pratiti određene standarde.
 
 \section{Arhitektura teških klijenata}\label{sec:arhitektura-spa}
 
-Odlike arhitekture teških klijenata je da server šalje klijentu podatke i meta podatke, i prepušta 
-mu da samostalno pripremi prezentaciju. // TODO: ref: PVeb.2014.04%20-%20arh.apl,veb.2.0.pdf
-Ovakvom karakteristikom se smanjuje opterećenje servera, jer više ne mora da priprema prezentaciju.
-Arhitektura teških klijenata podrazumeva intenzivno korišćenje \textit{JavaScript}-a.
+Odlika arhitekture teških klijenata je da server šalje klijentu podatke i meta podatke, i prepušta 
+mu da samostalno pripremi prezentaciju.~\cite{PVEB} Ovakvom podelom odgovornosti se smanjuje opterećenje 
+servera, jer više ne mora da priprema prezentaciju. Arhitektura teških klijenata podrazumeva intenzivno 
+korišćenje \textit{JavaScript}-a.
 
 Ekstremni oblik ove arhitekture je arhitektura jedne stranice (eng. \textit{SPA - Single Page Application}).
 Arhitektura jedne stranice propisuje da se čitava aplikacija učitava kroz jednu stranicu. Primenom 
@@ -38,24 +38,24 @@ Jedan monolit bi sadržao svu poslovnu logiku koju izvršava aplikacija. Kako ap
 tako raste i sam monolit, koji se sve teže održava. Problemi koji nastaju kod velikog monolita nisu 
 samo problemi održavanja, već je i skaliranje upitno. 
 
-Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" se sve češće pojavlje poslednjih 
+Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" sve češće pojavlje poslednjih 
 par godina kako bi opisao određeni način projektovanja softverskih aplikacija kao paketa usluga koji se 
 mogu odvojeno isporučiti. Iako ne postoji precizna definicija ovog arhitektonskog stila, postoje određene 
 zajedničke karakteristike u organizaciji oko poslovne logike, automatskog isporučivanja i decentralizovane 
 kontrole podataka.~\cite{martinfowler_microservices} 
 
-Mikroservisi predstavlja aplikaciju koja je struktuirana kao kolekcija slabo vezanih servisa. Glavna 
+Mikroservisi predstavljaju aplikaciju koja je struktuirana kao kolekcija slabo vezanih servisa. Glavna 
 ideja iza mikroservisne arhitekture je da se aplikacije lakše razvijaju i održavaju ako su podeljene 
 na manje delove koji rade nesmetano zajedno.
 
 Servisi se mogu posmatrati kao komponente sistema. Martin Fauler definiše komponente kao jedinice 
 softvera koje se mogu nezavisno zameniti i unaprediti.~\cite{martinfowler_software_component}.
 
-Biblioteke su komponente koje su ulinkovane u program i pozivaju se pomoću funkcija koje se nalaze u 
+Biblioteke su komponente koje su povezane u program i pozivaju se pomoću funkcija koje se nalaze u 
 memoriji, dok su servisi komponente koje su van procesa i koje komuniciraju preko mreže.
 Servisi, naravno, mogu da koriste biblioteke. Glavni benefit ovakvog korišćenja servisa je da se mogu 
 nezavisno isporučiti, što nije slučaj ako imamo jednu aplikaciju koja je sastavljena od skupa biblioteka.
-Sa druge strane, daljinski pozivi, kao što su pozivi preko mreže, su skuplji, odnosno sporiji. 
+Sa druge strane, daljinski pozivi preko mreže su skuplji, odnosno sporiji. 
 Druga loša strana je da se logika teže prebacuje iz jednog servisa u drugi, odnosno refaktorisanje je 
 otežano u tom smislu.
 
@@ -72,13 +72,12 @@ jezik jer je u njemu lakše rešiti problem.
 
 Monolitne aplikacije preferiraju da imaju jednu bazu podataka za čuvanje podataka. Sa druge strane, kod 
 mikroservisnih aplikacija se odluka o bazi podataka prepušta samom servisu. Neke probleme koje servis 
-rešava je pogodnije rešiti bazom podataka \textit{SQL}, dok je za neki drugi servis možda pogodnija graf baza.
+rešava je pogodnije rešiti relacionom bazom podataka, dok je za neki drugi servis možda pogodnija grafovska baza.
 Iako i monolitne aplikacije mogu da koriste više tipova baza podataka, ova osobina je češća kod 
 mikroservisa. Decentralizovana odgovornost za čuvanje podataka ima i svoje implikacije na ažuriranje 
 podataka. Ovaj problem se može rešiti korišćenjem transakcija. Korišćenjem transakcija rešava se problem 
-konzistentnosti, ali sa druge strane se uvodi privremeno usko povezivanje između više servisa, što 
-smanjuje dostupnost. Zato, česta je odluka da se konzistentnost zameni eventualnom konzistentnošću, u 
-onim slučajevima gde je ona moguća. 
+konzistentnosti, ali se smanjuje dostupnost. Zato, česta je odluka da se konzistentnost zameni 
+odloženom konzistentnošću, u onim slučajevima gde je ona moguća. 
 
 % CAP Teorema
 
@@ -86,7 +85,7 @@ onim slučajevima gde je ona moguća.
 
 Interoperabilnost je sposobnost da različiti sistemi rade zajedno. Da bi se ovo postiglo potrebni su 
 standardi koje će sistemi poštovati. Kako u klijent -- server arhitekturi imamo dva različita sistema 
-(klijent i server), oni moraju poštovati određene standarde za komunikaciju. Jedan od takvih načina za 
+(klijent i server), oni moraju poštovati određene standarde za komunikaciju. Jedan od takvih standarda za 
 komunikaciju je i \textit{REST} (eng. \textit{Representational State Transfer}). \textit{REST} je stil 
 softverske arhitekture koji definiše skup pravila koja treba da se poštuju tokom pravljenja mrežnih 
 aplikacija. Prvi put je predstavljen u doktorskoj disertaciji Roja Fildinga~\cite{REST_Roy}. Po \textit{REST}-u, 
@@ -107,9 +106,9 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
 	
     \item \textbf{Keširanje}: Server u svom odgovoru sa nekim podacima mora eksplicitno da navede da li 
     podaci mogu da se keširaju, ili ne. Ako server odgovori da su podaci kešabilni, klijent ih može 
-    koristiti kasnije ako je zahtev za podacima isti. Sever može napomenuti i vreme isteka keša.
+    koristiti kasnije ako je zahtev za podacima isti. Server može napomenuti i vreme isteka keša.
     
-    \item \textbf{Uniforman interfejs}: Uniformni interfejs definiše interfejs između klijnta i servera.
+    \item \textbf{Uniforman interfejs}: Uniformni interfejs definiše interfejs između klijenta i servera.
     On pojednostavljuje i razdvaja arhitekturu, što omogućava da se svaki deo razvija samostalno. 
     Četiri vodeća principa uniformnog interfejsa su:
 
@@ -142,11 +141,11 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
     
 	\item \textbf{Slojevit sistem}: \textit{REST} omogućava korišćenje slojevitih sistema, gde klijent ne zna 
     eksplicitno da li komunicira sa krajnjim serverom ili sa posrednikom. Ovako se može povećati 
-    skalabilnost uvođenjem balansirnja opterećenja ili uvođenjem keširanja na strani servera. 
+    skalabilnost uvođenjem balansera opterećenja ili uvođenjem keširanja na strani servera. 
 	
-	\item \textbf{Kod na zahtev (opciono)}: Serveri mogu proširiti klijent slanjem koda koji će biti izvršen na 
+	\item \textbf{Kod na zahtev (opciono)}: Serveri mogu obogatiti klijentsku stranu slanjem koda koji će biti izvršen na 
 	klijentskoj strani. Ovo može uprostiti klijente jer se smanjuje broj funkcija koje je potrebno da 
-    klijent ima. Primer na Vebu bi bio slanje \textit{JavaScript} koda. 
+    klijent ima. Primer na vebu bi bio slanje \textit{JavaScript} koda. 
 
 \end{itemize}
 

@@ -15,6 +15,11 @@ Džejms Luis i Martin Fauler, Microservices,
 \newblock {\url{https://martinfowler.com/articles/microservices.html}}.
 \newblock {30.8.2021.}.
 
+\bibitem{PVEB}
+Saša Malkov, beleške sa predavanja,
+\newblock {Programiranje za veb}.
+\newblock {2014. godina}.
+
 \bibitem{martinfowler_software_component}
 Martin Fauler, Software Component,
 \newblock {\url{https://martinfowler.com/bliki/SoftwareComponent.html}}.
