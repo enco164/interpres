@@ -79,6 +79,18 @@ podataka. Ovaj problem se može rešiti korišćenjem transakcija. Korišćenjem
 konzistentnosti, ali se smanjuje dostupnost. Zato, česta je odluka da se konzistentnost zameni 
 odloženom konzistentnošću, u onim slučajevima gde je ona moguća. 
 
+Kada se govori o mikroservisima često se sa razlogom postavlja pitanje postoji li razlika između arhitekture
+mikroservisa i servisno orijentisane arhitekture (eng. \textit{Service Oriented Architecture}, \textit{SOA}). 
+Glavne prednosti arhitekture mikroservisa su umnogome slične \textit{SOA}. Problem je taj što \textit{SOA} 
+može da predstavlja mnogo različitih stvari, a najviše zbog prevelikog fokusa na kanal komunikacije 
+(eng. \textit{Enterprise Service Bus}, \textit{ESB}) koji se koriste za integraciju monolitnih aplikacija. 
+Može se reći da je arhitektura mikroservisa nastala iz stečenog iskustva razvijanja \textit{SOA}. 
+Preuzeti su raznorazni dobri obrasci iz \textit{SOA}. \textit{ESB} je predstavljao preveliku kompleksnost 
+pa je iz tog razloga zamenjen jednostavnim veb protokolima. Ljudi koji zagovaraju arhitekturu mikroservisa 
+su iz ovih razloga krenuli da odbacuju naziv \textit{SOA}, dok drugi smatraju da su mikroservisi samo još 
+jedan oblik \textit{SOA}. Kako bilo, činjenica da \textit{SOA} znači toliko različitih stvari, dragoceno 
+je imati izraz koji preciznije opisuje ovu arhitekturu.
+
 % CAP Teorema
 
 \section{REST}\label{sec:arhitektura-rest}
