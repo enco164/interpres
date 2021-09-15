@@ -1,6 +1,6 @@
 \chapter{Funkcionalni zahtevi}\label{ch:funkcionalni_zahtevi}
 
-Suština sistema je da omogući lako upravljanje prevodima. To podrazumeva da prevodilac, koji nije tehničko 
+Glavni zadatak sistema je da omogući lako upravljanje prevodima. To podrazumeva da prevodilac, koji nije tehničko 
 lice, može sa lakoćom da obavlja svoj posao a da ne zna interne procese rada programerskog tima. S druge
 strane, programerima treba omogućiti što veći stepen automatizacije. Jednostavno, treba razdvojiti što je
 više moguće poslove prevodilaca i programera. Tu se mogu uočiti dve celine sistema, jedna celina koja podržava
@@ -10,18 +10,19 @@ proces rada prevodilaca, i druga celina koja podržava proces rada programera.
 \section{Uređivač prevoda}\label{sec:funkcionalni_zahtevi-uredjivac_prevoda}
 
 Uređivač prevoda predstavlja korisnički interfejs za uređivanje i obradu prevoda, a koristi ga prevodilac.
-Kako se svaki prevod čuva u obliku "ključ -- vrednost", pored prevedene labele, potrebno je prikazati i sam 
-ključ kako bi se mogla jednoznačno prikazati svaka labela. 
+Kako se svaki prevod čuva u obliku "ključ -- vrednost", pored instance prevoda, potrebno je prikazati i sam 
+ključ kako bi se mogla jednoznačno prikazati svaka instanca.
 
-Ključ se može posmatrati i kao referenca na jednu labelu. Osim toga, on nema neku dodatnu vrednost za prevodioca.
-Njima veću vrednost predstavlja labela u jeziku koji je zajednički za prevodioca i programera. Na primer, kada 
-programer želi da dobije prevode za srpski jezik, on će prevodiocu isporučiti labele na engleskom a prevodilac 
-će uz odgovarajuće ključeve i labele na engleskom jeziku dodati prevode na srpskom jeziku. To znači da je na 
-korisničkom interfejsu potrebno prikazati sve prevode labela za određeni ključ.
+Ključ se može posmatrati i kao referenca na jednu grupu instanci prevoda koje predstavljaju istu nisku u različitim 
+jezicima. Osim toga, on nema neku dodatnu vrednost za prevodioca.
+Njima veću vrednost predstavlja instanca prevoda u jeziku koji je zajednički za prevodioca i programera. Na primer, kada 
+programer želi da dobije prevode za srpski jezik, on će prevodiocu isporučiti instance prevoda na engleskom a prevodilac 
+će uz odgovarajuće ključeve i instance prevoda na engleskom jeziku dodati prevode na srpskom jeziku. To znači da je na 
+korisničkom interfejsu potrebno prikazati sve instance prevoda za određeni ključ.
 
-Biblioteke za internacionalizaciju uglavnom pružaju nekakvu vrstu grupisanja labela. Ako se prevodi čuvaju u 
+Biblioteke za internacionalizaciju uglavnom pružaju nekakvu vrstu grupisanja ključeva. Ako se prevodi čuvaju u 
 fajlovima, onda se jedan fajl može smatrati jednom grupom prevoda. Grupisanje je korisno jer se onda prevodi 
-za određeni deo aplikacije obrađuju u istom kontekstu. Sa druge strane, ako se prevodi na aplikaciju dovlače 
+za određeni deo aplikacije obrađuju u istom kontekstu. Sa druge strane, ako se prevodi u aplikaciju dovlače 
 preko mreže, inicijalno učitavanje aplikacije se može ubrzati jer nije potrebno učitati sve prevode, već se 
 mogu učitati po potrebi. Na korisničkom interfejsu treba prikazati te grupe i omogućiti laku navigaciju kroz
 grupe.
@@ -38,17 +39,17 @@ sa sistemom za kontrolu verzija, kao što je \textit{GitHub}, bi pružala najudo
 uvoz prevoda, ali i za izvoz. 
 
 Prevodilac bi mogao preko dugmeta za sinhronizaciju da uveze nove promene 
-koje su se pojavile na repozitorijumu. Promene koje mogu da se pojave na repozitorijumu su dodavanje novih 
+koje su se pojavile u repozitorijumu. Promene koje mogu da se pojave u repozitorijumu su dodavanje novih 
 ključeva ili brisanje postojećih. Za te potrebe, promene će se uvek preuzimati sa glavne grane iz sistema za 
 kontrolu verzija. 
 
 Izvoz prevoda bi isto mogao da se uradi jednim klikom na dugme. U tom slučaju sistem bi napravio novi zahtev 
-za promenu (eng. \textit{Pull Request}) na \textit{GitHub}-u, koji bi zahtevao da odobrenje od strane progamera da se spoji sa 
-glavnom granom koda.
+za promenu (eng. \textit{Pull Request}) na \textit{GitHub}-u, koji bi zahtevao odobrenje od strane 
+programera da se spoji sa glavnom granom koda.
 
 Ovakvim razdvajanjem dva tima mogu raditi nesmetano. Prevodioci će uvek imati najsvežiju verziju prevoda, 
 odnosno ključeva za labele koje treba prevesti i neće zavisiti od procesa rada programera. Sa druge strane,
-progameri će na kraju dobijati zahteve za promene i mogu sami da odluče u kom trenutku žele da primene nove
+programeri će na kraju dobijati zahteve za promene i mogu sami da odluče u kom trenutku žele da primene nove
 prevode.
 
 
@@ -56,8 +57,8 @@ prevode.
 
 Aplikacije koje je potrebno prevesti na što veći broj jezika zahtevaju i timove prevodilaca. Kolaboraciju 
 između više prevodilaca treba omogućiti preko mreže radi što veće udobnosti. Svaki prevodilac treba da ima 
-mogućnost da pristupa aplikaci, odnosno prevodima, sa svog računara. Kako bi se omogućila kolaboracija 
-između više korisnika, potrebno je podatke skladištiti u oblaku. Veb aplikacije u oblaku pružaju naveću 
+mogućnost da pristupa aplikaciji, odnosno prevodima, sa svog računara. Kako bi se omogućila kolaboracija 
+između više korisnika, potrebno je podatke skladištiti u oblaku. Veb aplikacije u oblaku pružaju najveću 
 udobnost u tom smislu. Dovoljno je otvoriti aplikaciju u veb pregledaču i korisnik je spreman za rad.
 
 Jedna od važnih osobina aplikacija na vebu je dostupnost. Dostupnost aplikacije predstavlja stepen u kojem je 
@@ -66,6 +67,6 @@ Računarstvo u oblaku pruža rešenja da aplikacija bude dostupna u skoro svakom
 
 Aplikacije u oblaku su podrazumevano javno dostupne preko veb adrese. Kako bi se podaci zaštitili,
 potrebno je implementirati i sistem za autentikaciju. S obzirom da se već radi integracija sa \textit{GiHub}-om, radi
-uvoza, odnosno izvoza prevoda, može se iskoristiti \textit{GitHub} kao provajder identiteta (eng. \textit{Identity Provider}).
+uvoza, odnosno izvoza prevoda, \textit{GitHub} se može iskoristiti kao provajder identiteta (eng. \textit{Identity Provider}).
 To zači da je potrebno da prevodici naprave svoje naloge na \textit{GitHub}-u s kojima će se kasnije prijavljivati 
 na sistem.
