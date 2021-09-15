@@ -2,20 +2,20 @@
 
 Implementacija prati opisanu arhitekturu iz prethodnih poglavlja. 
 Korisnički interfejs je zasnovan na arhitekturi jedne stranice, 
-uz pomoć \textit{React} okruženja. Komunikacija između klijenta i servera 
+uz pomoć okruženja \textit{React}. Komunikacija između klijenta i servera 
 je preko \textit{REST API}-a. Server je implementiran u arhitekturi
 mikroservisa uz pomoć \textit{NestJS}. Za bazu podataka 
 je izabrana \textit{PostgreSQL}. Za potrebe pravljenja zahteva za promenu 
 na kodu, server komunicira preko \textit{GitHub} aplikacije. Autentikacija 
 je implementirana preko \textit{OAuth} protokola, a za provajdera 
-identitea je izabran \textit{GitHub IdP}. Od alata za \textit{CI/CD} su izabrane 
+identiteta je izabran \textit{GitHub IdP}. Kao alat za \textit{CI/CD} se koriste 
 \textit{GitHub Akcije}. 
 
 Implementirano rešenje je nazvano \textit{Interpres}. Aplikacija je 
 višejezična, odnosno može prikazati korisnički interfejs u više 
-jezika. Za potrebe uređivanja prevoda je upravo \textit{Interpres} korišćen.
+jezika. Za potrebe uređivanja prevoda je korišćen upravo \textit{Interpres}.
 
-Izvorni kod je otvorenog tipa i može se naći na \url{https://github.com/enco164/interpres}.
+Izvorni kod je otvoren i može se naći na \url{https://github.com/enco164/interpres}.
 
 \section{Komponente sistema}
 
@@ -36,17 +36,17 @@ U nastavku će biti opisana svaka komponenta, kao i njena
 zavisnost sa drugim komponentama.
 
 \subsection{SPA}
-Komponenta \textit{SPA} predstavlja klijentsku stranu sistema, implementiranu 
+Komponenta \textit{SPA} predstavlja klijentsku stranu aplikacije, implementiranu 
 u stilu arhitekture jedne stranicne. Izgrađena je 
-uz pomoć \textit{React} razvojnog okruženja. Za stilizovanje korisničkog 
+uz pomoć razvojnog okruženja \textit{React}. Za stilizovanje korisničkog 
 interfejsa korišćena je biblioteka \textit{Material UI}. 
 
 Kada se pokrene izgradnja \textit{React} projekta, artifakti koji se dobiju 
 su \textit{HTML}, \textit{JavaScript} i \textit{CSS} fajlovi. Da bi korisnik dobio fajlove, 
-potreban je Veb server, i u te svrhe je izabran \textit{Nginx}.
+potreban je veb server, i u te svrhe je izabran \textit{Nginx}.
 
 Komponenta \textit{SPA} dobija podatke sa servera. Komunikacija sa serverom 
-je preko \textit{REST} protokola, a ulazna tačka je mikroservis \textit{gateway}.
+je preko protokola \textit{REST}, a ulazna tačka je mikroservis \textit{gateway}.
 
 \subsection{Gateway}
 Komponenta \textit{gateway} jedina "otvara kapiju" ka spoljnom svetu.
@@ -59,16 +59,17 @@ prvi put prijavljuje na sistem, njegovi podaci o imenu i prezimenu će
 biti poslati mikroservisu \textit{user-management}. 
 
 Komunikacija sa ostalim mikroservisima (\textit{core} i \textit{user-management})
-se odvija preko \textit{TCP} protokola podržanog od strane \textit{NestJS}.
+se odvija preko protokola \textit{TCP} podržanog od strane \textit{NestJS}.
 
 \subsection{User Management}
 Cilj ove komponente je da se brine o podacima korisnika. Iako \textit{GitHub} 
-predstavlja izvor istine za podatke o korisniku, kao dobra praksa se 
+predstavlja %TODO iyvor istine
+izvor istine za podatke o korisniku, kao dobra praksa se 
 pokazalo da ne treba zavisiti od ključeva nekih eksternih sistema. 
 Ovde se konkretno misli na jedinstveni identifikator korisnika. Kao 
 poboljšanje sistema, mogao bi da se implementira pristup sistemu preko 
 nekog drugog provajdera identiteta. U tom slučaju može doći do kolizije 
-ključeva, odnosno nemamo sigurnost da će različiti provajderi identiteta 
+ključeva, odnosno ne možemo da budemo sigurni da će različiti provajderi identiteta 
 davati različite ključeve.
 
 Pored brige o primarnim ključevima za korisnike, ovaj mikroservis služi 
@@ -84,13 +85,13 @@ klijentsku stranu aplikacije ili za mikroservis \textit{integration}.
 
 \subsection{Integration}
 Ova komponenta ima funkciju integracije sa sistemom za verzionisanje koda. 
-Na zahtev \textit{core} mikroservisa, ona može preko \textit{GitHub Aplikacije}, 
+Na zahtev mikroservisa \textit{core}, ona može preko \textit{GitHub Aplikacije}, 
 da dohvati prevode sa repozitorijuma i da napravi \textit{Pull Request} sa 
 novim izmenama. Ako bi se u budućnosti implementirala integracija sa nekim 
 drugim sistemom za verzionisanje koda, ovaj mikroservis je pravo mesto za to.
 
 \subsection{GitHub Application i GitHub IdP}
-Da bi se napravila integracija sa \textit{GitHub}-om, a u potrebe menjanja 
+Da bi se napravila integracija sa \textit{GitHub}-om, za potrebe menjanja 
 koda, potrebno je napraviti \textit{GitHub Application}. Aplikacija 
 ustvari daje samo pristupne ključeve, a na programeru je dalje da implementira 
 i postavi aplikaciju na neki server. Implementacija aplikacije u \textit{NodeJS} 
@@ -101,17 +102,17 @@ prevodima i pravljenje \textit{Pull Request}-a, i koriste se za uvoz i za
 izvoz prevoda.
 
 \textit{GitHub IdP} je eksterna komponenta i služi kao provajder identiteta. 
-Slično kao i za \textit{GitHub Application}, potrebno je samo registracija 
+Slično kao i za \textit{GitHub Application}, potrebna je samo registracija 
 za dobijanje pristupnih ključeva kojima se pristupa interfejsu provajdera. 
 Za implementaciju pristupa korićena je biblioteka \textit{Passport.js}, 
 preporučena od strane \textit{NestJS}, koja ima implementaciju 
-\textit{OAuth2} protokola, protokola koji \textit{GitHub IdP} koristi.
+protokola \textit{OAuth2}, protokola koji koristi \textit{GitHub IdP}.
 
 \section{Klijent}
-Klijentski deo je izgrađen uz pomoć \textit{React} radnog okvira, a početna 
+Klijentski deo je izgrađen uz pomoć radnog okvira \textit{React}, a početna 
 organizacija koda uz pomoć \textit{create-react-app}, preporučenog alata za 
 generisanje \textit{React} projekta od strane \textit{Facebook}-a. 
-Projekat je izgenerisan u \textit{Typescript} jeziku. 
+Projekat je izgenerisan na jeziku \textit{Typescript}. 
 
 Organizacija projekata je podeljena po funkcionalnostima, i one su 
 \textit{auth} (odgovorna za autorizaciju), \textit{projects} (odgovorna za 
@@ -123,14 +124,15 @@ Sve \textit{React} komponente su pisane kao funkcijske komponente
 (eng. \textit{function components}) uz korišćenje kuka (eng. \textit{hooks}).
 Programeri koji po prvi put koriste \textit{React} uglavnom nalaze da je 
 ovako napisan kod nečitljiv jer deluje da je pomešana poslovna logika komponente 
-sa prikazom korisničkog interfejsa. Iako se to može učiniti na početku, uglavnom je 
+sa prikazom korisničkog interfejsa. %TODO sl recenica
+Iako se to može učiniti na početku, uglavnom je 
 problem nepostojanja predloženog dizajna od strane autora biblioteke na 
-zvaničnom sajtu. Poštovanjem pricipa da se sva poslovna logika 
+zvaničnom sajtu. Poštovanjem pricipa da se sva poslovna logika %TODO cuva u kuki 
 čuva u kuki, a da funkcijska komponenta koristi kuku i prikazuje sadržaj, 
 postiže se veća čitljivost, razdvajaju se odgovornosti, lakše se testira 
 automatskim testovima, a samim tim se kod lakše održava. 
-Ovaj princip je prikazan na \ref{code:primer}.
-
+Ovaj princip je prikazan na primeru koda \ref{code:primer}.
+%TODO change listing caption label
 \begin{listing}[H]
   \centering
 \begin{minted}[ fontsize=\footnotesize ]{jsx}
@@ -162,12 +164,13 @@ export const Primer = () => {
 \label{code:primer}
 \end{listing}
 
-Za upravljanje stanjem u aplikacije korišćen je \textit{redux}. On radi 
+Za upravljanje stanjem u aplikaciji korišćen je \textit{redux}. On radi 
 po principu centralizovanog skladišta, što znači da njemu pristupaju sve 
-komponente, odnosno da je on jedinstven izvor istine. Na taj način je 
+komponente, odnosno da je on jedinstven %TODO iyvor istine 
+izvor istine. Na taj način je 
 napravljena sigurnost da podaci biti konzistentni i da neće biti particionisani.
 Ako dve komponente zahtevaju isti podatak, one ga neće čuvati u svom stanju 
-već će ga potraživati i sa istog mesta.
+već će ga potraživati sa istog mesta.
 
 \section{Server}
 Svaki mikroservis je napravljen kao zasebna aplikacija i generisan uz pomoć 
@@ -181,10 +184,10 @@ mikroservisa se učitava pri svakom podizanju.
 Mikroservisi koji čuvaju stanje u bazi podataka su \textit{core} i 
 \textit{user-management}. Kako \textit{NestJS} koristi u pozadini \textit{TypeORM}, 
 iskorišćena je njegova funkcija migriranja baze podataka. Migracije služe 
-za promenu sheme baze podataka u produkcionom okruženju. One osiguravanju da 
+za promenu sheme baze podataka u produkcionom okruženju. One osiguravaju da 
 će prebacivanje na novu verziju sheme biti sigurno i da neće doći do gubitka 
 podataka. Migracioni fajl sadrži klasu koja implementira 
-\texttt{MigrationInterface},a potrebno je implementirati dve metode: 
+\texttt{MigrationInterface}, a potrebno je implementirati dve metode: 
 \texttt{up} i \texttt{down}. Prva služi da se baza migrira na višu 
 verziju, a druga služi ako je u nekom slučaju potreban povratak na prethodnu. 
 Unutar tih metoda treba napisati \textit{SQL} naredbe za migracije. Pored 
@@ -229,20 +232,20 @@ raspoređivanje na \textit{Kubernetes}.
 
 \section{Produkciono okruženje}
 Razne kompanije pružaju usluge iznajmljivanja računara u oblaku. Neki od 
-njihovih proizvoda su \textit{Amazon Web Services}, \textit{Microsoft Azure}
+poznatijih proizvoda su \textit{Amazon Web Services}, \textit{Microsoft Azure}
 i \textit{Google Cloud Platform}. Sa druge strane, \textit{Kubernetes} je 
-nezavisan od platforme. Iako ga je moguće namestiti, taj posao je mukotrpan 
-pa je pametnije izabrati neki proizvod gde se \textit{Kubernetes} može 
-podići uz par klikova. 
+nezavisan od platforme. Iako ga je moguće instalirati i pokrenuti na sopstvenom 
+serveru, taj posao je mukotrpan pa je pametnije izabrati neki proizvod gde se 
+\textit{Kubernetes} može podići uz par klikova. 
 
 Kako je \textit{Google} razvio \textit{Kubernetes}, pretpostavka je da je 
 na \textit{Google Cloud Platform} uvek malo prednjači, pa je iz tog razloga 
-on izabran za Interpres.
+on izabran za aplikaciju \textit{Interpres}.
 
 Podešavanje na \textit{Google Cloud Platform} je jednostavno. Preko 
 korisničkog interfejsa je potrebno napraviti klaster. Za klaster je 
-potrebno izabrati tip virtuelne mašine, kao i lokaciju servera na kojoj 
-će ta virtuelna mašina biti podignuta. Na dalje se sve može konfigurisati 
+potrebno izabrati tip virtualne mašine, kao i lokaciju servera na kojoj 
+će ta virtualna mašina biti podignuta. Nadalje se sve može konfigurisati 
 i preko komandne linije uz \textit{Kubernetes}-ov alat \texttt{kubectl}.
 Preko ovog alata se izvršavaju komande sa pravljenje \textit{Pod}-ova.
 
