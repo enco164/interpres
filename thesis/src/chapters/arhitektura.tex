@@ -2,17 +2,17 @@
 
 Funkcionalni zahtev da aplikacija bude u oblaku, opisan u poglavlju 
 \ref{sec:funkcionalni_zahtevi-aplikacija_u_oblaku}, nameće grubu sliku kako arhitektura sistema 
-treba da izgleda. Aplikacije na Vebu su dominantno bazirane po modelu klijent--server arhitekture. 
+treba da izgleda. Aplikacije na vebu su dominantno bazirane po modelu klijent--server arhitekture. 
 Server u takvoj arhitekturi obezbeđuje uslugu klijentima koji je zahtevaju. Klijent--server 
 arhitektura je višenamenska i modularna, a sa ciljem unapređenja upotrebljivosti, interoperabilnosti, 
 fleksibilnosti i skalabilnosti. 
 
-Veb aplikacije su nezavisne od platforme jer zahtevaju samo Veb pregledač, dok se kod standardne 
+Veb aplikacije su nezavisne od platforme jer zahtevaju samo veb pregledač, dok se kod standardne 
 klijent--server arhitekture klijent mora instalirati na platformi korisnika. Pored toga, 
-kod Veb aplikacija je protokol komunikacije definisan, koristi se \textit{HTTP}, dok se kod klijent--server
+kod veb aplikacija je protokol komunikacije definisan, koristi se \textit{HTTP}, dok se kod klijent--server
 arhitekture protokol može izabrati po potrebi.
 
-Komponente klijent -- server arhitekture, prilagođene za Veb, se mogu grupisati u tri kategorije: 
+Komponente klijent -- server arhitekture, prilagođene za veb, se mogu grupisati u tri kategorije: 
 server, klijent i mreža. Uloga servera je da upravlja zajedničkim resursima, bazom podataka, da 
 izvršava poslovnu logiku, kao i da kontroliše pristup i bezbednost podataka. Posao klijenta je da 
 upravlja korisničkim interfejsom. Računarska mreža omogućava komunikaciju uzmeđu klijenta i servera, 
@@ -120,7 +120,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
     podaci mogu da se keširaju, ili ne. Ako server odgovori da su podaci kešabilni, klijent ih može 
     koristiti kasnije ako je zahtev za podacima isti. Server može napomenuti i vreme isteka keša.
     
-    \item \textbf{Uniforman interfejs}: Uniformni interfejs definiše interfejs između klijenta i servera.
+    \item \textbf{Uniforman interfejs}: Uniforman interfejs definiše interfejs između klijenta i servera.
     On pojednostavljuje i razdvaja arhitekturu, što omogućava da se svaki deo razvija samostalno. 
     Četiri vodeća principa uniformnog interfejsa su:
 
@@ -139,7 +139,8 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
         može sadržati informaciju o tome koji parser treba da se pozove. Odgovori eksplicitno 
         označavaju da li imaju sposobnost keširanja.
 
-        \item \textbf{Hipermedija kao pokretač aplikacije (\textit{HATEOAS})}: Klijenti isporučuju stanje kroz telo sadržaja,
+        \item \textbf{Hipermedija kao pokretač aplikacije (\textit{HATEOAS})}: %TODO
+        Klijenti isporučuju stanje kroz telo sadržaja,
         parametara upita, zaglavlja zahteva i traženog \textit{URI}-a (ime resursa). Servisi isporučuju stanje 
         kroz telo sadržaja, kodove u odgovoru i zaglavlje odgovora. To se tehnički naziva hipermedija 
         (hiperlinkovi unutar hiperteksta). \textit{HATEOAS} (eng. Hypermedia as the Engine of Application State) 
