@@ -7,6 +7,25 @@ korisničko iskustvo aplikacije na kojoj rade. Zbog sve prisutnije digitalizacij
 ne sme se zaboraviti na grupe ljudi koje ne razumeju određeni jezik i zbog toga 
 ne mogu da koriste aplikaciju.
 
+Predloženo rešenje je u velikoj meri fleksibilno što se tiče podrške alata za prevođenje.
+Bitno je da alat, za skladištenje prevoda, radi sa datotekama u formatu \textit{JSON}. 
+U budućnosti se ostali formati mogu podržati jednostavnom implementacijom novog parsera
+u mikroservisu \textit{integration} i poštovanjem interfejsa za komunikaciju sa 
+mikroservisom \textit{core}. Sa druge strane, projekat \textit{Interpres} se previše 
+oslanja na \textit{GitHub}. Glavne mane su nemogućnost uvoza i izvoza prevoda u fajlove 
+i zavisnost od provajdera identiteta. Aplikacije koje je potrebno prevesti mogu koristiti 
+neke druge sisteme za verzionisanje koda, a \textit{Interpres} to ne dozvoljava. Isto tako, 
+nije teško zamisliti da korisnici ne žele da prave naloge na \textit{GitHub}-u, već da 
+žele da koriste neki drugi provajder identiteta kao što je \textit{Google},
+\textit{Facebook}, ili pak žele da naprave nalog na samom sistemu.
+
+Tema koja je ostala neobrađena, a koja je jako bitna, je autorizacija. U predloženom rešenju,
+korisnik koji je autentifikovan ima pristup svim projektima. Ovaj nedostatak predstavlja 
+veliki rizik za bezbednost podataka. U narednoj verziji projekta trebalo bi osmisliti i 
+implementirati prava pristupa. Korisnici bi se u tom slučaju dodavali u projekat sa određenim 
+pravima, kao što su prava za čitanje, prava za menjanje sadržaja ili prava za podešavanje 
+samog projekta.
+
 Prilokom razvoja sistema korišćena je arhitektura mikroservisa. Ideja vodilja za odabir 
 ove arhitekture je bila da informacioni sistem bude što je više moguće skalabilan, 
 pouzdan i održiv. Sve veći trend korišćenja mikroservisa u oblaku za velike aplikacije 
