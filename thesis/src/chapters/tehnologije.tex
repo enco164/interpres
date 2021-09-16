@@ -132,20 +132,21 @@ lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih kom
 \section{GitHub aplikacija}\label{sec:github_app}
 Aplikacije na \textit{GitHub}-u mogu automatizovati i poboljšati tok razvoja. \textit{GitHub} 
 aplikacije se preporučuju za integrisanje sa \textit{GitHub}-om jer nude granularnije permisije 
-za pristup podacima. Rade samostalno, preduzimajući akcije putem \textit{API}-ja, koristeći 
-sopstveni identitet. 
+za pristup podacima. 
 
 \textit{GitHub} aplikacije se mogu instalirati direktno na organizacione i korisničke naloge i 
 odobriti pristup specifičnim repozitorijima. Može ih instalirati vlasnik naloga organizacije 
-ili korisnik sa administratorskim dozvolama. 
+ili korisnik sa administratorskim dozvolama. Kako bi ih promovisao, \textit{GitHub} je napravio
+stranicu koja predstavlja prodavnicu aplikacija i preko ove prodavnice je moguće instalirati 
+aplikacije i dodatno obogatiti repozitorijume.
 
-\textit{GitHub} aplikacije su sa ugrađenim \textit{Webhook}-ovima i suženim, specifičnim dozvolama. 
-Kada se postavi \textit{GitHub} aplikacija, može se izabrati kojim repozitorijumima će se pritupiti.
-
-\textit{GitHub} aplikacije su aplikacije koje se ne izvršavaju na \textit{GitHub}-u već za 
-njih mora da se obezbedi server. Sa \textit{GitHub}-a se samo dobiju ključevi za pristup i njihova
-biblioteka \textit{octokit} koja služi da pozove odgovarajuće interfejse kako bi izvršili neku 
-akciju nad repozitorijumom.
+\textit{GitHub} aplikacije se ponašaju kao dodatni korisnici na repozitorijumu. Za svaku 
+aplikaciju se vezuje jedan identitet koji joj odgovara. Registrovanjem aplikacije programer 
+dobija pristupne ključeve. Uz pomoć ovih ključeva i \textit{GitHub}-ovom bibliotekom, zvanom \textit{octokit},
+programer može da izvršava akcije u repozitorijumu, kao što su ostavljanje komentara,
+menjanje datoteka, pravljenje zahteva za promenu ili mogu da reaguju na neke događaje koji su se 
+desili u repozitorijumu preko \textit{Webhook}-ova. Ove aplikacije se ne izvršavaju na 
+\textit{GitHub}-u već za njih mora da se obezbedi server. 
 
 Za poboljšanje rada u repozitorijumu, može se napraviti GitHub aplikacija koja sadrži više skripti 
 ili celu aplikaciju, i takvu aplikaciju uvezati sa mnoštvo drugih alata~\cite{github_apps}. Tako na 
@@ -204,14 +205,13 @@ pokrenula aplikacija. To je u osnovi spremna aplikacija kreirana iz \textit{Dock
 
 \section{Kubernetes}\label{sec:kubernetes}
 
-Do nedavno, većina softverskih aplikacija je razvijana kao veliki monoliti, koji su funkcionisali kao jedan proces 
-ili kao mali broj procesa rasprostanjenih na više servera. Ovi zastareli sistemi su i dalje veoma rasprostranjeni. 
-Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko. Na kraju svakog razvojnog ciklusa, programeri
-upakuju ceo sistem i predaju ga timu zaduženom za operacije, koji ga kasnije instalira i nadgleda. U slučaju hardverske
-greške, tim za operacije ručno migrira sistem na preostale servere koji su bez greške.
+Razvojem mikroservisnih arhitektura dovelo je do povećane upotrebe kontejner tehnologija, jer 
+kontejneri predstavljaju savršeno rešenje za male, nezavisne aplikacije, kao što su mikroservisi. 
+To je dalje dovelo do toga da se aplikacije sada nalaze u velikom broju kontejnera. Upravljanje 
+tim kontejnerima, kroz različita oruženja, uz pomoć skripti ili alata koji su nastali u okviru 
+kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno.
 
-Danas se ovako veliki monoliti rasčlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. Obzirom
-da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
+Obzirom da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
 Ovakva osobina omogućava češće promene na komponentama. S druge strane, povećanjem broja komponenti koje treba 
 instalirati postaje sve teže konfigurisati, upravljati i očuvati ceo sistem u radnom stanju. Pored navedenog, mnogo 
 je teže shvatiti kako i gde postaviti ove komponente kako bi se postigla veća iskorišćenost resursa, a samim tim i 
@@ -234,13 +234,6 @@ tako \textit{Kubernetes} postaje standardan model za računarstvo u oblaku~\cite
 strane \textit{Google}-a. Pomaže pri upravljanju aplikacijama koje su razvijene u velikom broju 
 kontejnera. Može da se primeni na različita okruženja za isporuku, kao što su fizički 
 hardver, virtualne mašine ili oblak.
-
-%TODO ovo prebaciti na pocetak price o Kubernetes, umesto ponavljanja price o mikroservisima
-Razvojem mikroservisnih arhitektura dovelo je do povećane upotrebe kontejner tehnologija, jer 
-kontejneri predstavljaju savršeno rešenje za male, nezavisne aplikacije, kao što su mikroservisi. 
-To je dalje dovelo do toga da se aplikacije sada nalaze u velikom broju kontejnera. Upravljanje 
-tim kontejnerima, kroz različita oruženja, uz pomoć skripti ili alata koji su nastali u okviru 
-kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno.
 
 Prednosti korišćenja \textit{Kubernetes} su mnogobrojne. Visoka dostupnost aplikacije je jedna od tih prednosti. 
 To zači da će korisnici moći (skoro) uvek da pristupe aplikaciji. Druga prednost je horizontalna 
@@ -265,8 +258,7 @@ komandnoj liniji. Drugi proces koji se nalazi na glavnom čvoru je {\em Controll
 prati šta se dešava u klasteru, da li nešto treba da se popravi, ili da otkrije da je došlo do greške 
 u kontejneru. Dalje, na glavnom čvoru se nalazi proces pod imenom {\em Scheduler} koji je zadužen 
 za podizanje kontejnera na različitim čvorovima u odnosu na opterećenje i dostupne resurse na svakom 
-čvoru. \textit{Scheduler} je %TODO
-pametan proces koji odlučuje na kom čvoru će biti podignut koji kontejner. 
+čvoru. \textit{Scheduler} je proces koji odlučuje na kom čvoru će biti podignut koji kontejner. 
 Još jedna bitna komponenta na glavnom čvoru je {\em etcd}, skladište "ključ -- vrednost", koje služi 
 da čuva stanje \textit{Kubernetes} klastera. On čuva sve konfiguracije za svaki čvor, aplikaciju, ali i statusne 
 podatke o svakom kontejneru. Poslednja, ali nimalo manje važna komponenta u arhitekturi \textit{Kubernetes}-a, 
@@ -300,68 +292,41 @@ nova \textit{IP} adresa, prirodno se uvodi pojam {\em Servisa}. Servis predstavl
 da umesto da podovi komuniciraju međusobno preko \textit{IP} adrese, oni mogu da komuniciraju preko Servisa 
 koji dalje prosleđuju komunikaciju čauri. Tako da, ako se čaura ponovo napravi, ostali će znati da komuniciraju 
 s njom kada ponovo bude dostupna. Pored zamene \textit{IP} adrese, Servisi služe i kao balanseri opterećenja. 
-%TODO Mozda da dodate recenicu: Moye se reci da servisi predstavljaju apstrakciju "pod"ova, kao i da podovi predstavljaju instance servisa
+
+Može se reći da servisi predstavljaju apstrakciju čauri, kao i da čaure predstavljaju instance servisa.
 
 \subsection{Konfiguracija Kubernetes-a}
 Konfigurisanje sistema \textit{Kubernetes} se odvija deklarativno, uz pomoć konfiguracionog fajla u formatu \textit{YAML}. U njemu deklarišemo
 koji kontejner treba da se podigne, od koje \textit{Docker} slike treba da se napravi, koliko čaura treba 
-da bude u svakom trenutku, kao i %TODO promenljive iz okruzenja
-promenljive iz okruženja. \textit{Kubernetes} se stara da ovi zahtevi budu 
-ispoštovani, i za to je zadužen \textit{Controller Manager}, koji proverava konfiguraciju i upravlja ostalim 
-procesima. 
+da bude u svakom trenutku. Pomenuto skladište {\em etcd}, pored stanja klastera, može da sačuva i dodatne promenljive.
+U konfiguracionom fajlu za čaure se te promenljive mogu navesti, a potom će, prilikom izvršavanja, one biti 
+dostupne kroz sistemske promenljive kontejnera. Na ovaj način se kontejneri mogu lako konfigurisati bez prekida rada. 
+\textit{Kubernetes} se stara da ovi zahtevi budu ispoštovani, i za to je zadužen \textit{Controller Manager}, 
+koji proverava konfiguraciju i upravlja ostalim procesima. 
+
 
 \section{Kontinualna integracija, isporuka i raspoređivanje}\label{sec:arhitektura-ci_cd}
 
 \textit{CI/CD} je metod za često dostavljanje aplikacija korisnicima kroz predstavljanje automatizacije u 
 fazama razvoja aplikacije. Glavni koncept \textit{CI/CD} su kontinualna integracija (eng. 
 \textit{continuous integration}), kontinualno dostavljanje (eng. \textit{continuous delivery}) i 
-kontinualno raspoređivanje (eng. \textit{continuous deployment}). \textit{CI/CD} je rešenje za %TODO problem koji nastaje
-problem koji nastaje prilikom integracije novog koda.
+kontinualno raspoređivanje (eng. \textit{continuous deployment}).
 
 \textit{CI/CD} uvodi automatizaciju i kontinualno praćenje kroz životni ciklus aplikacija, 
 od integracije i faze testiranja do dostavljanja i raspoređivanja. Zajedno, ove povezane prakse 
-često se nazivaju “\textit{CI/CD} tok” (eng. \textit{CI/CD pipeline}), a podržani su i od strane razvojnih 
-i od strane operacionih timova.
-
-\subsection{Razlika između CI i CD}
-Akronim \textit{CI/CD} ima više različitih značenja. \textit{“CI”} u \textit{CI/CD} uvek označava kontinualnu integraciju, 
-koja predstavlja automatizovan proces izgradnje i testiranja projekta. Uspešan \textit{CI} označava da su nove izmene koda 
-na aplikaciji regularno izgrađene, testirane i pripojene deljenom repozitorijumu. To je rešenje 
-za problem koji postoji onda kada ima previše grana u razvoju koje mogu dovesti do konflikata.
-
-\textit{“CD”} u \textit{CI/CD} označava kontinualno dostavljanje i/ili kontinualno raspoređivanje, što su povezani 
-koncepti i mogu se koristiti naizmenično. I jedan i drugi tiču se automatizacije određenih faza u distribuiranju aplikacije, 
-međutim, nekada se koriste i odvojeno u cilju prikaza količine automatizacije koja se odvija.
-
-Kontinualno dostavljanje obično znači da su izmene koje je programer napravio automatski testirane 
-i otpremljene u repozitorijum, gde se onda mogu rasporediti na produkciono okruženje od strane 
-operacionog tima. Može se smatrati odgovorom na slabu preglednost i komunikaciju između tima 
-programera i poslovnog tima. Iz tog razloga, svrha kontinualnog dostavljanja jeste da omogući 
-raspoređivanje novog koda uz minimalne napore.
-
-Kontinualno raspoređivanje odnosi se na automatsko puštanje izmena sa repozitorijuma u produkciju. 
-Rešava problem preopterećenja operacionog tima manuelnim procesima koji usporavaju dostavljanje 
-aplikacije. %TODO
-Zasniva se na prednostima kontinualnog dostavljanja automatizacijom narednih faza u toku.
+često se nazivaju “\textit{CI/CD} tok” (eng. \textit{CI/CD pipeline}), prikazan na slici~\ref{fig:cicd}, 
+a podržan je i od strane razvojnih i od strane operacionih timova.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.85\textwidth]{ci-cd-flow-desktop}
     \caption{\textit{CI/CD} tok}
+    \label{fig:cicd}
 \end{figure}
 
-Moguće je da \textit{CI/CD} obuhvati povezane prakse kontinualne integracije i kontinualnog dostavljanja, 
-ili sve 3 povezane prakse kontinualne integracije, kontinualnog dostavljanja i kontinualnog 
-raspoređivanja. Dodatnu komplikaciju stvara to što se kontinualna isporuka može nekada koristiti 
-na način koji obuhvata procese kontinualnog raspoređivanja.
-
-%TODO ovoj recenici nije ovde mesto, vec pre opisivanja CI i CD. Isto i za naredni pasus
-\textit{CI/CD} je proces, često predstavljen kao tok, koji obuhvata uvođenje visokog stepena 
-automatizacije i kontinualnog praćenja razvoja aplikacije.
-
 Od slučaja do slučaja, na šta se termini konkretno odnose zavisi od toga koliko je automatizacije 
-ugrađenou \textit{CI/CD} tok. Mnoga preduzeća započinju dodavanjem \textit{CI}, nakon čega uvode automatizaciju 
-dostavljanja i raspoređivanja.
+ugrađeno u \textit{CI/CD} tok. Mnoga preduzeća započinju dodavanjem kontinualne integracije, 
+nakon čega uvode automatizaciju dostavljanja i raspoređivanja.
 
 \subsection{Kontinualna integracija}
 U razvoju modernih aplikacija, cilj je da više programera istovremeno radi na različitim delovima 
@@ -374,7 +339,9 @@ Kontinualna integracija (\textit{CI}) pomaže programerima da spoje izmene na ko
 čak i na dnevnom nivou. Nakon spajanja izmenjenih delova koda, izmene se validiraju tako što se 
 automatski gradi aplikacija i pokreće se više nivoa automatskog testiranja. To znači da se testira 
 sve, od klasa i funkcija do različitih modula koji su deo aplikacije. Ako automatski testovi pronađu 
-konflikt između novog i postojećeg koda, \textit{CI} olakšava rešavanje konflikata.
+konflikt između novog i postojećeg koda, \textit{CI} olakšava rešavanje konflikata jer pomaže u 
+pronalaženju uzroka konflikta. Uspešan \textit{CI} označava da su nove izmene koda 
+na aplikaciji regularno izgrađene, testirane i pripojene deljenom repozitorijumu.
 
 \subsection{Kontinualno dostavljanje}
 Nakon automatskog građenja aplikacije i testiranja u \textit{CI}, kontinualno dostavljanje automatizuje 
@@ -384,8 +351,9 @@ baze koda koja je uvek spremna za raspoređivanje na produkciono okruženje.
 
 U kontinualnom dostavljanju, svaka faza, počevši od spajanja izmenjenog koda do dostavljanja 
 verzija spremnih za produkciju, podrazumeva automatsko testiranje i automatizaciju raspoređivanja 
-koda. Na kraju tog procesa, operacioni tim je u mogućnosti da brzo i jednostavno rasporedi 
-aplikaciju na produkciju.
+koda. Može se smatrati odgovorom na slabu preglednost i komunikaciju između tima 
+programera i poslovnog tima. Iz tog razloga, svrha kontinualnog dostavljanja jeste da omogući 
+raspoređivanje novog koda brzo, jednostavno i uz minimalne napore.
 
 \subsection{Kontinualno raspoređivanje}
 Poslednja faza \textit{CI/CD} protoka je kontinualno raspoređivanje. Kao dodatak kontinualnom dostavljanju, 
@@ -394,6 +362,10 @@ puštanje aplikacije u produkciju. U velikoj meri se oslanja na dobro osmišljen
 
 U praksi, kontinualno raspoređivanje znači da izmene na aplikaciji mogu biti na produkciji za samo 
 nekoliko minuta (pod pretpostavkom da su automatski testovi uspešno završeni).
+
+Kontinualno dostavljanje i kontinualno raspoređivanje su povezani koncepti i mogu se koristiti naizmenično. 
+I jedan i drugi tiču se automatizacije određenih faza u distribuiranju aplikacije, 
+međutim, nekada se koriste i odvojeno u cilju prikaza količine automatizacije koja se odvija.
 
 Sve povezane prakse \textit{CI/CD} čine raspoređivanje aplikacije manje rizičnim, stoga je lakše pustiti 
 promene u aplikaciji u delovima, pre nego odjednom.~\cite{CI_CD}
@@ -413,12 +385,12 @@ se čuvaju u repozitorijumu, u folderu pod nazivom \mbox{\texttt{.github/workflo
 Komponente koje postoje u \textit{GitHub Akcijama} su: 
 
 \begin{itemize}
+    \item Izvršilac (eng. \textit{Runner})
     \item Tok rada (eng. \textit{Workflow})
     \item Događaj (eng. \textit{Event})
     \item Posao (eng. \textit{Job})
     \item Korak (eng. \textit{Step})
     \item Akcija (eng. \textit{Action})
-    \item Izvršilac (eng. \textit{Runner})
 \end{itemize}
 
 \begin{figure}[h]
@@ -426,6 +398,12 @@ Komponente koje postoje u \textit{GitHub Akcijama} su:
     \includegraphics[width=0.5\textwidth]{overview-actions-design}
     \caption{Prikaz interakcija komponenata \textit{GitHub Akcija}}
 \end{figure}
+
+\subsubsection{Izvršilac}
+Izvršilac je mašina nad kojom se \textit{GitHub Akcije} izvršavaju. Izvršilac osluškuje pokrenute poslove,
+pokreće jedan posao za drugim, i šalje izveštaje \textit{GitHub}-u o napretku, logovima i rezultatima. Ove 
+mašine mogu da budu bazirane na \textit{Linux}, \textit{Windows} i \textit{macOS} operativnim sistemima, a svaki posao 
+unutar toka rada se pokreće iz novog virtualnog okruženja.~\cite{GitHubActions}
 
 \subsubsection{Tok rada}
 Tok rada je automatizovana procedura koja se definiše u repozitorijumu. Tokovi rada su sastavljeni 
@@ -439,8 +417,7 @@ zahtev za promenu. Aktivnost ne mora da bude u okviru \textit{GitHub}-a. Ona mo�
 nekog eksternog sistema.
 
 \subsubsection{Posao}
-Posao predstavlja skup koraka koji treba da se izvrše %TODO nad istim izvrsiocem
-nad istim izvršiocem. Tok rada sa više poslova 
+Posao predstavlja skup koraka koji treba da se izvrše u okviru istog izvršioca. Tok rada sa više poslova 
 će pokrenuti ove poslove u paraleli. Naravno, tok rada se može podesiti tako da izvršava poslove 
 sekvencijalno. Na primer, tok rada može imati dva sekvencijalna posla koji izgrađuju i testiraju kod, 
 gde je posao za testiranje zavisan od toga da li kod uopšte može da se izgradi. Ako posao za izgradnju 
@@ -455,9 +432,3 @@ dele podatke između sebe.
 Akcije predstavljaju samostalne komande koje se mogu kombinovati u korake kako bi sačinile jedan posao.
 Akcije su najmanje portabilne jedinice građe toka rada. Korisnici mogu sami da naprave svoje akcije,
 ili da koriste akcije koje su napravljene od strane \textit{GitHub} zajednice. 
-
-\subsubsection{Izvršilac}
-Izvršilac je mašina nad kojom se \textit{GitHub Akcije} izvršavaju. Izvršilac osluškuje pokrenute poslove,
-pokreće jedan posao za drugim, i šalje izveštaje \textit{GitHub}-u o napretku, logovima i rezultatima. Ove 
-mašine mogu da budu bazirane na \textit{Linux}, \textit{Windows} i \textit{macOS} operativnim sistemima, a svaki posao 
-unutar toka rada se pokreće iz novog virtualnog okruženja.~\cite{GitHubActions}
