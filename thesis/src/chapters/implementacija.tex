@@ -22,7 +22,7 @@ Izvorni kod je otvoren i može se naći na \url{https://github.com/enco164/inter
 Na slici \ref{fig:komponente} su prikazane komponente sistema kao i
 njihove zavisnosti. Važno je napomenuti da, iako \textit{core} i 
 \textit{user-management} mikroservisi koriste različite baze podataka,
-baze se zapravo nalaze u istom sistemu za upravljanje bazama podataka. 
+obe baze se zapravo nalaze u istom sistemu za upravljanje bazama podataka. 
 Ova odluka je donešena radi boljeg iskorišćenja resursa. 
 
 \begin{figure}[h]
@@ -106,7 +106,7 @@ Slično kao i za \textit{GitHub Application}, potrebna je samo registracija
 za dobijanje pristupnih ključeva kojima se pristupa interfejsu provajdera. 
 Za implementaciju pristupa korićena je biblioteka \textit{Passport.js}, 
 preporučena od strane \textit{NestJS}, koja ima implementaciju 
-protokola \textit{OAuth2}, protokola koji koristi \textit{GitHub IdP}.
+protokola \textit{OAuth2}, koji koristi \textit{GitHub IdP}.
 
 \section{Klijent}
 Klijentski deo je izgrađen uz pomoć radnog okvira \textit{React}, a početna 

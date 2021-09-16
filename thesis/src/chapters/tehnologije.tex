@@ -124,7 +124,7 @@ Tri osnovna koncepta NestJS su:
 koji definiše kako će se podaci poslati preko mreže
 \item \textbf{Interfejsi} : \textit{TypeScript} interfejsi se koriste za proveru tipa i 
 definisanje tipova podataka koji se mogu proslediti kontroleru ili \textit{NestJS} servisu
-\item \textbf{Umetanje zavisnosti}: (eng. \textit{Dependency Injection}) je dizajn obrazac 
+\item \textbf{Umetanje zavisnosti}: (eng. \textit{Dependency Injection}) je obrazac projektovanja 
 koji se koristi za povećanje efikasnosti i modularnosti aplikaicje. Održava kod čistim i 
 lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih komponenata.~\cite{nest_getting_started}
 \end{itemize}
@@ -165,7 +165,7 @@ Virtualizacija je imala nekoliko nedostataka:
     \item Sam proces pokretanja je predugo trajao
 \end{itemize}
 
-Pomenuti nedostaci doveli su do nastanka nove tehnike korišćenja kontejnera (kontejnerizacije). 
+Pomenuti nedostaci doveli su do nastanka tehnike korišćenja kontejnera (kontejnerizacije). 
 
 Kontejnerizacija je tip virtualizacije koji dovodi virtualizaciju na nivo operativnog 
 sistema. Kao što virtualizacija apstrahuje hardver, tako i kontejnerizacija apstrahuje 
@@ -224,7 +224,7 @@ i u slučaju greške pokreće nove instance aplikacija. To znači da se fokus op
 pojedinačnih aplikacija na nadgledanje i upravljanje infrastrukture i \textit{Kubernetes} alata, dok se \textit{Kubernetes} stara o samim
 aplikacijama.
 
-\textit{Kubernetes} apstrahuje hardversku infrastrukturu i pruža privid da je ceo centar ya podatke jedan veliki resurs. To omogućava
+\textit{Kubernetes} apstrahuje hardversku infrastrukturu i pruža privid da je ceo centar za podatke jedan veliki resurs. To omogućava
 velikim kompanijama koje pružaju usluge računarstva u oblaku da ponude programerima jednostavnu platformu za pokretanje
 raznih tipova aplikacija, a da pritom njihovi administratori sistema ne znaju koje su aplikacije pokrenute na njihovom
 hardveru. Kako velike kompanije sve više prihvataju \textit{Kubernetes} model kao jedan od boljih načina za pokretanje aplikacija,
@@ -281,7 +281,7 @@ okruženju se uvek drži barem 2 pokrenuta glavna čvora, tako da, ako jedan pad
 posao na sebe.
 
 \subsection{Osnovni koncepti Kubernetes-a}
-Čaura (eng. {\em Pod}) u \textit{Kubernetes}-u predstavnja najmanju jedinicu koja može da se konfiguriše i sa kojom može da 
+Čaura (eng. {\em Pod}) u \textit{Kubernetes}-u predstavlja najmanju jedinicu koja može da se konfiguriše i sa kojom može da 
 se ostvari interakcija. Ona praktično predstavlja omotač oko kontejnera. U okviru jednog radnog čvora 
 može se naći više čaura, a u jednoj čauri se može naći više kontejnera. Uobičajeno je da se jedan 
 kontejner nalazi u jednoj čauri, ali postoje slučajevi kada jedan kontejner zahteva pomoćne kontejnere 
@@ -355,7 +355,7 @@ ili sve 3 povezane prakse kontinualne integracije, kontinualnog dostavljanja i k
 raspoređivanja. Dodatnu komplikaciju stvara to što se kontinualna isporuka može nekada koristiti 
 na način koji obuhvata procese kontinualnog raspoređivanja.
 
-%TODO ovoj recenici nije ovde mesto, vec pre opisivanja CI i CD. Isto i ya naredni pasus
+%TODO ovoj recenici nije ovde mesto, vec pre opisivanja CI i CD. Isto i za naredni pasus
 \textit{CI/CD} je proces, često predstavljen kao tok, koji obuhvata uvođenje visokog stepena 
 automatizacije i kontinualnog praćenja razvoja aplikacije.
 
@@ -376,7 +376,7 @@ automatski gradi aplikacija i pokreće se više nivoa automatskog testiranja. To
 sve, od klasa i funkcija do različitih modula koji su deo aplikacije. Ako automatski testovi pronađu 
 konflikt između novog i postojećeg koda, \textit{CI} olakšava rešavanje konflikata.
 
-\subsection{Kontinualna dostavljanje}
+\subsection{Kontinualno dostavljanje}
 Nakon automatskog građenja aplikacije i testiranja u \textit{CI}, kontinualno dostavljanje automatizuje 
 puštanje prethodno validiranog koda u repozitorijum. Kako bismo imali efektivan proces kontinualne 
 dostave, važno je da imamo već ugrađen \textit{CI} u protoku. Cilj kontinualnog dostavljanja jeste postojanje 
