@@ -153,6 +153,29 @@ ili celu aplikaciju, i takvu aplikaciju uvezati sa mnoštvo drugih alata~\cite{g
 primer, može se povezati sistem za uređivanje prevoda koji bi mogao da otvori novi "zahtev za promenu"
 kad su prevodioci završili sa svojim ciklusom prevođenja.
 
+\textit{OAuth} je standardni protokol koji omogućava korisniku da autorizuje pristup ka \textit{API}-ju 
+od strane aplikacije. Onda kada je pristup omogućen, autorizovana aplikacija može koristiti 
+\textit{API} u ime korisnika.
+
+\textit{OAuth 1.0} je delegirana strategija autentikacije koja uključuje više koraka. 
+Koristi se samo za veb. Aplikacija koja zahteva pristup se može identifikovati preko korisničkog 
+ključa (eng. \textit{consumer key}) i korisniške šifre (eng. \textit{consumer secret}).
+\textit{OAuth 2.0} je dizajniran da prevaziđe uočene nedostatke u prethodnoj verziji. 
+Podržava klijente koji nisu na vebu. Tok autentikacije je isti kao i kod \textit{OAuth 1.0}. 
+Međutim kod \textit{OAuth 2.0} se postiže bolje upravljanje zahtevima i autorizacijom korisnika.
+\textit{GitHub}-ova \textit{OAuth} implementacija podržava obe verzije.
+
+Autorizacija korisnika na veb aplikaciji sastoji se iz tri koraka:
+\begin{itemize}
+    \item Korisnik bira akciju da prosledi svoj \textit{GitHub} identitet aplikaciji.
+    \item Korisnik se preusmerava na veb stranicu od strane \textit{GITHub}-a.
+        Ako korisnik prihvati zahtev, \textit{GitHub} ga preusmerava nazad sa privremenim kodom i stanjem 
+        koje je prosleđeno u prethodnom koraku. Vreme trajanja koda je 10 minuta. U slučaju da 
+        se stanja ne poklapaju, proces se obustavlja iz sigurnosnih razloga.
+    \item Aplikacija pristupa \textit{API}-ju sa korisničkim pristupnim tokenom. 
+        Pristupni token omogućava pravljenje zahtevaa prema \textit{API}-ju u korisnikovo ime.
+\end{itemize}
+
 \section{Docker}\label{sec:docker}
 
 Pre korišćenja kontejnera, glavni način za izolovanje, organizaciju aplikacije i njenih zavisnosti je 

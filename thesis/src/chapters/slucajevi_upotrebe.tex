@@ -1,5 +1,12 @@
 \chapter{Slučajevi upotrebe}\label{ch:slucajevi_upotrebe}
 
+Razvoj softvera iterativnom metodom diktira i uređivanje prevoda za aplikaciju. Na kraju svakog 
+ciklusa, programeri obaveste prevodioce da su završili kako bi prevodioci mogli da započnu svoj 
+ciklus prevođenja. 
+
+U ovom poglavlju će biti opisani slučajevi upotrebe. Na dijagramu \ref{fig:slucajevi_upotrebe} je 
+prikazana šira slika svih slučajeva upotrebe. 
+
 \renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
 \renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
 \renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
@@ -64,12 +71,6 @@
     \item Sistem prevodiocu vraća stranicu sa podacima o projektu
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{kreiranje_projekta}
-    \caption{Dijagram aktivnosti - pravljenje projekta}
-\end{figure}
-
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Uvoz prevoda}
@@ -94,12 +95,6 @@
 \textbf{Alternativni tok}: Ukoliko prevodilac u koraku 5. klikne na dugme "\textit{Cancel}", 
 sistem zatvara modal i prevodi neće biti uvezeni.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{uvoz_prevoda}
-    \caption{Dijagram aktivnosti -- uvoz prevoda}
-\end{figure}
-
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Izmena prevoda}
@@ -120,12 +115,6 @@ sistem zatvara modal i prevodi neće biti uvezeni.
     \item Prevod se automatski šalje na čuvanje u trenutku kada tekstualno polje izgubi fokus
     \item Sistem čuva izmenjeni prevod
 \end{enumerate}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\textwidth]{izmena_prevoda}
-    \caption{Dijagram aktivnosti -- izmena prevoda}
-\end{figure}
 
 \begin{figure}[H]
     \centering

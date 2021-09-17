@@ -17,6 +17,7 @@ jezika. Za potrebe uređivanja prevoda je korišćen upravo \textit{Interpres}.
 
 Izvorni kod je otvoren i može se naći na \url{https://github.com/enco164/interpres}.
 
+
 \section{Komponente sistema}
 
 Na slici \ref{fig:komponente} su prikazane komponente sistema kao i
@@ -133,50 +134,48 @@ postiže se veća čitljivost, razdvajaju se odgovornosti, lakše se testira
 automatskim testovima, a samim tim se kod lakše održava. 
 Ovaj princip je prikazan na primeru koda \ref{code:primer}.
 %TODO change listing caption label
-\begin{listing}[H]
+\begin{listing}[h]
   \centering
-\begin{minted}[ fontsize=\footnotesize ]{jsx}
-// usePrimer.ts
-export const usePrimer = () => {
-  const [count, setCount] = useState(0);
+  \begin{minted}[ fontsize=\footnotesize ]{jsx}
+  // usePrimer.ts
+  export const usePrimer = () => {
+    const [count, setCount] = useState(0);
 
-  return {
-    count,
-    handleClick: () => setCount(count + 1),
-  };
-}
+    return {
+      count,
+      handleClick: () => setCount(count + 1),
+    };
+  }
 
-// primer.tsx
-export const Primer = () => {
-  const {count, handleClick} = usePrimer();
+  // primer.tsx
+  export const Primer = () => {
+    const {count, handleClick} = usePrimer();
 
-  return (
-    <div>
-      <p>Kliknuli ste {count} puta</p>
-      <button onClick={handleClick}>
-        Klikni me
-      </button>
-    </div>
-  );
-}
-\end{minted}
+    return (
+      <div>
+        <p>Kliknuli ste {count} puta</p>
+        <button onClick={handleClick}>
+          Klikni me
+        </button>
+      </div>
+    );
+  }
+  \end{minted}
 \caption{Princip pisanja funkcijskih komponenata sa kukama}
 \label{code:primer}
 \end{listing}
 
 Za upravljanje stanjem u aplikaciji korišćen je \textit{redux}. On radi 
 po principu centralizovanog skladišta, što znači da njemu pristupaju sve 
-komponente, odnosno da je on jedinstven %TODO iyvor istine 
-izvor istine. Na taj način je 
-napravljena sigurnost da podaci biti konzistentni i da neće biti particionisani.
-Ako dve komponente zahtevaju isti podatak, one ga neće čuvati u svom stanju 
+komponente. Na taj način je napravljena sigurnost da će podaci biti konzistentni 
+i da neće biti particionisani. Ako dve komponente zahtevaju isti podatak, one ga neće čuvati u svom stanju 
 već će ga potraživati sa istog mesta.
 
 \section{Server}
 Svaki mikroservis je napravljen kao zasebna aplikacija i generisan uz pomoć 
 \textit{NestJS} interfejsa za komandnu liniju. Ako neki mikroservis treba 
 da zna za postojanje nekog drugog, informacija o lokaciji će biti prosleđenja 
-kroz konfiguraciju, odnosno kroz promenljive iz okruženja. U konfiguraciji 
+kroz konfiguraciju, odnosno kroz sistemske promenljive. U konfiguraciji 
 se pored toga čuvaju pristupni ključevi za \textit{GitHub Application}, 
 \textit{GiHub IdP}, i lokacija i kredencijali za bazu podataka. Konfiguracija 
 mikroservisa se učitava pri svakom podizanju.
@@ -205,7 +204,42 @@ i onda se pretplatiti na odgovor. Dok se čeka odgovor, pogram je slobodan da
 obavlja neki drugi posao. Kada odgovor stigne biće pozvana funkcija 
 za obradu pretplate i tok izvršavanja će se nastaviti.
 Pisanje reaktivnog koda je umnogome olakšano jer je i sam \textit{NestJS} 
-napisan uz pomoć \textit{rx.js}. 
+napisan uz pomoć \textit{rx.js}. Na primeru koda \ref{code:rxjs} je prikazano
+korišćenje \textit{rx.js} na metodi uvoza prevoda.
+
+
+\begin{listing}[h]
+  \centering
+  \begin{minted}[ fontsize=\footnotesize ]{js}
+importProject({ projectId }: ImportRequest) {
+  return this.projectRepository.getProjectById(projectId)
+    .pipe(
+      throwIfEmpty(
+        () => new NotFoundException(`Project with id ${projectId} not found`)
+      ),
+      concatMap((project) =>
+        forkJoin([
+          this.integrationMicroserviceClientSend(
+            "import",
+            {
+              owner: project.githubOwner,
+              repo: project.githubRepo,
+              translationsLoadPath: project.lngLoadPath,
+            }
+          ),
+          this.translationRepository.remove(project.translations)
+        ])
+      ),
+      concatMap(([dataFromGithub, ]) =>
+        this.importParsedTranslations(dataFromGithub, projectId)
+      )
+    );
+}  
+  \end{minted}
+\caption{Metoda za uvoz prevoda napisana u reaktivnom stilu}
+\label{code:rxjs}
+\end{listing}
+
 
 \section{Automatizacija}
 Kontinualna integracija, isporučivanje i isporuka je implementirana uz 
@@ -229,6 +263,60 @@ Tu se izgrade \textit{Docker} slike koje se kasnije isporučuju na
 \textit{Docker} javni registar. Potom, kada su sve slike isporučene na 
 \textit{Docker} registar, pokreće se \textit{GitHub} akcija koja započinje 
 raspoređivanje na \textit{Kubernetes}.
+
+Na primeru koda \ref{code:cicd} je prikazan tok kontinualne isporuke
+mikroservisa \textit{gateway} na \textit{Docker} javni registar.
+
+\begin{listing}[h]
+  \centering
+  \begin{minted}[ fontsize=\footnotesize ]{yaml}
+name: Build & Publish API Gateway docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-docker-and-publish:
+    runs-on: ubuntu-latest
+    environment: main
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Determine Docker Tag
+        run: echo "DOCKER_TAG=${{ github.sha }}"  >> $GITHUB_ENV
+      - run: |-
+          echo DOCKER_TAG:  $DOCKER_TAG
+
+      - name: DockerHub login
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: |
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+
+      - name: Build docker image
+        run: |
+          docker build \
+            -t interpres/api-gateway:latest \
+            -t interpres/api-gateway:$DOCKER_TAG \
+            ./server/api-gateway
+
+      - name: Push docker image
+        run: |
+          docker push --all-tags interpres/api-gateway
+\end{minted}
+\caption{Tok kontinualne isporuke mikroservisa \textit{gateway}}
+\label{code:cicd}
+\end{listing}
 
 \section{Produkciono okruženje}
 Razne kompanije pružaju usluge iznajmljivanja računara u oblaku. Neki od 

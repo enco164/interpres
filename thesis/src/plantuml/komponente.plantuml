@@ -1,6 +1,4 @@
 @startuml Komponente
-
-
 node "Google Cloud Platform" {
     database "user-management DB" as UM_DB
     database "core DB" as C_DB
@@ -20,8 +18,12 @@ node "Pregledač" {
     [SPA] ..> [gateway]
 }
 
+cloud "GitHub Cloud" {
+    [GitHub IdP]
+    [GitHub Application]
+}
+
 [gateway] ..> [GitHub IdP]
 
 [integration] ..> [GitHub Application]
-
 @enduml
