@@ -232,7 +232,7 @@ Razvojem mikroservisnih arhitektura dovelo je do povećane upotrebe kontejner te
 kontejneri predstavljaju savršeno rešenje za male, nezavisne aplikacije, kao što su mikroservisi. 
 To je dalje dovelo do toga da se aplikacije sada nalaze u velikom broju kontejnera. Upravljanje 
 tim kontejnerima, kroz različita oruženja, uz pomoć skripti ili alata koji su nastali u okviru 
-kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno.
+kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno. 
 
 Obzirom da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
 Ovakva osobina omogućava češće promene na komponentama. S druge strane, povećanjem broja komponenti koje treba 
@@ -240,6 +240,12 @@ instalirati postaje sve teže konfigurisati, upravljati i očuvati ceo sistem u 
 je teže shvatiti kako i gde postaviti ove komponente kako bi se postigla veća iskorišćenost resursa, a samim tim i 
 smanjiti cenu potrebnog hardvera. Odatle postoji potreba za automatizacijom, koja uključuje automatsku konfiguraciju,
 nadzor  i rešavanje problema. Iz ovih razloga je razvijen \textit{Kubernetes}.
+
+Porastom kompleksnosti sistema raste i broj alata koji se koriste za upravljanje. Vremenom postaje 
+nemoguće da tim programera isprati sve tehnologije i alate. Odatle prirodno nastaje potreba za 
+izdvojenim timom tehničkih lica koja poznaju alate i tehnologije za upravljanje sistemom. Ovaj tim 
+se naziva operacioni tim, i zadužen je za održavanje sistema i raspoređivanje novih verzija. Tim 
+programera je u tom slučaju rasterećen jer mu je fokus samo na rešavanju poslovne logike.
 
 \textit{Kubernetes} omogućava programerima da sami instaliraju svoju aplikaciju, bez pomoći dodatnog operacionog tima. 
 Ali s druge strane, nemaju samo programeri benefit. Ovaj alat takođe pomaže operacionom timu tako što automatski nadgleda, 
