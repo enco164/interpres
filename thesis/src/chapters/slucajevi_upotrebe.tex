@@ -1,5 +1,10 @@
 \chapter{Slučajevi upotrebe}\label{ch:slucajevi_upotrebe}
 
+
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
 Razvoj softvera iterativnom metodom diktira i uređivanje prevoda za aplikaciju. Na kraju svakog 
 ciklusa, programeri obaveste prevodioce da su završili kako bi prevodioci mogli da započnu svoj 
 ciklus prevođenja. 
@@ -7,16 +12,19 @@ ciklus prevođenja.
 U ovom poglavlju će biti opisani slučajevi upotrebe. Na dijagramu \ref{fig:slucajevi_upotrebe} je 
 prikazana šira slika svih slučajeva upotrebe. 
 
-\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
-\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
-\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{slucajevi_upotrebe}
+    \caption{BPMN dijagram slučajeva upotrebe}
+    \label{fig:slucajevi_upotrebe}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Prijava korisnika uz pomoć GitHub IdP}
 
 \textbf{Kratak opis}: Korisnik se prijavljuje sa sopstvenim kredencijalima
 
-\textbf{Učesnici}: Korisnik, veb aplikacija, \textit{Gateway}, \textit{GitHub Identity Provider (IdP)}
+\textbf{Učesnici}: Korisnik
 
 \textbf{Postuslov}: Korisnik je prijavljen
 
@@ -45,7 +53,7 @@ prikazana šira slika svih slučajeva upotrebe.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{prijava_korisnika}
+    \includegraphics[width=1\textwidth]{prijava_korisnika}
     \caption{Dijagram sekvence -- prijava korisnika}
 \end{figure}
 
@@ -127,7 +135,7 @@ sistem zatvara modal i prevodi neće biti uvezeni.
 \section{Izvoz prevoda}
 
 \textbf{Kratak opis}: Prevodilac želi da izveze prevode izabranog projekta i 
-na taj način praov \textit{Pull Request} na \textit{GitHub}-u
+na taj način napravi zahtev za promenu na \textit{GitHub}-u
 
 \textbf{Učesnici}: Prevodilac
 
@@ -140,7 +148,7 @@ na taj način praov \textit{Pull Request} na \textit{GitHub}-u
     \item Sistem prikazuje opcije za uvoz i izvoz prevoda
     \item Prevodilac bira akciju za izvoz prevoda
     \item Sistem prikazuje modal sa formom za unos naslova i opisa 
-    zahteva za promenu (eng. \textit{Pull Request})
+    zahteva za promenu
     \item Prevodilac unosi naslov i opis u tekstualna polja
     \item Korisnik klikne na dugme \textit{OK}
     \item Sistem pokreće akciju izvoza prevoda

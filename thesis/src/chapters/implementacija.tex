@@ -63,10 +63,9 @@ Komunikacija sa ostalim mikroservisima (\textit{core} i \textit{user-management}
 se odvija preko protokola \textit{TCP} podržanog od strane \textit{NestJS}.
 
 \subsection{User Management}
-Cilj ove komponente je da se brine o podacima korisnika. Iako \textit{GitHub} 
-predstavlja %TODO iyvor istine
-izvor istine za podatke o korisniku, kao dobra praksa se 
-pokazalo da ne treba zavisiti od ključeva nekih eksternih sistema. 
+Cilj ove komponente je da se brine o podacima korisnika. Pošto se podaci o korisnicima 
+preuzimaju od eksternih servisa, u ovom slučaju od \textit{GitHub}-a, kao dobra praksa se 
+pokazalo da ne treba zavisiti od ključeva eksternih sistema. 
 Ovde se konkretno misli na jedinstveni identifikator korisnika. Kao 
 poboljšanje sistema, mogao bi da se implementira pristup sistemu preko 
 nekog drugog provajdera identiteta. U tom slučaju može doći do kolizije 
@@ -87,7 +86,7 @@ klijentsku stranu aplikacije ili za mikroservis \textit{integration}.
 \subsection{Integration}
 Ova komponenta ima funkciju integracije sa sistemom za verzionisanje koda. 
 Na zahtev mikroservisa \textit{core}, ona može preko \textit{GitHub Aplikacije}, 
-da dohvati prevode sa repozitorijuma i da napravi \textit{Pull Request} sa 
+da dohvati prevode sa repozitorijuma i da napravi zahtev za promenu sa 
 novim izmenama. Ako bi se u budućnosti implementirala integracija sa nekim 
 drugim sistemom za verzionisanje koda, ovaj mikroservis je pravo mesto za to.
 
@@ -99,7 +98,7 @@ i postavi aplikaciju na neki server. Implementacija aplikacije u \textit{NodeJS}
 je preko \textit{GitHub}-ove biblioteke, nazvane \textit{octokit}. Preko ove 
 biblioteke se dobija interfejs za sve akcije koje je moguće uraditi nad 
 repozitorijumom. Dve glavne koje su implementirane su čitanje fajlova sa 
-prevodima i pravljenje \textit{Pull Request}-a, i koriste se za uvoz i za 
+prevodima i pravljenje zahteva za promenu, i koriste se za uvoz i za 
 izvoz prevoda.
 
 \textit{GitHub IdP} je eksterna komponenta i služi kao provajder identiteta. 
@@ -125,19 +124,20 @@ Sve \textit{React} komponente su pisane kao funkcijske komponente
 (eng. \textit{function components}) uz korišćenje kuka (eng. \textit{hooks}).
 Programeri koji po prvi put koriste \textit{React} uglavnom nalaze da je 
 ovako napisan kod nečitljiv jer deluje da je pomešana poslovna logika komponente 
-sa prikazom korisničkog interfejsa. %TODO sl recenica
-Iako se to može učiniti na početku, uglavnom je 
-problem nepostojanja predloženog dizajna od strane autora biblioteke na 
-zvaničnom sajtu. Poštovanjem pricipa da se sva poslovna logika %TODO cuva u kuki 
-čuva u kuki, a da funkcijska komponenta koristi kuku i prikazuje sadržaj, 
-postiže se veća čitljivost, razdvajaju se odgovornosti, lakše se testira 
-automatskim testovima, a samim tim se kod lakše održava. 
+sa prikazom korisničkog interfejsa. Ustvari, mišljenje da je poslovna logika 
+pomešana sa prikazom korisničkog interfejsa nastaje iz toga da u zvaničnoj 
+dokumentaciji nije predložena arhitektura, već se samo opisuje tehnologija.
+Programeru je ostavljeno na razmišljanje kako da organizuje svoju aplikaciju.
+Prilikom razvoja projekta poštovan je pricipa da se sva poslovna logika 
+nalazi u kuki, a da funkcijska komponenta koristi kuku i prikazuje sadržaj. 
+Ovim principom se postiže veća čitljivost, razdvajaju se odgovornosti, lakše se testira 
+automatskim testovima, a samim tim se i kod lakše održava. 
 Ovaj princip je prikazan na primeru koda \ref{code:primer}.
-%TODO change listing caption label
+
 \begin{listing}[h]
   \centering
-  \begin{minted}[ fontsize=\footnotesize ]{jsx}
-  // usePrimer.ts
+  \begin{minted}[ fontsize=\footnotesize ]{js}
+  // kuka: usePrimer.ts 
   export const usePrimer = () => {
     const [count, setCount] = useState(0);
 
@@ -147,7 +147,7 @@ Ovaj princip je prikazan na primeru koda \ref{code:primer}.
     };
   }
 
-  // primer.tsx
+  // komponenta: primer.tsx 
   export const Primer = () => {
     const {count, handleClick} = usePrimer();
 
