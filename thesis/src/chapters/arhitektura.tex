@@ -15,7 +15,7 @@ arhitekture protokol može izabrati po potrebi.
 Komponente klijent -- server arhitekture, prilagođene za veb, se mogu grupisati u tri kategorije: 
 server, klijent i mreža. Uloga servera je da upravlja zajedničkim resursima, bazom podataka, da 
 izvršava poslovnu logiku, kao i da kontroliše pristup i bezbednost podataka. Posao klijenta je da 
-upravlja korisničkim interfejsom. Računarska mreža omogućava komunikaciju uzmeđu klijenta i servera, 
+upravlja korisničkim interfejsom. Računarska mreža omogućava komunikaciju između klijenta i servera, 
 a komunikacija mora pratiti određene standarde.
 
 \section{Arhitektura teških klijenata}\label{sec:arhitektura-spa}
@@ -38,7 +38,7 @@ Jedan monolit bi sadržao svu poslovnu logiku koju izvršava aplikacija. Kako ap
 tako raste i sam monolit, koji se sve teže održava. Problemi koji nastaju kod velikog monolita nisu 
 samo problemi održavanja, već je i skaliranje upitno. Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko.
 
-Danas se ovako veliki monoliti rasčlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. 
+Danas se ovako veliki monoliti raščlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. 
 Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" sve češće pojavlje poslednjih 
 par godina kako bi opisao određeni način projektovanja softverskih aplikacija kao paketa usluga koji se 
 mogu odvojeno isporučiti. Iako ne postoji precizna definicija ovog arhitektonskog stila, postoje određene 
@@ -62,7 +62,7 @@ otežano u tom smislu.
 
 Da bi se monoliti lakše razvijali, programeri se uglavnom podele po tehnologiji, na primer u tim za 
 bazu podataka, tim za poslovnu logiku i tim za korisnički interfejs. U arhitekturi mikroservisa je malo 
-drugačije. Timovi se organizju oko jednog servisa i sastavljeni su od progamera različitih tehnologija.
+drugačije. Timovi se organizuju oko jednog servisa i sastavljeni su od progamera različitih tehnologija.
 To znači da su timovi nezavisni, kao i što su i sami servisi nezavisni, i organizovani su sa fokusom na 
 poslovnu logiku, a ne na tehnologiju.
 
@@ -111,7 +111,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
 \begin{itemize}
 
 	\item \textbf{Klijent -- server}: Razdvajanjem korisničkog interfejsa od servera briga o podacima 
-	ostaje na serveru. Klijenti postaju lakši za portabilnost među raličitim sistemima, a server se može
+	ostaje na serveru. Klijenti postaju lakši za portabilnost među različitim sistemima, a server se može
     lakše skalirati.
 	
     \item \textbf{Sistem bez stanja (eng. \textit{Stateless})}: Svaki zahtev sa klijenta ka serveru mora da sadrži 
@@ -133,7 +133,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
         već radije, šalje \textit{HTML}, \textit{XML} ili \textit{JSON} koji predstavljaju traženi zapis iz baze podataka.
 
         \item \textbf{Upravljanje resursima kroz reprezentaciju}: Kada klijent sadrži reprezentaciju resursa,
-        uključujući meta podatke u prilogu, onda ima dvoljno podataka da izmeni ili obriše resurse 
+        uključujući meta podatke u prilogu, onda ima dovoljno podataka da izmeni ili obriše resurse 
         sa servera, pod uslovom da ima ovlašćenje da to uradi.
 
         \item \textbf{Samoopisne poruke}: Svaka poruka sadrži dovoljno informacija da opiše na koji 
@@ -141,13 +141,13 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
         može sadržati informaciju o tome koji parser treba da se pozove. Odgovori eksplicitno 
         označavaju da li imaju sposobnost keširanja.
 
-        \item \textbf{Hipermedija kao pokretač aplikacije (\textit{HATEOAS})}: %TODO
-        Klijenti isporučuju stanje kroz telo sadržaja,
-        parametara upita, zaglavlja zahteva i traženog \textit{URI}-a (ime resursa). Servisi isporučuju stanje 
-        kroz telo sadržaja, kodove u odgovoru i zaglavlje odgovora. To se tehnički naziva hipermedija 
-        (hiperlinkovi unutar hiperteksta). \textit{HATEOAS} (eng. Hypermedia as the Engine of Application State) 
-        takođe znači da, tamo gde je potrebno, veze su sadržane unutar vraćenog tela 
-        (ili zaglavlja) odgovora, kako bi se isporučio URI za preuzimanje samog objekta ili srodnih 
+        \item \textbf{Hipermedija kao pokretač aplikacije (\textit{HATEOAS})}:
+        Klijenti treba da znaju što je manje moguće o tome kako da komuniciraju sa serverom. Komunikacija treba da bude
+        što je više moguće generička. Server svoje stanje isporučuje klijentu u vidu hiperteksta, koji unutar sebe 
+        sadrži hiperlinkove. To se tehnički naziva hipermedija (hiperlinkovi unutar hiperteksta). 
+        \textit{HATEOAS} (eng. Hypermedia as the Engine of Application State) 
+        znači da, tamo gde je potrebno, veze su sadržane unutar vraćenog odgovora. 
+        Tako se isporučuje URI za preuzimanje samog objekta ili srodnih 
         objekata. Uniformni interfejs koji svaki \textit{REST} servis mora pružiti je fundamentalna 
         osnova za njegov dizajn.
         

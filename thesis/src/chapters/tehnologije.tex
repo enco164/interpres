@@ -3,7 +3,7 @@
 U ovom poglavlju će biti opisane tehnologije korišćene za razvoj rešenja.
 
 \section{React}\label{sec:react}
-\textit{React} je \textit{Javascript} biblioteka za građenje korisničkog interfejsa. Koristi se za kreiranje modernih 
+\textit{React} je \textit{Javascript} biblioteka za građenje korisničkog interfejsa. Koristi se za pravljenje modernih 
 reaktivnih korisničkih interfejsa koji se mogu izgraditi uz pomoć izolovanih delova koda. Ti delovi koda nazivaju 
 se komponente. Korišćenjem komponente omogućeno je deljenje aplikacije na nezavisne delove koji se prilikom razvoja 
 mogu iznova koristiti.~\cite{react}
@@ -52,10 +52,11 @@ funkcijskim komponentama pa je upotreba komponenti višeg reda opširnija.
 Glavna prednost \textit{React} kuka je enkapsulacija. Odgovornost za prikazivanje korisničkog interfejsa ostaje na samoj 
 komponenti, a logika prikaza za tu komponentu se prebacuje u kuku koja se vezuje za tu komponentu. Na taj način se štiti 
 od neželjenog pristupa unutrašnjim podacima od strane komponente i sakriva se kompleksnost. Uz sve navedeno, 
-testiranje postaje lakše jer se odvojeno mogu testirati prikaz korisničkog %TODO interfejsa od logike
-interfejsa od logike prikaza. 
+testiranje postaje lakše jer se odvojeno mogu testirati prikaz korisničkog interfejsa i logika prikaza. Praktično,
+testovi za kuke, odnosno logike prikaza, postaju testovi jedinice koda (eng. \textit{Unit Test}) a testovi prikaza
+korisničkog interfejsa postaju integracioni testovi (eng. \textit{Integration Test}).
 
-Prilikom razvoja aplikacije susrećemo se sa izazovima kao što je kreiranje konzistentnih komponenti koje izgledaju i funkcionišu 
+Prilikom razvoja aplikacije susrećemo se sa izazovima kao što je pravljenje konzistentnih komponenti koje izgledaju i funkcionišu 
 na isti način, ne samo unutar jedne aplikacije već i na mnogim drugim aplikacijama koje se razvijaju. Ispis identičnih stilova 
 komponenata iznova i izmena promenljivih vrednosti na više mesta u aplikaciji utiče na vreme razvoja aplikacije.
 
@@ -93,12 +94,12 @@ MongoDB i MySQL baze podataka.
 
 Osnovne gradivne komponente NestJS aplikacije su kontroleri, provajderi i moduli.
 
-Kao i kod većine radnih okvira, kontroleri u \textit{NestJS} su odgovorini za upravljanje %TODO dolaznih zahteva
-svih dolaznih zahteva i povratnih odgovora ka klijentskom delu aplikacije. \textit{NestJS} je struktuiran tako da je 
+Kao i kod većine radnih okvira, kontroleri u \textit{NestJS} su odgovorini za opsluživanje zahteva koji dolaze
+sa klijentske strane. \textit{NestJS} je struktuiran tako da je
 mehanizam za usmeravanje, prikazan na slici \ref{fig:kontroler} sposoban da kontroliše koji kontroler 
 će biti zadužen za određeni zahtev.
-Kako bi se napravio osnovni kontroler, koriste se klase i dekoratori. Dekoratori pridruzuju meta 
-podatke klasama i omogućavaju \textit{Nest}-u da kreira mapu za rutiranje. Za definisanje HTTP 
+Kako bi se napravio osnovni kontroler, koriste se klase i dekoratori. Dekoratori pridružuju meta
+podatke klasama i omogućavaju \textit{Nest}-u da napravi mapu za rutiranje. Za definisanje HTTP 
 metoda za rute, koriste se dekoratori \texttt{@Get()}, \texttt{@Put()}, \texttt{@Post()} i \texttt{@Delete()}.~\cite{nest}
 
 \begin{figure}[h]
@@ -114,16 +115,16 @@ Servisni provajder u \textit{Nest} je klasa sa specijalnim dekoratorm \texttt{@I
 
 Moduli omogućavaju grupisanje povezanih fajlova. To su TypeScript fajlovi dekorisani sa 
 \texttt{@Module} dekoratorom, koji pruža meta podatke koje \textit{Nest} koristi za organizaciju 
-strukture aplikacije. Svaka \textit{Nest} aplikacija mora imati bar jedan modul - osnovni modul. 
+strukture aplikacije. Svaka \textit{Nest} aplikacija mora imati bar jedan modul -- osnovni modul. 
 Preporučuje se da se velike aplikacije rastave na više modula kako bi se lakše kontrolisala 
 struktura aplikacije.
 
 Tri osnovna koncepta NestJS su:
 \begin{itemize}
 \item \textbf{DTO}: Objekat za prenos podataka (eng. \textit{Data transfer object}) je objekat 
-koji definiše kako će se podaci poslati preko mreže
+koji definiše kako će se podaci poslati preko mreže;
 \item \textbf{Interfejsi} : \textit{TypeScript} interfejsi se koriste za proveru tipa i 
-definisanje tipova podataka koji se mogu proslediti kontroleru ili \textit{NestJS} servisu
+definisanje tipova podataka koji se mogu proslediti kontroleru ili \textit{NestJS} servisu i
 \item \textbf{Umetanje zavisnosti}: (eng. \textit{Dependency Injection}) je obrazac projektovanja 
 koji se koristi za povećanje efikasnosti i modularnosti aplikaicje. Održava kod čistim i 
 lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih komponenata.~\cite{nest_getting_started}
@@ -184,9 +185,9 @@ na istom fizičkom hardveru i takav proces se naziva virtualizacija.
 
 Virtualizacija je imala nekoliko nedostataka: 
 \begin{itemize}
-    \item Virtualne mašine su bile glomazne
-    \item Pokretanje više virtualnih mašina uticalo je na performanse
-    \item Sam proces pokretanja je predugo trajao
+    \item Virtualne mašine su bile glomazne;
+    \item Pokretanje više virtualnih mašina uticalo je na performanse i
+    \item Sam proces pokretanja je predugo trajao.
 \end{itemize}
 
 Pomenuti nedostaci doveli su do nastanka tehnike korišćenja kontejnera (kontejnerizacije). 
@@ -210,7 +211,7 @@ Ovakav aspekt obezbeđuje da aplikacija radi na svim okruženjima.
 
 Svaka aplikacija se pokreće na zasebnom kontejneru i ima svoj skup zavisnosti i biblioteka. 
 Zbog toga možemo biti sigurni da svaka aplikacija radi nezavisno od ostalih aplikacija, 
-dajući programerima sigurnost da grade aplikacije čije zavisnosti se neće međusobno sukobljavati.
+dajući programerima sigurnost da grade aplikacije čije se zavisnosti neće međusobno sukobljavati.
 
 \textit{Docker} fajl je tekstualni dokument koji sadrži komande koje je potrebno pokrenuti 
 u komandnoj liniji kako bi se sastavila \textit{Docker} slika. \textit{Docker} može izgraditi sliku automatski 
@@ -221,7 +222,7 @@ To su šabloni koji se ne mogu menjati i predstavljaju gradivni element kontejne
 \textit{Docker} slike se čuvaju u \textit{Docker} registrima. 
 
 \textit{Docker} kontejner je pokrenuta instanca \textit{Docker} slike. Sadrži sve što je potrebno da bi se 
-pokrenula aplikacija. To je u osnovi spremna aplikacija kreirana iz \textit{Docker} slike, 
+pokrenula aplikacija. To je u osnovi spremna aplikacija napravljena iz \textit{Docker} slike, 
 što ujedno predstavlja i krajnji proizvod \textit{Docker}-a.~\cite{docker}
 
 \textit{Docker} je trenutno najpopularnija implementacija kontejnera.
@@ -232,7 +233,7 @@ Razvojem mikroservisnih arhitektura dovelo je do povećane upotrebe kontejner te
 kontejneri predstavljaju savršeno rešenje za male, nezavisne aplikacije, kao što su mikroservisi. 
 To je dalje dovelo do toga da se aplikacije sada nalaze u velikom broju kontejnera. Upravljanje 
 tim kontejnerima, kroz različita oruženja, uz pomoć skripti ili alata koji su nastali u okviru 
-kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno.
+kompanije koja proizvodi aplikaciju postaje ubrzo jako kompleksno. 
 
 Obzirom da su mikroservisi odvojeni jedni od drugih, mogu se razvijati, instalirati, ažurirati i skalirati svaki ponaosob.
 Ovakva osobina omogućava češće promene na komponentama. S druge strane, povećanjem broja komponenti koje treba 
@@ -241,7 +242,13 @@ je teže shvatiti kako i gde postaviti ove komponente kako bi se postigla veća 
 smanjiti cenu potrebnog hardvera. Odatle postoji potreba za automatizacijom, koja uključuje automatsku konfiguraciju,
 nadzor  i rešavanje problema. Iz ovih razloga je razvijen \textit{Kubernetes}.
 
-\textit{Kubernetes} omogućava programerima da sami instaliraju svoju aplikaciju, bez pomoći dodatnog operacionog tima. 
+Porastom kompleksnosti sistema raste i broj alata koji se koriste za upravljanje. Vremenom postaje 
+nemoguće da tim programera isprati sve tehnologije i alate. Odatle prirodno nastaje potreba za 
+izdvojenim timom tehničkih lica koja poznaju alate i tehnologije za upravljanje sistemom. Ovaj tim 
+se naziva operacioni tim, i zadužen je za održavanje sistema i raspoređivanje novih verzija. Tim 
+programera je u tom slučaju rasterećen jer mu je fokus samo na rešavanju poslovne logike.
+
+\textit{Kubernetes} omogućava programerima da sami instaliraju svoju aplikaciju, bez dodatne pomoći operacionog tima. 
 Ali s druge strane, nemaju samo programeri benefit. Ovaj alat takođe pomaže operacionom timu tako što automatski nadgleda, 
 i u slučaju greške pokreće nove instance aplikacija. To znači da se fokus operacionog tima preusmerava sa nadgledanja
 pojedinačnih aplikacija na nadgledanje i upravljanje infrastrukture i \textit{Kubernetes} alata, dok se \textit{Kubernetes} stara o samim
@@ -249,7 +256,7 @@ aplikacijama.
 
 \textit{Kubernetes} apstrahuje hardversku infrastrukturu i pruža privid da je ceo centar za podatke jedan veliki resurs. To omogućava
 velikim kompanijama koje pružaju usluge računarstva u oblaku da ponude programerima jednostavnu platformu za pokretanje
-raznih tipova aplikacija, a da pritom njihovi administratori sistema ne znaju koje su aplikacije pokrenute na njihovom
+raznih tipova aplikacija, a da pritom administratori sistema tih kompanija ne znaju koje su aplikacije pokrenute na njihovom
 hardveru. Kako velike kompanije sve više prihvataju \textit{Kubernetes} model kao jedan od boljih načina za pokretanje aplikacija,
 tako \textit{Kubernetes} postaje standardan model za računarstvo u oblaku~\cite{KIA}.
 
@@ -268,7 +275,7 @@ poslednjeg sačuvanog stanja.
 \subsection{Arhitektura Kubernetes-a}
 Arhitektura \textit{Kubernetes}-a je zasnovana na klasterima. Klaster predstavlja skup čvorova. Svaki klaster sadrži
 jedan glavni čvor koji je povezan sa jednim ili više radnih čvora. Radni čvorovi na sebi imaju 
-takozvani "kublet" proces koji je pokrenut na njima. Ovaj proces služi da klaster moze da komunicira
+takozvani "kublet" proces koji je pokrenut na njima. Ovaj proces služi da klaster može da komunicira
 sa radnim čvorovima i izvšava određene poslove na njima, kao što je pokretanje procesa za aplikacije.
 Svaki radni čvor ima različite \textit{Docker} kontejnere, različitih aplikacija, koje su isporučene na njemu.
 Raspored kontejnera u radnim čvorovima zavisi od opterećenja sistema. Ako je opterećenje za određeni 
@@ -408,12 +415,12 @@ se čuvaju u repozitorijumu, u folderu pod nazivom \mbox{\texttt{.github/workflo
 Komponente koje postoje u \textit{GitHub Akcijama} su: 
 
 \begin{itemize}
-    \item Izvršilac (eng. \textit{Runner})
-    \item Tok rada (eng. \textit{Workflow})
-    \item Događaj (eng. \textit{Event})
-    \item Posao (eng. \textit{Job})
-    \item Korak (eng. \textit{Step})
-    \item Akcija (eng. \textit{Action})
+    \item Izvršilac (eng. \textit{Runner});
+    \item Tok rada (eng. \textit{Workflow});
+    \item Događaj (eng. \textit{Event});
+    \item Posao (eng. \textit{Job});
+    \item Korak (eng. \textit{Step}) i
+    \item Akcija (eng. \textit{Action}).
 \end{itemize}
 
 \begin{figure}[h]
