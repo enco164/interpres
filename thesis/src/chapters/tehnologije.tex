@@ -296,7 +296,7 @@ je virtualna mreža. Preko nje čvorovi mogu međusobno da komuniciraju.
 
 Može se primetiti da će glavni resursi biti raspoređeni na radne čvorove, jer oni služe za pokretanje 
 aplikacije. Za glavni čvor nije potrebno toliko resursa, jer se na njemu pokreću ne toliko zahtevni procesi 
-koji služe samo za rad \textit{Kubernetesa}. Ako nekim slučajem dođe do otkazivanja radnog čvora, glavni čvor 
+koji služe samo za rad \textit{Kubernetes}-a. Ako nekim slučajem dođe do otkazivanja radnog čvora, glavni čvor 
 će se pobrinuti da se podigne novi radni čvor sa istom konfiguracijom. S druge strane, ako dođe do 
 otkazivanja glavnog čvora, gubimo konekciju sa svim ostalim čvorovima. Iz tog razloga, u produkcionom 
 okruženju se uvek drži barem 2 pokrenuta glavna čvora, tako da, ako jedan padne, drugi preuzima 
@@ -409,7 +409,7 @@ posle navedenog događaja. Na primer, svaki put kada neko napravi \textit{zahtev
 (eng. \textit{Pull Request}) u repozitorijumu, može se automatski pokrenuti komanda koja pokreće 
 testove. 
 
-\textit{GitHub Akcije} koriste \textit{YAML} fajlove kako bi se definisale komponente toka rada. Ovi fajlovi 
+\textit{GitHub Akcije} koriste fajlovi u formatu \textit{YAML} kako bi se definisale komponente toka rada. Ovi fajlovi 
 se čuvaju u repozitorijumu, u folderu pod nazivom \mbox{\texttt{.github/workflows}}.
 
 Komponente koje postoje u \textit{GitHub Akcijama} su: 

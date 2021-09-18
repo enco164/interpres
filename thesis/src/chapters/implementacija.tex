@@ -21,8 +21,8 @@ Izvorni kod je otvoren i može se naći na \url{https://github.com/enco164/inter
 \section{Komponente sistema}
 
 Na slici \ref{fig:komponente} su prikazane komponente sistema kao i
-njihove zavisnosti. Važno je napomenuti da, iako \textit{core} i 
-\textit{user-management} mikroservisi koriste različite baze podataka,
+njihove zavisnosti. Važno je napomenuti da, iako mikroservisi \textit{core} i 
+\textit{user-management} koriste različite baze podataka,
 obe baze se zapravo nalaze u istom sistemu za upravljanje bazama podataka. 
 Ova odluka je donešena radi boljeg iskorišćenja resursa. 
 
@@ -96,8 +96,8 @@ koda, potrebno je napraviti \textit{GitHub Application}. Aplikacija
 ustvari daje samo pristupne ključeve, a na programeru je dalje da implementira 
 i postavi aplikaciju na neki server. Implementacija aplikacije u \textit{NodeJS} 
 je preko \textit{GitHub}-ove biblioteke, nazvane \textit{octokit}. Preko ove 
-biblioteke se dobija interfejs za sve akcije koje je moguće uraditi nad 
-repozitorijumom. Dve glavne koje su implementirane su čitanje fajlova sa 
+biblioteke se dobija interfejs za sve akcije koje je moguće uraditi u 
+repozitorijumu. Dve glavne koje su implementirane su čitanje fajlova sa 
 prevodima i pravljenje zahteva za promenu, i koriste se za uvoz i za 
 izvoz prevoda.
 
@@ -128,7 +128,7 @@ sa prikazom korisničkog interfejsa. Ustvari, mišljenje da je poslovna logika
 pomešana sa prikazom korisničkog interfejsa nastaje iz toga da u zvaničnoj 
 dokumentaciji nije predložena arhitektura, već se samo opisuje tehnologija.
 Programeru je ostavljeno na razmišljanje kako da organizuje svoju aplikaciju.
-Prilikom razvoja projekta poštovan je pricipa da se sva poslovna logika 
+Prilikom razvoja projekta poštovan je princip da se sva poslovna logika 
 nalazi u kuki, a da funkcijska komponenta koristi kuku i prikazuje sadržaj. 
 Ovim principom se postiže veća čitljivost, razdvajaju se odgovornosti, lakše se testira 
 automatskim testovima, a samim tim se i kod lakše održava. 
@@ -242,7 +242,7 @@ importProject({ projectId }: ImportRequest) {
 
 
 \section{Automatizacija}
-Kontinualna integracija, isporučivanje i isporuka je implementirana uz 
+Kontinualna integracija, isporučivanje i raspoređivanje je implementirano uz 
 pomoć \textit{GitHub}-a. Na glavnoj (\textit{"main"}) grani 
 je postavljeno pravilo zaštite, odnosno onemogućeno je direkto slanje 
 koda na tu granu. Za svaku izmenu koda potrebno otvoriti zahtev za 
@@ -335,7 +335,7 @@ korisničkog interfejsa je potrebno napraviti klaster. Za klaster je
 potrebno izabrati tip virtualne mašine, kao i lokaciju servera na kojoj 
 će ta virtualna mašina biti podignuta. Nadalje se sve može konfigurisati 
 i preko komandne linije uz \textit{Kubernetes}-ov alat \texttt{kubectl}.
-Preko ovog alata se izvršavaju komande sa pravljenje \textit{Pod}-ova.
+Preko ovog alata se izvršavaju komande sa pravljenje čaura.
 
 Potrebno je napomenuti da se korišćenje \textit{Google Cloud Platform}-e,
 naravno, naplaćuje. U trenutku pisanja ovog rada \textit{Google} za nove 
