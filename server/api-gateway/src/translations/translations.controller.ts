@@ -5,12 +5,14 @@ import {
   Logger,
   Param,
   Patch,
+  Post,
   Query,
   UseGuards,
 } from "@nestjs/common";
-import { TranslationsService } from "./translations.service";
 import { Operation } from "fast-json-patch";
+import { CreateTranslationDto } from "src/translations/dto/create-translation.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { TranslationsService } from "./translations.service";
 
 @Controller("translations")
 export class TranslationsController {
@@ -33,5 +35,15 @@ export class TranslationsController {
       body: patches,
     });
     return this.translationsService.patchTranslation(id, patches);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  createTranslation(@Body() newData: CreateTranslationDto) {
+    this.logger.verbose({
+      request: `POST /translations`,
+      body: newData,
+    });
+    return this.translationsService.createTranslation(newData);
   }
 }
