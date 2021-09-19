@@ -90,6 +90,21 @@ razvijanja \textit{SOA}, odnosno da predstavlja sledeći iterativni korak u razv
 Preuzeti su raznorazni dobri obrasci iz \textit{SOA}. Sa druge strane, delovi koji su bili previše kompleksni 
 zamenjeni su jednostavnijim. Primer je \textit{ESB} koji je zamenjen jednostavnijim veb protokolima. 
 
+Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razlike su:
+
+\begin{itemize}
+    \item Kod mikroservisa je nivo granularnosti niži. To znači da su pojedinačni mikroservisi suviše mali i u drugačijem 
+    kontekstu se retko mogu ponovo upotrebiti. Jedinice ponovne upotrebe u ovoj arhitekturi predstavljajugrupe mikroservisa.
+    Sa druge strane, u \textit{SOA}, servis predstavlja i jedinicu ponovne upotrebe i jedinicu funkcionalnosti.
+    \item Kod mikroservisa se ne daje preveliki značaj standardizaciji komunikacije koliko kod \textit{SOA}. Naime, kod mikroservisa
+    različiti mikroservisi mogu koristiti različite tehnologije, na primer neki mogu koristiti \textit{REST} a drugi mogu koristiti \textit{GraphQL}.
+    Reprezentacije podataka se isto mogu razlikovati jer jedni mogu serijalizovati podatke u formatu \textit{JSON} a drugi u fromatu \textit{XML}.
+    Pored toga, sami mikroservisi mogu imati neke druge protokole, osmišljene samo za njihove potrebe. Ne postoji nikakav problem dokle god postoji neki 
+    protokol komuniciraje. \textit{SOA} po ovom pitanju pokušava da standardizuje način komunikacije. U slučaju veb servisa se za protokol bira \textit{SOAP}.
+    \item Mikroservisi podrazumevaju da je komunikacija između njih bez stanja. Komunikacijom bez stanja se postiže lakša horizontalna replikacija, odnosno 
+    viša skalabilnost. U \textit{SOA} se komunikacija između servisa često odvija u okviru sesije.
+\end{itemize}		
+
 Ljudi koji zagovaraju arhitekturu mikroservisa su iz navedenih razloga krenuli da odbacuju naziv \textit{SOA}, 
 dok drugi smatraju da su mikroservisi samo još jedan oblik \textit{SOA}. Baš zato što \textit{SOA} 
 može da predstavlja toliko različitih stvari, dragoceno je imati izraz koji preciznije opisuje arhitekturu 

@@ -195,10 +195,15 @@ migracionih klasa, jer može izračunati prethodni oblik modela, a odatle i
 razliku koju treba primeniti na bazu podataka kako bi podržala novi model. 
 
 Stil pisanja koda na serveru je reaktivan uz \textit{rx.js} biblioteku koja
-implementira obrazac "posmatrač". Kako je server napisan u stilu mikroservisa,
-komunikacija među servisima je asinhrona, odnosno po principu 
+implementira obrazac "posmatrač". Server napisan u stilu mikroservisa,
+a komunikacija među servisima je sinhrona, odnosno po principu 
 "zahtev -- odgovor". To znači da dok neki servis čeka na odgovor drugog 
-servisa, prvi može obavljati i neki drugi posao. Korišćenjem obrasca 
+servisa, prvi ostaje blokiran dok ne dobije odgorvor. Kako se programi napisani 
+u \textit{JavaScript}-u izvršavaju u jednoj niti ovo postaje veliki problem. 
+Iz tog razloga \textit{NestJS} pruža implementaciju \textit{HTTP} klijenta 
+koji prima odgovore asinhrono. On će poslati \textit{HTTP} zahtev koji će biti razrešen kada 
+stigne odgovor. Na taj način mikroservis koji je poslao \textit{HTTP} zahtev 
+može obavljati i neki drugi posao dok odgovor ne stigne. Korišćenjem obrasca 
 posmatrač se ova asinhronost lakše apstrahuje. Potrebno je napraviti zahtev 
 i onda se pretplatiti na odgovor. Dok se čeka odgovor, pogram je slobodan da 
 obavlja neki drugi posao. Kada odgovor stigne biće pozvana funkcija 
