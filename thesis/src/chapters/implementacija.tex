@@ -1,4 +1,4 @@
-\chapter{Implementacija}\label{ch:impl}
+\chapter{Implementacija aplikacije Interpres}\label{ch:impl}
 
 Implementacija prati opisanu arhitekturu iz prethodnih poglavlja. 
 Korisnički interfejs je zasnovan na arhitekturi jedne stranice, 
@@ -10,12 +10,6 @@ na kodu, server komunicira preko \textit{GitHub} aplikacije. Autentikacija
 je implementirana preko \textit{OAuth} protokola, a za provajdera 
 identiteta je izabran \textit{GitHub IdP}. Kao alat za \textit{CI/CD} se koriste 
 \textit{GitHub Akcije}. 
-
-Implementirano rešenje je nazvano \textit{Interpres}. Aplikacija je 
-višejezična, odnosno može prikazati korisnički interfejs u više 
-jezika. Za potrebe uređivanja prevoda je korišćen upravo \textit{Interpres}.
-
-Izvorni kod je otvoren i može se naći na \url{https://github.com/enco164/interpres}.
 
 
 \section{Komponente sistema}
@@ -136,7 +130,7 @@ Ovaj princip je prikazan na primeru koda \ref{code:primer}.
 
 \begin{listing}[h]
   \centering
-  \begin{minted}[ fontsize=\footnotesize ]{jsx}
+  \begin{minted}[ fontsize=\footnotesize ]{js}
   // kuka: usePrimer.ts 
   export const usePrimer = () => {
     const [count, setCount] = useState(0);
