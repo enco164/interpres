@@ -1,18 +1,28 @@
 import {
   Box,
-  List,
   ListItem,
   ListItemText,
   makeStyles,
   Paper,
   Typography,
 } from "@material-ui/core";
-import React, { useMemo } from "react";
+import React from "react";
 import { Translation } from "../../domain/translation";
 import { TranslationEditor } from "./translation-editor";
 
 interface SelectedTranslationKeysEditorProps {
-  translations: Translation[];
+  translations: (
+    | Translation
+    | {
+        id: null;
+        lang: string;
+        namespace: string;
+        key: string;
+        value: string;
+      }
+  )[];
+  translationKey: string;
+  projectId: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -26,46 +36,37 @@ const useStyles = makeStyles((theme) => ({
 
 export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEditorProps> = ({
   translations,
+  translationKey,
+  projectId,
 }) => {
-  const translationKeys = useMemo(() => {
-    const set = new Set(translations.map((t) => t.key));
-    return Array.from(set).sort();
-  }, [translations]);
-
   const classes = useStyles();
 
   return (
-    <List>
-      {translationKeys.map((translationKey) => (
-        <Paper
-          className={classes.paper}
-          variant="outlined"
-          key={translationKey}
-        >
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              disableTypography
-              primary={
-                <Typography variant="subtitle2" gutterBottom>
-                  {translationKey}
-                </Typography>
-              }
-              secondary={
-                <Box>
-                  {translations
-                    .filter((t) => t.key === translationKey)
-                    .map((translation) => (
-                      <TranslationEditor
-                        key={translation.key + translation.lang}
-                        translation={translation}
-                      />
-                    ))}
-                </Box>
-              }
-            />
-          </ListItem>
-        </Paper>
-      ))}
-    </List>
+    <Paper className={classes.paper} variant="outlined" key={translationKey}>
+      <ListItem className={classes.listItem}>
+        <ListItemText
+          disableTypography
+          primary={
+            <Typography variant="subtitle2" gutterBottom>
+              {translationKey}
+            </Typography>
+          }
+          secondary={
+            <Box>
+              {translations
+                .filter((t) => t.key === translationKey)
+                .sort((a, b) => a.lang.localeCompare(b.lang))
+                .map((translation) => (
+                  <TranslationEditor
+                    key={translation.key + translation.lang}
+                    translation={translation}
+                    projectId={projectId}
+                  />
+                ))}
+            </Box>
+          }
+        />
+      </ListItem>
+    </Paper>
   );
 };

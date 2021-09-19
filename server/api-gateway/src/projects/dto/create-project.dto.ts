@@ -14,5 +14,5 @@ export class CreateProjectDto {
   lngLoadPath: string;
 
   @Allow()
-  languages: string[] | null;
+  languages?: string[] | null;
 }

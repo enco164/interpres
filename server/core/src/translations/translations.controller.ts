@@ -1,9 +1,10 @@
 import { Body, Controller, Logger } from "@nestjs/common";
-import { Operation } from "fast-json-patch";
-import { TranslationsService } from "./translations.service";
 import { MessagePattern } from "@nestjs/microservices";
-import { GetTranslationsRequest } from "./dto/get-translations.request";
+import { Operation } from "fast-json-patch";
+import { CreateTranslationDto } from "./dto/create-translation.dto";
 import { DeleteTranslationsRequest } from "./dto/delete-translations.request";
+import { GetTranslationsRequest } from "./dto/get-translations.request";
+import { TranslationsService } from "./translations.service";
 
 @Controller("translations")
 export class TranslationsController {
@@ -23,7 +24,7 @@ export class TranslationsController {
   @MessagePattern({ cmd: "translations/removeTranslations" })
   removeTranslations(@Body() body: DeleteTranslationsRequest) {
     this.logger.verbose({ cmd: "translations/removeTranslations", body });
-    let translations = body.translations.map((translationDto) =>
+    const translations = body.translations.map((translationDto) =>
       translationDto.toEntity()
     );
     return this.translationsService.removeTranslations(translations);
@@ -32,5 +33,10 @@ export class TranslationsController {
   @MessagePattern({ cmd: "translations/patchTranslation" })
   patch(@Body() body: { patches: Operation[]; id: string }) {
     return this.translationsService.patch(body.id, body.patches);
+  }
+
+  @MessagePattern({ cmd: "translations/createTranslation" })
+  create(@Body() body: CreateTranslationDto) {
+    return this.translationsService.create(body);
   }
 }

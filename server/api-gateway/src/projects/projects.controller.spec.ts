@@ -1,7 +1,7 @@
+import { ClientProxyFactory } from "@nestjs/microservices";
 import { Test, TestingModule } from "@nestjs/testing";
 import { ProjectsController } from "./projects.controller";
 import { ProjectsService } from "./projects.service";
-import { ClientProxyFactory } from "@nestjs/microservices";
 
 describe("ProjectsController", () => {
   let controller: ProjectsController;
@@ -13,6 +13,10 @@ describe("ProjectsController", () => {
         ProjectsService,
         {
           provide: "CORE_SERVICE",
+          useFactory: () => ClientProxyFactory.create({}),
+        },
+        {
+          provide: "INTEGRATION_SERVICE",
           useFactory: () => ClientProxyFactory.create({}),
         },
       ],

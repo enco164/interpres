@@ -7,6 +7,7 @@ import { CreateProjectDto } from "../../api/dto/create-project.dto";
 import { UpdateProjectDto } from "../../api/dto/update-project.dto";
 import { ProjectsApi } from "../../api/projects.api";
 import { Project } from "../../domain/project";
+import { TestConnectionResult } from "../../domain/test-connection-result";
 import { RootState } from "../../state/store";
 
 const entityAdapter = createEntityAdapter<Project>({
@@ -32,6 +33,13 @@ export const createProject = createAsyncThunk<Project, CreateProjectDto>(
 export const updateProject = createAsyncThunk<Project, UpdateProjectDto>(
   "projects/updateProject",
   (arg, { signal }) => ProjectsApi.updateProject(arg, { signal })
+);
+
+export const testConnection = createAsyncThunk<
+  TestConnectionResult,
+  CreateProjectDto
+>("projects/testConnection", (arg, { signal }) =>
+  ProjectsApi.testConnection(arg, { signal })
 );
 
 export const projectsSlice = createSlice({

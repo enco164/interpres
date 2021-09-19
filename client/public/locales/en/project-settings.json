@@ -1,4 +1,6 @@
 {
+  "title": "Settings",
+  "savedSnackbarLabel": "Saved",
   "formLabels": {
     "name": "Name",
     "owner": "Github Owner",

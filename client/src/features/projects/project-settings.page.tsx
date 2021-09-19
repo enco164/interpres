@@ -3,30 +3,26 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
+  Snackbar,
   TextField,
   Typography,
 } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import { Autocomplete } from "@material-ui/lab";
 import { Form, Formik } from "formik";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Project } from "../../domain/project";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
 import { RootState, useAppDispatch } from "../../state/store";
+import { allLngs, mapLngCodeToLngOption } from "../../util";
 import {
   fetchProjectById,
   selectProjectById,
   updateProject,
 } from "./projects.slice";
-import ISO6391 from "iso-639-1";
-
-const mapLngCodeToLngOption = (code: string) => ({
-  name: ISO6391.getName(code),
-  code,
-});
-
-const allLngs = ISO6391.getAllCodes().map(mapLngCodeToLngOption);
 
 interface ProjectSettingsPageProps {}
 
@@ -37,6 +33,7 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
   const project = useSelector((state: RootState) =>
     selectProjectById(state, projectId)
   );
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     const promise = dispatch(fetchProjectById({ id: projectId }));
@@ -47,13 +44,18 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
   }, [dispatch, projectId]);
 
   const handleSubmit = useCallback(
-    (values: Project) => {
+    async (values: Project) => {
       try {
-        dispatch(updateProject(values));
+        await dispatch(updateProject(values));
+        setSnackbarOpen(true);
       } catch (e) {}
     },
     [dispatch]
   );
+
+  const handleSnackbarClose = useCallback(() => {
+    setSnackbarOpen(false);
+  }, []);
 
   if (!project) {
     return null;
@@ -62,7 +64,7 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" gutterBottom>
-        Settings
+        {t("title")}
       </Typography>
       {project && (
         <Formik initialValues={project} onSubmit={handleSubmit}>
@@ -151,6 +153,26 @@ export const ProjectSettingsPage: React.FC<ProjectSettingsPageProps> = () => {
           )}
         </Formik>
       )}
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+        message={t("savedSnackbarLabel")}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
     </Container>
   );
 };

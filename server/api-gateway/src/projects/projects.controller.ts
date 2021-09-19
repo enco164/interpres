@@ -6,12 +6,15 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from "@nestjs/common";
-import { ProjectsService } from "./projects.service";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
-import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { ProjectsService } from "./projects.service";
 
 @Controller("projects")
 export class ProjectsController {
@@ -24,6 +27,29 @@ export class ProjectsController {
   getProjects() {
     this.logger.verbose({ request: "GET /projects" });
     return this.projectsService.getProjects();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("test-connection")
+  testProjectConnection(
+    @Query("name") name: string,
+    @Query("githubOwner") githubOwner: string,
+    @Query("githubRepo") githubRepo: string,
+    @Query("lngLoadPath") lngLoadPath: string
+  ) {
+    return this.projectsService
+      .testProjectConnection({
+        name,
+        lngLoadPath,
+        githubOwner,
+        githubRepo,
+      })
+      .pipe(
+        catchError((err) => {
+          this.logger.error(err);
+          return of(err);
+        })
+      );
   }
 
   @UseGuards(JwtAuthGuard)

@@ -1,3 +1,5 @@
+import ISO6391 from "iso-639-1";
+
 export const toBase64 = (file: File) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -23,3 +25,10 @@ export const readJsonFile = (file: File) =>
     };
     reader.onerror = (error) => reject(error);
   });
+
+export const mapLngCodeToLngOption = (code: string) => ({
+  name: ISO6391.getName(code),
+  code,
+});
+
+export const allLngs = ISO6391.getAllCodes().map(mapLngCodeToLngOption);

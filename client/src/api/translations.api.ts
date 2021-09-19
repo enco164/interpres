@@ -1,10 +1,20 @@
 import { Operation } from "fast-json-patch";
 import { BaseApiClient, JSONApiResponse } from "../core/api";
+import { CreateTranslationDto } from "../domain/create-translation.dto";
 import { Translation } from "../domain/translation";
 
 const BASE_URL = "/api/translations";
 
 class TranslationsApiClient extends BaseApiClient {
+  async createTranslation(arg: CreateTranslationDto, signal: AbortSignal) {
+    const result = await this.fetchApi(BASE_URL, {
+      method: "POST",
+      body: JSON.stringify(arg),
+      signal,
+    });
+    return new JSONApiResponse<Translation>(result).value();
+  }
+
   async patchTranslation(
     arg: { translationId: number; patches: Operation[] },
     signal: AbortSignal

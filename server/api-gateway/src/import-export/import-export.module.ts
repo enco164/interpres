@@ -18,8 +18,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
           },
         }),
       },
-    ]),
-    ClientsModule.registerAsync([
       {
         imports: [ConfigModule],
         inject: [ConfigService],
@@ -32,8 +30,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
           },
         }),
       },
-    ]),
-    ClientsModule.registerAsync([
       {
         imports: [ConfigModule],
         inject: [ConfigService],

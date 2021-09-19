@@ -1,15 +1,25 @@
 import { Box, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Translation } from "../../domain/translation";
 import { useAppDispatch } from "../../state/store";
-import { patchTranslationValueById } from "./translations.slice";
+import {
+  createTranslation,
+  patchTranslationValueById,
+} from "./translations.slice";
 
 interface TranslationEditorProps {
-  translation: Translation;
+  translation: {
+    id: number | null;
+    lang: string;
+    namespace: string;
+    key: string;
+    value: string;
+  };
+  projectId: string;
 }
 
 export const TranslationEditor: React.FC<TranslationEditorProps> = ({
   translation,
+  projectId,
 }) => {
   const dispatch = useAppDispatch();
   const [internalValue, setInternalValue] = useState<string>(translation.value);
@@ -32,12 +42,17 @@ export const TranslationEditor: React.FC<TranslationEditorProps> = ({
             return;
           }
 
-          dispatch(
-            patchTranslationValueById({
-              translationId: translation.id,
-              value,
-            })
-          );
+          if (translation.id) {
+            dispatch(
+              patchTranslationValueById({
+                translationId: translation.id,
+                value,
+              })
+            );
+          } else {
+            const { id, ...createDto } = { ...translation, value, projectId };
+            dispatch(createTranslation(createDto));
+          }
         }}
       />
     </Box>
