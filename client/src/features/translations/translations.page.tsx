@@ -140,6 +140,7 @@ export const TranslationsPage: React.FC = () => {
               <SelectedTranslationKeysEditor
                 translations={selectedTranslations}
                 translationKey={translationKey}
+                projectId={projectId}
               />
             );
           })}

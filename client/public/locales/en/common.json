@@ -2,6 +2,10 @@
   "recent_projects_header": "Your Interpres projects",
   "new_project_button": "Add project",
   "create_project_button": "Create project",
+  "project_githubOwner_input_label": "GitHub Owner",
+  "project_githubRepo_input_label": "GitHub Repo",
+  "project_lngLoadPath_input_label": "Locales Path",
+  "project_languages_input_label": "Languages",
   "project_name_input_label": "Project Name",
   "test_connection": "Test connection"
 }

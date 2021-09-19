@@ -14,10 +14,12 @@ interface TranslationEditorProps {
     key: string;
     value: string;
   };
+  projectId: string;
 }
 
 export const TranslationEditor: React.FC<TranslationEditorProps> = ({
   translation,
+  projectId,
 }) => {
   const dispatch = useAppDispatch();
   const [internalValue, setInternalValue] = useState<string>(translation.value);
@@ -48,7 +50,7 @@ export const TranslationEditor: React.FC<TranslationEditorProps> = ({
               })
             );
           } else {
-            const { id, ...createDto } = { ...translation, value };
+            const { id, ...createDto } = { ...translation, value, projectId };
             dispatch(createTranslation(createDto));
           }
         }}

@@ -19,7 +19,7 @@ export const TestConnectionResultAlert: React.FC<TestConnectionResultAlertProps>
 
   return (
     <Alert severity={severity}>
-      <AlertTitle>Error</AlertTitle>
+      <AlertTitle>Succeeded</AlertTitle>
       <>
         <Typography>
           Project exist:{" "}

@@ -22,6 +22,7 @@ interface SelectedTranslationKeysEditorProps {
       }
   )[];
   translationKey: string;
+  projectId: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEditorProps> = ({
   translations,
   translationKey,
+  projectId,
 }) => {
   const classes = useStyles();
 
@@ -58,6 +60,7 @@ export const SelectedTranslationKeysEditor: React.FC<SelectedTranslationKeysEdit
                   <TranslationEditor
                     key={translation.key + translation.lang}
                     translation={translation}
+                    projectId={projectId}
                   />
                 ))}
             </Box>

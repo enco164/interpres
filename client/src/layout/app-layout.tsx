@@ -11,12 +11,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import React from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import MenuIcon from "@material-ui/icons/Menu";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import { UserProfileDropdown } from "../features/auth/user-profile-dropdown";
 import { useAppLayout } from "./use-app-layout";
-import MenuIcon from "@material-ui/icons/Menu";
-import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -151,7 +151,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             noWrap
             className={classes.title}
           >
-            Interpres
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              Interpres
+            </Link>
           </Typography>
           <UserProfileDropdown />
         </Toolbar>

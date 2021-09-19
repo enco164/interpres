@@ -5,7 +5,7 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Alert, Autocomplete } from "@material-ui/lab";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Form, Formik } from "formik";
 import React, { useCallback, useState } from "react";
@@ -15,6 +15,7 @@ import { CreateProjectDto } from "../../api/dto/create-project.dto";
 import { TestConnectionResultAlert } from "../../components";
 import { TestConnectionResult } from "../../domain/test-connection-result";
 import { useAppDispatch } from "../../state/store";
+import { allLngs, mapLngCodeToLngOption } from "../../util";
 import { createProject, testConnection } from "./projects.slice";
 
 interface NewProjectPageProps {}
@@ -60,6 +61,7 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
           githubOwner: "",
           githubRepo: "",
           lngLoadPath: "",
+          languages: [],
         }}
         onSubmit={onSubmit}
       >
@@ -100,6 +102,40 @@ export const NewProjectPage: React.FC<NewProjectPageProps> = () => {
                   label={t("project_lngLoadPath_input_label")}
                   value={formik.values.lngLoadPath}
                   onChange={formik.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} container direction="column">
+                <Autocomplete
+                  multiple
+                  autoComplete
+                  autoHighlight
+                  autoSelect
+                  clearOnBlur
+                  options={allLngs}
+                  getOptionLabel={(option) => `${option.name} (${option.code})`}
+                  defaultValue={[]}
+                  filterSelectedOptions
+                  getOptionSelected={(option, value) =>
+                    option.code === value.code
+                  }
+                  onChange={(event, value) => {
+                    formik.setFieldValue(
+                      "languages",
+                      value?.map((opt) => opt.code),
+                      true
+                    );
+                  }}
+                  value={
+                    formik.values.languages?.map(mapLngCodeToLngOption) || []
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      name="languages"
+                      variant="standard"
+                      label={t("project_languages_input_label")}
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12}>

@@ -11,25 +11,18 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import { Autocomplete } from "@material-ui/lab";
 import { Form, Formik } from "formik";
-import ISO6391 from "iso-639-1";
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Project } from "../../domain/project";
 import { useProjectIdParam } from "../../hooks/use-project-id-param";
 import { RootState, useAppDispatch } from "../../state/store";
+import { allLngs, mapLngCodeToLngOption } from "../../util";
 import {
   fetchProjectById,
   selectProjectById,
   updateProject,
 } from "./projects.slice";
-
-const mapLngCodeToLngOption = (code: string) => ({
-  name: ISO6391.getName(code),
-  code,
-});
-
-const allLngs = ISO6391.getAllCodes().map(mapLngCodeToLngOption);
 
 interface ProjectSettingsPageProps {}
 

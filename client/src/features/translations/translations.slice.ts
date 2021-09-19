@@ -7,6 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import * as jsonpatch from "fast-json-patch";
 import { TranslationsApi } from "../../api/translations.api";
+import { CreateTranslationDto } from "../../domain/create-translation.dto";
 import { Translation } from "../../domain/translation";
 import { TranslationKeyTree } from "../../domain/translation-key-tree";
 import { RootState } from "../../state/store";
@@ -49,7 +50,7 @@ export const patchTranslationValueById = createAsyncThunk<
 
 export const createTranslation = createAsyncThunk<
   Translation,
-  Omit<Translation, "id">,
+  CreateTranslationDto,
   { state: RootState }
 >("translations/createTranslation", (arg, thunkAPI) =>
   TranslationsApi.createTranslation(arg, thunkAPI.signal)
