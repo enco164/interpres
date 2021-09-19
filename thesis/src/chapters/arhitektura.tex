@@ -1,8 +1,6 @@
-\chapter{Arhitektura i dizajn sistema}\label{ch:arhitektura}
+\section{Arhitektura aplikacije}\label{ch:arhitektura}
 
-Funkcionalni zahtev da aplikacija bude u oblaku, opisan u poglavlju 
-\ref{sec:funkcionalni_zahtevi-aplikacija_u_oblaku}, nameće grubu sliku kako arhitektura sistema 
-treba da izgleda. Aplikacije na vebu su dominantno bazirane po modelu klijent--server arhitekture. 
+Aplikacije na vebu su dominantno bazirane po modelu klijent--server arhitekture. 
 Server u takvoj arhitekturi obezbeđuje uslugu klijentima koji je zahtevaju. Klijent--server 
 arhitektura je višenamenska i modularna, a sa ciljem unapređenja upotrebljivosti, interoperabilnosti, 
 fleksibilnosti i skalabilnosti. 
@@ -18,7 +16,7 @@ izvršava poslovnu logiku, kao i da kontroliše pristup i bezbednost podataka. P
 upravlja korisničkim interfejsom. Računarska mreža omogućava komunikaciju između klijenta i servera, 
 a komunikacija mora pratiti određene standarde.
 
-\section{Arhitektura teških klijenata}\label{sec:arhitektura-spa}
+\subsection{Arhitektura teških klijenata}\label{sec:arhitektura-spa}
 
 Odlika arhitekture teških klijenata je da server šalje klijentu podatke i meta podatke, i prepušta 
 mu da samostalno pripremi prezentaciju.~\cite{PVEB} Ovakvom podelom odgovornosti se smanjuje opterećenje 
@@ -31,7 +29,7 @@ ovih pravila se dobija potpuno odvojen klijent od servera. Klijent u ovom sluča
 sa serverom u pozadini radi preuzimanja podataka i izvođenja transakcija. S obzirom da prezentacija
 priprema na korisničkoj strani, korisnički interfejs ima bolji odziv, jer se ne prenosi kroz mrežu.
 
-\section{Mikroservisi}\label{sec:arhitektura-mikroservisi}
+\subsection{Mikroservisi}\label{sec:arhitektura-mikroservisi}
 
 Tradicionalan način razvijanja poslovnih aplikacija predstavlja razvoj takozvane monolitne arhitekture. 
 Jedan monolit bi sadržao svu poslovnu logiku koju izvršava aplikacija. Kako aplikacija raste vremenom, 
@@ -90,12 +88,27 @@ razvijanja \textit{SOA}, odnosno da predstavlja sledeći iterativni korak u razv
 Preuzeti su raznorazni dobri obrasci iz \textit{SOA}. Sa druge strane, delovi koji su bili previše kompleksni 
 zamenjeni su jednostavnijim. Primer je \textit{ESB} koji je zamenjen jednostavnijim veb protokolima. 
 
+Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razlike su:
+
+\begin{itemize}
+    \item Kod mikroservisa je nivo granularnosti niži. To znači da su pojedinačni mikroservisi suviše mali i u drugačijem 
+    kontekstu se retko mogu ponovo upotrebiti. Jedinice ponovne upotrebe u ovoj arhitekturi predstavljajugrupe mikroservisa.
+    Sa druge strane, u \textit{SOA}, servis predstavlja i jedinicu ponovne upotrebe i jedinicu funkcionalnosti.
+    \item Kod mikroservisa se ne daje preveliki značaj standardizaciji komunikacije koliko kod \textit{SOA}. Naime, kod mikroservisa
+    različiti mikroservisi mogu koristiti različite tehnologije, na primer neki mogu koristiti \textit{REST} a drugi mogu koristiti \textit{GraphQL}.
+    Reprezentacije podataka se isto mogu razlikovati jer jedni mogu serijalizovati podatke u formatu \textit{JSON} a drugi u fromatu \textit{XML}.
+    Pored toga, sami mikroservisi mogu imati neke druge protokole, osmišljene samo za njihove potrebe. Ne postoji nikakav problem dokle god postoji neki 
+    protokol komuniciraje. \textit{SOA} po ovom pitanju pokušava da standardizuje način komunikacije. U slučaju veb servisa se za protokol bira \textit{SOAP}.
+    \item Mikroservisi podrazumevaju da je komunikacija između njih bez stanja. Komunikacijom bez stanja se postiže lakša horizontalna replikacija, odnosno 
+    viša skalabilnost. U \textit{SOA} se komunikacija između servisa često odvija u okviru sesije.
+\end{itemize}		
+
 Ljudi koji zagovaraju arhitekturu mikroservisa su iz navedenih razloga krenuli da odbacuju naziv \textit{SOA}, 
 dok drugi smatraju da su mikroservisi samo još jedan oblik \textit{SOA}. Baš zato što \textit{SOA} 
 može da predstavlja toliko različitih stvari, dragoceno je imati izraz koji preciznije opisuje arhitekturu 
 zvanu mikroservisi.~\cite{martinfowler_microservices}
 
-\section{REST}\label{sec:arhitektura-rest}
+\subsection{REST}\label{sec:arhitektura-rest}
 
 Interoperabilnost je sposobnost da različiti sistemi rade zajedno. Da bi se ovo postiglo potrebni su 
 standardi koje će sistemi poštovati. Kako u klijent -- server arhitekturi imamo dva različita sistema 
