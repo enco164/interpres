@@ -80,10 +80,23 @@ prikazana šira slika svih slučajeva upotrebe.
         \item putanju na kojoj će se čuvati fajlovi sa prevodima i
         \item skup jezika za koje su potrebni prevodi.
     \end{itemize}
+    \item Prevodilac klikne na dugme za testiranje konekcije
+    \begin{itemize}
+        \item Ukoliko su podešavanja pravilno unešena i \textit{GitHub} aplikacija uspešno instalirana u repozitorijum,
+        sistem prikazuje uspešnu poruku zajedno sa jezicima koje je pronašao u repozitorijumu
+        \item Ukoliko podešavanja nisu pravilno unešena ili \textit{GitHub} aplikacija nije uspešno instalirana u repozitorijum,
+        sistem prikazuje poruku sa greškom.
+    \end{itemize}
     \item Prevodilac klikne na dugme za pravljenje projekta
     \item Sistem čuva projekat
     \item Sistem prevodiocu vraća stranicu sa podacima o projektu
 \end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{create_project}
+    \caption{Korisnički interfejs -- pravljenje projekta}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -163,6 +176,13 @@ na taj način napravi zahtev za promenu na \textit{GitHub}-u
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{izvoz_prevoda}
+    \includegraphics[width=0.7\textwidth]{izvoz_prevoda}
     \caption{Dijagram aktivnosti -- izvoz prevoda}
 \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{export_translations}
+    \caption{Korisnički interfejs za izvoz prevoda}
+\end{figure}
+
