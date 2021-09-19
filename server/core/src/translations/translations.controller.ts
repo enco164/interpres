@@ -1,7 +1,7 @@
 import { Body, Controller, Logger } from "@nestjs/common";
 import { MessagePattern } from "@nestjs/microservices";
 import { Operation } from "fast-json-patch";
-import { CreateTranslationDto } from "src/translations/dto/create-translation.dto";
+import { CreateTranslationDto } from "./dto/create-translation.dto";
 import { DeleteTranslationsRequest } from "./dto/delete-translations.request";
 import { GetTranslationsRequest } from "./dto/get-translations.request";
 import { TranslationsService } from "./translations.service";

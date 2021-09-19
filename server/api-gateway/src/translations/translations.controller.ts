@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { Operation } from "fast-json-patch";
-import { CreateTranslationDto } from "src/translations/dto/create-translation.dto";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { CreateTranslationDto } from "./dto/create-translation.dto";
 import { TranslationsService } from "./translations.service";
 
 @Controller("translations")
