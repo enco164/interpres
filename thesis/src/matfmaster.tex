@@ -63,11 +63,34 @@
 % Ime i afilijacija četvrtog člana komisije (opciono)
 % \komisijaD{}
 % Datum odbrane (odkomentarisati narednu liniju i upisati datum odbrane ako je poznat)
-% \datumodbrane{}
+\datumodbrane{28. septembar 2021.}
 
 % Apstrakt na srpskom jeziku (u odabranom pismu)
 \apstr{%
-Apstrakt
+Računarstvo u oblaku se svakog dana sve više razvija a prednosti softvera u oblaku 
+su višestruke. Drugi trend koji se može primetiti u industriji je razvoj softvera u 
+mikroservis arhitekturi. Iako ove dve tehnike imaju svoje prednosti, one sa sobom 
+nose i određenu kompleksnost koja se ne sme zanemariti.
+
+Bitna karakteristika modernih aplikacija je da budu višejezične. Takve aplikacije 
+pružaju bolje korisničko iskustvo prevazilaženjem jezičkih barijera. Razvoj višejezičnih
+aplikacija zahteva saradnju programera i prevodioca, koja se ogleda u tome da 
+programeri šalju šifrarnike na jednom jeziku prevodiocu, a potom prevodilac vraća
+popunjen šifrarnik na željenom jeziku. Šifrarnici se uglavnom prosleđuju u čoveku
+čitljivom formatu za serijalizaciju, kao što su \emph{JSON}, \emph{YML} ili \emph{XML}.
+
+Informacioni sistem koji pruža podršku saradnji programera i prevodioca, a pritom 
+razvijen u oblaku, olakšao bi posao obema stranama u velikoj meri tako pto bi imao 
+visoku dostupnost, standardizovao bi proces razmene prevoda i prevodiocima bi pružao
+prijatno korisničko iskustvo.
+
+Cilj ovog rada je da predloži i razvije informacioni sistem u oblaku koji bi pomogao
+programerima i prevodiocima tokom razvijanja višejezične aplikacije. 
+
+U okviru rada na tezi su obrazloženi, analizirani i diskutovani arhitektura i dizajn 
+sistema koji podržavaju postavljene zahteve. Uz ovaj rad je napravljen sistem kao veb 
+aplikacija u oblaku uz pomoć \emph{Kubernetes} sistema za automatsko skaliranje i 
+upravljanje kontejnerskim aplikacijama.
 }
 
 % Ključne reči na srpskom jeziku (u odabranom pismu)
@@ -85,7 +108,7 @@ Apstrakt
 % Strana sa posvetom (u odabranom pismu)
 % \posveta{Mami, tati i dedi}
 % Strana sa podacima o disertaciji na srpskom jeziku
-% \apstrakt
+\apstrakt
 % Sadržaj teze
 \tableofcontents*
 
@@ -112,23 +135,14 @@ Apstrakt
 
 % ------------------------------------------------------------------------------
 % Biografija kandidata
-%\begin{biografija}
-%  \textbf{Vuk Stefanović Karadžić} (\emph{Tršić,
-%    26. oktobar/6. novembar 1787. — Beč, 7. februar 1864.}) bio je
-%  srpski filolog, reformator srpskog jezika, sakupljač narodnih
-%  umotvorina i pisac prvog rečnika srpskog jezika.  Vuk je
-%  najznačajnija ličnost srpske književnosti prve polovine XIX
-%  veka. Stekao je i nekoliko počasnih mastera.  Učestvovao je u
-%  Prvom srpskom ustanku kao pisar i činovnik u Negotinskoj krajini, a
-%  nakon sloma ustanka preselio se u Beč, 1813. godine. Tu je upoznao
-%  Jerneja Kopitara, cenzora slovenskih knjiga, na čiji je podsticaj
-%  krenuo u prikupljanje srpskih narodnih pesama, reformu ćirilice i
-%  borbu za uvođenje narodnog jezika u srpsku književnost. Vukovim
-%  reformama u srpski jezik je uveden fonetski pravopis, a srpski jezik
-%  je potisnuo slavenosrpski jezik koji je u to vreme bio jezik
-%  obrazovanih ljudi. Tako se kao najvažnije godine Vukove reforme
-%  ističu 1818., 1836., 1839., 1847. i 1852.
-%\end{biografija}
+\begin{biografija}
+ \textbf{Uroš Milenković} (\emph{Bor,
+   29. maj 1992.}) Završio prirodno--matematički smer, XIII beogradske gimnazije 2010. godine 
+   i iste godine upisao Matematički fakultet u Beogradu. Osnovne studije, na smeru "Informatika",
+   završava 2015, kada je upisao i master studije na istom smeru. Aprila 2016. počinje da radi 
+   kao softverski inženjer u firmi \emph{CallidusCloud}, do septembra 2019. Tada prelazi u 
+   firmu \emph{3ap}. Avgusta 2021. prelazi u firmu \emph{Nutanix}.
+\end{biografija}
 % ------------------------------------------------------------------------------
 
 \end{document}

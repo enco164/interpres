@@ -19,15 +19,17 @@ a komunikacija mora pratiti određene standarde.
 \subsection{Arhitektura teških klijenata}\label{sec:arhitektura-spa}
 
 Odlika arhitekture teških klijenata je da server šalje klijentu podatke i meta podatke, i prepušta 
-mu da samostalno pripremi prezentaciju.~\cite{PVEB} Ovakvom podelom odgovornosti se smanjuje opterećenje 
+mu da samostalno pripremi prezentaciju~\cite{PVEB}. Ovakvom podelom odgovornosti se smanjuje opterećenje 
 servera, jer više ne mora da priprema prezentaciju. Arhitektura teških klijenata podrazumeva intenzivno 
 korišćenje \textit{JavaScript}-a.
 
-Ekstremni oblik ove arhitekture je arhitektura jedne stranice (eng. \textit{SPA - Single Page Application}).
+Ekstremni oblik ove arhitekture je arhitektura jedne stranice (eng. \textit{Single Page Application, SPA}).
 Arhitektura jedne stranice propisuje da se čitava aplikacija učitava kroz jednu stranicu. Primenom 
-ovih pravila se dobija potpuno odvojen klijent od servera. Klijent u ovom slučaju komunicira 
-sa serverom u pozadini radi preuzimanja podataka i izvođenja transakcija. S obzirom da prezentacija
-priprema na korisničkoj strani, korisnički interfejs ima bolji odziv, jer se ne prenosi kroz mrežu.
+ovih pravila se dobija potpuno odvojen klijent od servera. Iscrtavanjem korisničkog 
+interfejsa na klijentskoj strani postiže se bolje korisničko iskustvo iz dva razloga. Prvo, pošto klijent 
+priprema prezentaciju sam, onda nema potrebe čekati prezentaciju da pristigne preko mreže, već će se za korisnika
+sve brže prikazivati. Drugo, preko mreže se u tom slučaju preuzimaju samo podaci i izvode transakcije, 
+pa je i protok kroz mrežu manji.
 
 \subsection{Mikroservisi}\label{sec:arhitektura-mikroservisi}
 
@@ -41,14 +43,14 @@ Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" sve �
 par godina kako bi opisao određeni način projektovanja softverskih aplikacija kao paketa usluga koji se 
 mogu odvojeno isporučiti. Iako ne postoji precizna definicija ovog arhitektonskog stila, postoje određene 
 zajedničke karakteristike u organizaciji oko poslovne logike, automatskog isporučivanja i decentralizovane 
-kontrole podataka.~\cite{martinfowler_microservices} 
+kontrole podataka~\cite{martinfowler_microservices}.
 
-Mikroservisi predstavljaju aplikaciju koja je struktuirana kao kolekcija slabo vezanih servisa. Glavna 
+Mikroservisi predstavljaju aplikaciju koja je strukturirana kao kolekcija slabo vezanih servisa. Glavna 
 ideja iza mikroservisne arhitekture je da se aplikacije lakše razvijaju i održavaju ako su podeljene 
 na manje delove koji rade nesmetano zajedno.
 
 Servisi se mogu posmatrati kao komponente sistema. Martin Fauler definiše komponente kao jedinice 
-softvera koje se mogu nezavisno zameniti i unaprediti.~\cite{martinfowler_software_component}.
+softvera koje se mogu nezavisno zameniti i unaprediti~\cite{martinfowler_software_component}.
 
 Biblioteke su komponente koje su povezane u program i pozivaju se pomoću funkcija koje se nalaze u 
 memoriji, dok su servisi komponente koje su van procesa i koje komuniciraju preko mreže.
@@ -79,10 +81,10 @@ konzistentnosti, ali se smanjuje dostupnost. Zato, česta je odluka da se konzis
 odloženom konzistentnošću, u onim slučajevima gde je ona moguća. 
 
 Kada se govori o mikroservisima često se, sa razlogom, postavlja pitanje postoji li razlika između arhitekture
-mikroservisa i servisno orijentisane arhitekture (eng. \textit{Service Oriented Architecture}, \textit{SOA}). 
+mikroservisa i servisno orijentisane arhitekture (eng. \textit{Service Oriented Architecture, SOA}). 
 Glavne karakteristike arhitekture mikroservisa su umnogome slične \textit{SOA}. Problem je taj što \textit{SOA} 
 može da predstavlja mnogo različitih stvari. Preveliki fokus na kanal komunikacije 
-(eng. \textit{Enterprise Service Bus}, \textit{ESB}) koji se koristi za integraciju monolitnih aplikacija, 
+(eng. \textit{Enterprise Service Bus, ESB}) koji se koristi za integraciju monolitnih aplikacija, 
 predstavlja jedan od tih problema. Može se reći da je arhitektura mikroservisa nastala iz stečenog iskustva tokom 
 razvijanja \textit{SOA}, odnosno da predstavlja sledeći iterativni korak u razvoju ove arhitekture. 
 Preuzeti su raznorazni dobri obrasci iz \textit{SOA}. Sa druge strane, delovi koji su bili previše kompleksni 
@@ -92,7 +94,7 @@ Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razl
 
 \begin{itemize}
     \item Kod mikroservisa je nivo granularnosti niži. To znači da su pojedinačni mikroservisi suviše mali i u drugačijem 
-    kontekstu se retko mogu ponovo upotrebiti. Jedinice ponovne upotrebe u ovoj arhitekturi predstavljajugrupe mikroservisa.
+    kontekstu se retko mogu ponovo upotrebiti. Jedinice ponovne upotrebe u ovoj arhitekturi predstavljaju grupe mikroservisa.
     Sa druge strane, u \textit{SOA}, servis predstavlja i jedinicu ponovne upotrebe i jedinicu funkcionalnosti.
     \item Kod mikroservisa se ne daje preveliki značaj standardizaciji komunikacije koliko kod \textit{SOA}. Naime, kod mikroservisa
     različiti mikroservisi mogu koristiti različite tehnologije, na primer neki mogu koristiti \textit{REST} a drugi mogu koristiti \textit{GraphQL}.
@@ -106,7 +108,7 @@ Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razl
 Ljudi koji zagovaraju arhitekturu mikroservisa su iz navedenih razloga krenuli da odbacuju naziv \textit{SOA}, 
 dok drugi smatraju da su mikroservisi samo još jedan oblik \textit{SOA}. Baš zato što \textit{SOA} 
 može da predstavlja toliko različitih stvari, dragoceno je imati izraz koji preciznije opisuje arhitekturu 
-zvanu mikroservisi.~\cite{martinfowler_microservices}
+zvanu mikroservisi~\cite{martinfowler_microservices}.
 
 \subsection{REST}\label{sec:arhitektura-rest}
 
@@ -158,7 +160,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
         Klijenti treba da znaju što je manje moguće o tome kako da komuniciraju sa serverom. Komunikacija treba da bude
         što je više moguće generička. Server svoje stanje isporučuje klijentu u vidu hiperteksta, koji unutar sebe 
         sadrži hiperlinkove. To se tehnički naziva hipermedija (hiperlinkovi unutar hiperteksta). 
-        \textit{HATEOAS} (eng. Hypermedia as the Engine of Application State) 
+        \textit{HATEOAS} (eng. \textit{Hypermedia as the Engine of Application State}) 
         znači da, tamo gde je potrebno, veze su sadržane unutar vraćenog odgovora. 
         Tako se isporučuje URI za preuzimanje samog objekta ili srodnih 
         objekata. Uniformni interfejs koji svaki \textit{REST} servis mora pružiti je fundamentalna 

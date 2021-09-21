@@ -6,7 +6,7 @@ U ovom poglavlju će biti opisane tehnologije korišćene za razvoj rešenja, a 
 \textit{React} je \textit{Javascript} biblioteka za građenje korisničkog interfejsa. Koristi se za pravljenje modernih 
 reaktivnih korisničkih interfejsa koji se mogu izgraditi uz pomoć izolovanih delova koda. Ti delovi koda nazivaju 
 se komponente. Korišćenjem komponente omogućeno je deljenje aplikacije na nezavisne delove koji se prilikom razvoja 
-mogu iznova koristiti.~\cite{react}
+mogu iznova koristiti~\cite{react}.
 
 Svaka komponenta sastoji se iz metode za renderovanje i sadrži podatke o tome šta je sve potrebno da se prikaže 
 krajnjem korisniku. Mogu biti klasne ili funkcijske. Funkcijske komponente kao ulazni parametar primaju svojstva 
@@ -36,7 +36,7 @@ poštovati dva pravila:
 \end{itemize}
 
 Stanje svake komponente je potpuno nezavisno. Korišćenjem kuka, postiže se to da se logika sa stanjem može ponovo koristiti 
-(ali ne i samo stanje). Ustvari, svakim pozivom kuke dobijamo potpuno izlovano stanje, pa se stoga jedna kuka može koristiti 
+(ali ne i samo stanje). Ustvari, svakim pozivom kuke dobijamo potpuno izolovano stanje, pa se stoga jedna kuka može koristiti 
 više puta unutar jedne komponente. Pored toga, kuke omogućavaju pravljenje kompozicije. Unutar jedne kuke je moguće zakačiti 
 drugu kuku i tako napraviti kompoziciju. 
 
@@ -100,7 +100,7 @@ mehanizam za usmeravanje, prikazan na slici \ref{fig:kontroler} sposoban da kont
 će biti zadužen za određeni zahtev.
 Kako bi se napravio osnovni kontroler, koriste se klase i dekoratori. Dekoratori pridružuju meta
 podatke klasama i omogućavaju \textit{Nest}-u da napravi mapu za rutiranje. Za definisanje HTTP 
-metoda za rute, koriste se dekoratori \texttt{@Get()}, \texttt{@Put()}, \texttt{@Post()} i \texttt{@Delete()}.~\cite{nest}
+metoda za rute, koriste se dekoratori \texttt{@Get()}, \texttt{@Put()}, \texttt{@Post()} i \texttt{@Delete()}~\cite{nest}.
 
 \begin{figure}[h]
     \centering
@@ -121,13 +121,13 @@ struktura aplikacije.
 
 Tri osnovna koncepta NestJS su:
 \begin{itemize}
-\item \textbf{DTO}: Objekat za prenos podataka (eng. \textit{Data transfer object}) je objekat 
+\item \textbf{DTO}: Objekat za prenos podataka (eng. \textit{Data Transfer Object}) je objekat 
 koji definiše kako će se podaci poslati preko mreže;
 \item \textbf{Interfejsi} : \textit{TypeScript} interfejsi se koriste za proveru tipa i 
 definisanje tipova podataka koji se mogu proslediti kontroleru ili \textit{NestJS} servisu i
 \item \textbf{Umetanje zavisnosti}: (eng. \textit{Dependency Injection}) je obrazac projektovanja 
 koji se koristi za povećanje efikasnosti i modularnosti aplikaicje. Održava kod čistim i 
-lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih komponenata.~\cite{nest_getting_started}
+lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih komponenata~\cite{nest_getting_started}.
 \end{itemize}
 
 \subsection{GitHub aplikacija}\label{sec:github_app}
@@ -223,7 +223,7 @@ To su šabloni koji se ne mogu menjati i predstavljaju gradivni element kontejne
 
 \textit{Docker} kontejner je pokrenuta instanca \textit{Docker} slike. Sadrži sve što je potrebno da bi se 
 pokrenula aplikacija. To je u osnovi spremna aplikacija napravljena iz \textit{Docker} slike, 
-što ujedno predstavlja i krajnji proizvod \textit{Docker}-a.~\cite{docker}
+što ujedno predstavlja i krajnji proizvod \textit{Docker}-a~\cite{docker}.
 
 \textit{Docker} je trenutno najpopularnija implementacija kontejnera.
 
@@ -339,8 +339,8 @@ koji proverava konfiguraciju i upravlja ostalim procesima.
 
 \textit{CI/CD} je metod za često dostavljanje aplikacija korisnicima kroz predstavljanje automatizacije u 
 fazama razvoja aplikacije. Glavni koncept \textit{CI/CD} su kontinualna integracija (eng. 
-\textit{continuous integration}), kontinualno dostavljanje (eng. \textit{continuous delivery}) i 
-kontinualno raspoređivanje (eng. \textit{continuous deployment}).
+\textit{Continuous Integration}), kontinualno dostavljanje (eng. \textit{Continuous Delivery}) i 
+kontinualno raspoređivanje (eng. \textit{Continuous Deployment}).
 
 \textit{CI/CD} uvodi automatizaciju i kontinualno praćenje kroz životni ciklus aplikacija, 
 od integracije i faze testiranja do dostavljanja i raspoređivanja. Zajedno, ove povezane prakse 
@@ -398,7 +398,7 @@ I jedan i drugi tiču se automatizacije određenih faza u distribuiranju aplikac
 međutim, nekada se koriste i odvojeno u cilju prikaza količine automatizacije koja se odvija.
 
 Sve povezane prakse \textit{CI/CD} čine raspoređivanje aplikacije manje rizičnim, stoga je lakše pustiti 
-promene u aplikaciji u delovima, pre nego odjednom.~\cite{CI_CD}
+promene u aplikaciji u delovima, pre nego odjednom~\cite{CI_CD}.
 
 \subsubsection{GitHub Akcije}
 Za verzionisanje koda se može koristiti \textit{GitHub}. Pored verzionisanja, on pruža i alate za automatizaciju 
@@ -433,7 +433,7 @@ Komponente koje postoje u \textit{GitHub Akcijama} su:
 Izvršilac je mašina nad kojom se \textit{GitHub Akcije} izvršavaju. Izvršilac osluškuje pokrenute poslove,
 pokreće jedan posao za drugim, i šalje izveštaje \textit{GitHub}-u o napretku, logovima i rezultatima. Ove 
 mašine mogu da budu bazirane na \textit{Linux}, \textit{Windows} i \textit{macOS} operativnim sistemima, a svaki posao 
-unutar toka rada se pokreće iz novog virtualnog okruženja.~\cite{GitHubActions}
+unutar toka rada se pokreće iz novog virtualnog okruženja~\cite{GitHubActions}.
 
 \paragraph{Tok rada}
 Tok rada je automatizovana procedura koja se definiše u repozitorijumu. Tokovi rada su sastavljeni 
