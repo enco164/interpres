@@ -1,8 +1,8 @@
 {
   "menu": {
-    "overview": "Overview",
-    "translations": "Translations",
     "import_export": "Import / Export",
-    "settings": "Settings"
+    "overview": "Overview",
+    "settings": "Settings",
+    "translations": "Translations"
   }
 }

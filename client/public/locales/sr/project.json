@@ -1,7 +1,7 @@
 {
   "menu": {
+    "import_export": "Uvoz / Izvoz",
     "overview": "Pregled",
-    "translations": "Prevodi",
-    "import_export": "Uvoz / Izvoz"
+    "translations": "Prevodi"
   }
 }
