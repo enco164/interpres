@@ -1,4 +1,4 @@
-\section{Arhitektura aplikacije}\label{ch:arhitektura}
+\section{Arhitektura veb aplikacija}\label{ch:arhitektura}
 
 Aplikacije na vebu su dominantno bazirane po modelu klijent--server arhitekture. 
 Server u takvoj arhitekturi obezbeđuje uslugu klijentima koji je zahtevaju. Klijent--server 
@@ -94,7 +94,7 @@ Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razl
 
 \begin{itemize}
     \item Kod mikroservisa je nivo granularnosti niži. To znači da su pojedinačni mikroservisi suviše mali i u drugačijem 
-    kontekstu se retko mogu ponovo upotrebiti. Jedinice ponovne upotrebe u ovoj arhitekturi predstavljaju grupe mikroservisa.
+    kontekstu se retko mogu samostalno ponovo upotrebiti. Jedinice ponovne upotrebe u ovoj arhitekturi predstavljaju grupe mikroservisa.
     Sa druge strane, u \textit{SOA}, servis predstavlja i jedinicu ponovne upotrebe i jedinicu funkcionalnosti.
     \item Kod mikroservisa se ne daje preveliki značaj standardizaciji komunikacije koliko kod \textit{SOA}. Naime, kod mikroservisa
     različiti mikroservisi mogu koristiti različite tehnologije, na primer neki mogu koristiti \textit{REST} a drugi mogu koristiti \textit{GraphQL}.
