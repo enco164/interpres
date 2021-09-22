@@ -3,13 +3,13 @@
 U ovom poglavlju će biti opisane tehnologije korišćene za razvoj rešenja, a prateći ranije opisanu arhitekturu.
 
 \subsection{React}\label{sec:react}
-\textit{React} je \textit{Javascript} biblioteka za građenje korisničkog interfejsa. Koristi se za pravljenje modernih 
+\textit{React} je \textit{JavaScript} biblioteka za građenje korisničkog interfejsa. Koristi se za pravljenje modernih 
 reaktivnih korisničkih interfejsa koji se mogu izgraditi uz pomoć izolovanih delova koda. Ti delovi koda nazivaju 
-se komponente. Korišćenjem komponente omogućeno je deljenje aplikacije na nezavisne delove koji se prilikom razvoja 
+se komponente. Korišćenjem komponenti omogućeno je deljenje aplikacije na nezavisne delove koji se prilikom razvoja 
 mogu iznova koristiti~\cite{react}.
 
 Svaka komponenta sastoji se iz metode za renderovanje i sadrži podatke o tome šta je sve potrebno da se prikaže 
-krajnjem korisniku. Mogu biti klasne ili funkcijske. Funkcijske komponente kao ulazni parametar primaju svojstva 
+krajnjem korisniku. Komponente mogu biti klasne ili funkcijske. Funkcijske komponente kao ulazni parametar primaju svojstva 
 i vraćaju \textit{JSX} element. Sa druge strane, klasne komponente su definisane kao \textit{ES6} 
 klase i renderuju \textit{React} elemente koristeći \texttt{render()} metodu. 
 
@@ -22,12 +22,12 @@ ponovno korišćenje. Prosleđivanjem različitih svojstava, komponente se mogu 
 služe isključivo za prikaz i unutar same komponente ih ne bi trebalo menjati. Protok informacija mora biti jednosmeran od višeg 
 nivoa komponente ka nižem. Stoga je komponenta sa višeg nivoa zadužena za prosleđivanje skupa svojstava.
 
-Stanje komponente se koristi za “pamćenje” podataka unutar same komponente. Možemo reći da je stanje privatno, jer se stanju 
+Stanje komponente se koristi za "pamćenje" podataka unutar same komponente. Možemo reći da je stanje privatno, jer se stanju 
 komponente ne može pristupiti iz roditeljske komponente. Može se promeniti na osnovu korisnikove interakcije ili neke druge 
 akcije unutar aplikacije. Za razliku od svojstava, stanjem se može upravljati unutar same komponente.
 
 \textit{React} kuke (eng. \textit{hooks}) služe za korišćenje stanja u funkcijskim komponentama. U teoriji, kuke su funkcije 
-koje se “kače” za stanja i životne cikluse unutar funkcijske komponente. Da bi se koristile \textit{React} kuke, moraju se 
+koje se "kače" za stanja i životne cikluse unutar funkcijske komponente. Da bi se koristile \textit{React} kuke, moraju se 
 poštovati dva pravila:
 \begin{itemize}
     \item Pozivanje kuka se mora vršiti sa najvišeg nivoa. To znači da se one ne smeju pozivati unutar petlji, 
@@ -36,11 +36,11 @@ poštovati dva pravila:
 \end{itemize}
 
 Stanje svake komponente je potpuno nezavisno. Korišćenjem kuka, postiže se to da se logika sa stanjem može ponovo koristiti 
-(ali ne i samo stanje). Ustvari, svakim pozivom kuke dobijamo potpuno izolovano stanje, pa se stoga jedna kuka može koristiti 
+(ali ne i samo stanje). U stvari, svakim pozivom kuke dobijamo potpuno izolovano stanje, pa se stoga jedna kuka može koristiti 
 više puta unutar jedne komponente. Pored toga, kuke omogućavaju pravljenje kompozicije. Unutar jedne kuke je moguće zakačiti 
 drugu kuku i tako napraviti kompoziciju. 
 
-Pre uvođenja kuka, u \textit{React}-u se koristio obrazac zvan “komponente višeg reda” (eng. \textit{Higher-Order Components}). 
+Pre uvođenja kuka, u \textit{React}-u se koristio obrazac zvan "komponente višeg reda" (eng. \textit{Higher-Order Components}). 
 Konkretno, komponenta višeg reda je funkcija koja za argument prihvata komponentu i vraća novu komponentu. Kako su i ulaz i 
 izlaz istog tipa (\textit{React} komponenta), lako se može zaključiti da se komponente višeg reda mogu komponovati, a logika i 
 stanje koje one dodaju se mogu iskoristiti na više različitih mesta. Iako je i dalje moguće koristiti ovaj obrazac, jer je 
@@ -62,7 +62,7 @@ komponenata iznova i izmena promenljivih vrednosti na više mesta u aplikaciji u
 
 Umesto da se stilovi koriste globalno, teži se ka tome da se postave standardizovane komponente sa ugrađenim funkcionalnostima i 
 stilovima kako bi se one mogle koristiti iznova i podešavati jednostavno u zavisnosti od slučaja u kojem se koriste.
-Jedna od popularnijih biblioteka za stilizovanje \textit{React} komponenata je \textit{Material-UI}. Ona predstavlja 
+Jedna od popularnijih biblioteka za stilizovanje \textit{React} komponenata je \textit{Material UI}. Ona predstavlja 
 implementaciju \textit{Google}-ovog \textit{Material Design}-a. Uz pomoć ove biblioteke komponente se mogu koristiti zasebno, 
 koristeći samo one stilove koji treba da budu prikazani.
 
@@ -79,7 +79,7 @@ veličinu izgrađenog projekta, ova tehnika se može primeniti i na \textit{CSS}
 Razvoj aplikacije na \textit{Node.js} platformi vremenom može postati kompleksan. Što se više svojstava 
 dodaje u aplikaciju, to baza koda postaje sve veća.
 
-\textit{NestJS} je radni okvir za građenje efikasne, skalabilne \textit{Node.js} aplikacije na serveru. 
+\textit{NestJS} je radni okvir za građenje efikasne skalabilne \textit{Node.js} aplikacije na serveru. 
 Pruža serverskom delu aplikacije modularnu strukturu za organizaciju koda u odvojene module i služi 
 za eliminisanje neorganizovane baze kodova.
 
@@ -96,7 +96,7 @@ Osnovne gradivne komponente NestJS aplikacije su kontroleri, provajderi i moduli
 
 Kao i kod većine radnih okvira, kontroleri u \textit{NestJS} su odgovorini za opsluživanje zahteva koji dolaze
 sa klijentske strane. \textit{NestJS} je struktuiran tako da je
-mehanizam za usmeravanje, prikazan na slici \ref{fig:kontroler} sposoban da kontroliše koji kontroler 
+mehanizam za usmeravanje, prikazan na slici \ref{fig:kontroler}, sposoban da kontroliše koji kontroler 
 će biti zadužen za određeni zahtev.
 Kako bi se napravio osnovni kontroler, koriste se klase i dekoratori. Dekoratori pridružuju meta
 podatke klasama i omogućavaju \textit{Nest}-u da napravi mapu za rutiranje. Za definisanje HTTP 
@@ -125,7 +125,7 @@ Tri osnovna koncepta NestJS su:
 koji definiše kako će se podaci poslati preko mreže;
 \item \textbf{Interfejsi} : \textit{TypeScript} interfejsi se koriste za proveru tipa i 
 definisanje tipova podataka koji se mogu proslediti kontroleru ili \textit{NestJS} servisu i
-\item \textbf{Umetanje zavisnosti}: (eng. \textit{Dependency Injection}) je obrazac projektovanja 
+\item \textbf{Umetanje zavisnosti} (eng. \textit{Dependency Injection}) je obrazac projektovanja 
 koji se koristi za povećanje efikasnosti i modularnosti aplikaicje. Održava kod čistim i 
 lakšim za korišćenje. U \textit{NestJS} se koristi za pravljenje uvezanih komponenata~\cite{nest_getting_started}.
 \end{itemize}
@@ -149,7 +149,7 @@ menjanje datoteka, pravljenje zahteva za promenu ili mogu da reaguju na neke dog
 desili u repozitorijumu preko \textit{Webhook}-ova. Ove aplikacije se ne izvršavaju na 
 \textit{GitHub}-u već za njih mora da se obezbedi server. 
 
-Za poboljšanje rada u repozitorijumu, može se napraviti GitHub aplikacija koja sadrži više skripti 
+Za poboljšanje rada u repozitorijumu, može se napraviti \textit{GitHub} aplikacija koja sadrži više skripti 
 ili celu aplikaciju, i takvu aplikaciju uvezati sa mnoštvo drugih alata~\cite{github_apps}. Tako na 
 primer, može se povezati sistem za uređivanje prevoda koji bi mogao da otvori novi "zahtev za promenu"
 kad su prevodioci završili sa svojim ciklusom prevođenja.
@@ -159,22 +159,22 @@ od strane aplikacije. Onda kada je pristup omogućen, autorizovana aplikacija mo
 \textit{API} u ime korisnika.
 
 \textit{OAuth 1.0} je delegirana strategija autentikacije koja uključuje više koraka. 
-Koristi se samo za veb. Aplikacija koja zahteva pristup se može identifikovati preko korisničkog 
-ključa (eng. \textit{consumer key}) i korisniške šifre (eng. \textit{consumer secret}).
+\textit{OAuth 1.0} se koristi samo za veb. Aplikacija koja zahteva pristup se može identifikovati preko korisničkog 
+ključa (eng. \textit{consumer key}) i korisničke šifre (eng. \textit{consumer secret}).
 \textit{OAuth 2.0} je dizajniran da prevaziđe uočene nedostatke u prethodnoj verziji. 
-Podržava klijente koji nisu na vebu. Tok autentikacije je isti kao i kod \textit{OAuth 1.0}. 
+\textit{OAuth 2.0} podržava klijente koji nisu na vebu. Tok autentikacije je isti kao i kod \textit{OAuth 1.0}. 
 Međutim kod \textit{OAuth 2.0} se postiže bolje upravljanje zahtevima i autorizacijom korisnika.
 \textit{GitHub}-ova \textit{OAuth} implementacija podržava obe verzije.
 
 Autentikacija korisnika na veb aplikaciji sastoji se iz tri koraka:
 \begin{itemize}
     \item Korisnik bira akciju da prosledi svoj \textit{GitHub} identitet aplikaciji.
-    \item Korisnik se preusmerava na veb stranicu od strane \textit{GITHub}-a.
+    \item Korisnik se preusmerava na veb stranicu od strane \textit{GitHub}-a.
         Ako korisnik prihvati zahtev, \textit{GitHub} ga preusmerava nazad sa privremenim kodom i stanjem 
         koje je prosleđeno u prethodnom koraku. Vreme trajanja koda je 10 minuta. U slučaju da 
         se stanja ne poklapaju, proces se obustavlja iz sigurnosnih razloga.
     \item Aplikacija pristupa \textit{API}-ju sa korisničkim pristupnim tokenom. 
-        Pristupni token omogućava pravljenje zahtevaa prema \textit{API}-ju u korisnikovo ime.
+        Pristupni token omogućava pravljenje zahteva prema \textit{API}-ju u korisnikovo ime.
 \end{itemize}
 
 \subsection{Docker}\label{sec:docker}
@@ -200,7 +200,7 @@ Neke od prednosti kontejnerizacije su sledeće:
 \begin{itemize}
     \item Kontejneri nemaju gostujući operativni sistem i koriste operativni sistem domaćina. 
     Dele relevantne biblioteke i resurse onda kada je to potrebno.
-    \item Procesiranje i izvršavanje aplikacije je veoma brzo jer se komplajlirana aplikacija 
+    \item Procesiranje i izvršavanje aplikacije je veoma brzo jer se kompajlirana aplikacija 
     i biblioteke kontejnera izvršavaju na kernelu domaćina.
     \item Pokretanje kontejnera traje samo delić sekunde. Takođe, kontejneri su lakši i brži 
     od virtualnih mašina.
@@ -229,7 +229,7 @@ pokrenula aplikacija. To je u osnovi spremna aplikacija napravljena iz \textit{D
 
 \subsection{Kubernetes}\label{sec:kubernetes}
 
-Razvojem mikroservisnih arhitektura dovelo je do povećane upotrebe kontejner tehnologija, jer 
+Razvojem mikroservisnih arhitektura dovelo je do povećane upotrebe kontejner tehnologija jer 
 kontejneri predstavljaju savršeno rešenje za male, nezavisne aplikacije, kao što su mikroservisi. 
 To je dalje dovelo do toga da se aplikacije sada nalaze u velikom broju kontejnera. Upravljanje 
 tim kontejnerima, kroz različita oruženja, uz pomoć skripti ili alata koji su nastali u okviru 
@@ -245,7 +245,7 @@ nadzor  i rešavanje problema. Iz ovih razloga je razvijen \textit{Kubernetes}.
 Porastom kompleksnosti sistema raste i broj alata koji se koriste za upravljanje. Vremenom postaje 
 nemoguće da tim programera isprati sve tehnologije i alate. Odatle prirodno nastaje potreba za 
 izdvojenim timom tehničkih lica koja poznaju alate i tehnologije za upravljanje sistemom. Ovaj tim 
-se naziva operacioni tim, i zadužen je za održavanje sistema i raspoređivanje novih verzija. Tim 
+se naziva operacioni tim i zadužen je za održavanje sistema i raspoređivanje novih verzija. Tim 
 programera je u tom slučaju rasterećen jer mu je fokus samo na rešavanju poslovne logike.
 
 \textit{Kubernetes} omogućava programerima da sami instaliraju svoju aplikaciju, bez dodatne pomoći operacionog tima. 
@@ -282,7 +282,7 @@ Raspored kontejnera u radnim čvorovima zavisi od opterećenja sistema. Ako je o
 servis veće, \textit{Kubernetes} može da pokrene veći broj kontejnera za taj servis. 
 
 Dok se aplikacija izvršava na radnim čvorovima, glavni čvor služi da se na njemu pokrenu bitni procesi 
-bez kojih \textit{Kubernetes} ne može da radi. Jedan od tih procasa je {\em API Server}, koji služi za 
+bez kojih \textit{Kubernetes} ne može da radi. Jedan od tih procesa je {\em API Server}, koji služi za 
 komunikaciju sa različitim \textit{Kubernetes} klijentima, kao što je korisnički interfejs ili alat u 
 komandnoj liniji. Drugi proces koji se nalazi na glavnom čvoru je {\em Controller manager} koji 
 prati šta se dešava u klasteru, da li nešto treba da se popravi, ili da otkrije da je došlo do greške 
@@ -308,7 +308,7 @@ se ostvari interakcija. Ona praktično predstavlja omotač oko kontejnera. U okv
 može se naći više čaura, a u jednoj čauri se može naći više kontejnera. Uobičajeno je da se jedan 
 kontejner nalazi u jednoj čauri, ali postoje slučajevi kada jedan kontejner zahteva pomoćne kontejnere 
 i tada se može naći više njih u jednoj čauri. To zači da će jedna aplikacija, odnosno jedan servis, 
-biti u jednoj čauri. Čaura predstavlja apstrakciju za upravljanje nad kontejnerom koji se poreće unutar
+biti u jednoj čauri. Čaura predstavlja apstrakciju za upravljanje nad kontejnerom koji se pokreće unutar
 čaure. Na primer, ako se kontejner ugasi, čaura će ga ponovo podići za nas. 
 
 Čaure predstavljaju privremene komponente, što znači da često mogu da otkažu iz različitih razloga. 
@@ -319,7 +319,7 @@ svojom \textit{IP} adresom preko koje međusobno komuniciraju.
 
 S obzirom na to da čaure predstavljaju privremene komponente, i da se pravljenjem nove čaure dodeljuje 
 nova \textit{IP} adresa, prirodno se uvodi pojam {\em Servisa}. Servis predstavlja zamenu za \textit{IP} adrese, tako 
-da umesto da podovi komuniciraju međusobno preko \textit{IP} adrese, oni mogu da komuniciraju preko Servisa 
+da umesto da čaure komuniciraju međusobno preko \textit{IP} adrese, one mogu da komuniciraju preko Servisa 
 koji dalje prosleđuju komunikaciju čauri. Tako da, ako se čaura ponovo napravi, ostali će znati da komuniciraju 
 s njom kada ponovo bude dostupna. Pored zamene \textit{IP} adrese, Servisi služe i kao balanseri opterećenja. 
 
@@ -344,7 +344,7 @@ kontinualno raspoređivanje (eng. \textit{Continuous Deployment}).
 
 \textit{CI/CD} uvodi automatizaciju i kontinualno praćenje kroz životni ciklus aplikacija, 
 od integracije i faze testiranja do dostavljanja i raspoređivanja. Zajedno, ove povezane prakse 
-često se nazivaju “\textit{CI/CD} tok” (eng. \textit{CI/CD pipeline}), prikazan na slici~\ref{fig:cicd}, 
+često se nazivaju "\textit{CI/CD} tok" (eng. \textit{CI/CD pipeline}), prikazan na slici~\ref{fig:cicd}, 
 a podržan je i od strane razvojnih i od strane operacionih timova.
 
 \begin{figure}[h]
@@ -355,7 +355,7 @@ a podržan je i od strane razvojnih i od strane operacionih timova.
 \end{figure}
 
 Od slučaja do slučaja, na šta se termini konkretno odnose zavisi od toga koliko je automatizacije 
-ugrađeno u \textit{CI/CD} tok. Mnoga preduzeća započinju dodavanjem kontinualne integracije, 
+ugrađeno u \textit{CI/CD} tok. Mnoga preduzeća započinju automatizaciju dodavanjem kontinualne integracije, 
 nakon čega uvode automatizaciju dostavljanja i raspoređivanja.
 
 \subsubsection{Kontinualna integracija}
@@ -386,7 +386,7 @@ programera i poslovnog tima. Iz tog razloga, svrha kontinualnog dostavljanja jes
 raspoređivanje novog koda brzo, jednostavno i uz minimalne napore.
 
 \subsubsection{Kontinualno raspoređivanje}
-Poslednja faza \textit{CI/CD} protoka je kontinualno raspoređivanje. Kao dodatak kontinualnom dostavljanju, 
+Poslednja faza \textit{CI/CD} toka je kontinualno raspoređivanje. Kao dodatak kontinualnom dostavljanju, 
 koji automatizuje isporuku verzija spremnih za produkciju, kontinualno raspoređivanje automatizuje 
 puštanje aplikacije u produkciju. U velikoj meri se oslanja na dobro osmišljeno automatsko testiranje.
 
@@ -460,5 +460,5 @@ dele podatke između sebe.
 
 \paragraph{Akcija}
 Akcije predstavljaju samostalne komande koje se mogu kombinovati u korake kako bi sačinile jedan posao.
-Akcije su najmanje portabilne jedinice građe toka rada. Korisnici mogu sami da naprave svoje akcije,
+Akcije su najmanje portabilne jedinice građe toka rada. Korisnici mogu sami da naprave svoje akcije
 ili da koriste akcije koje su napravljene od strane \textit{GitHub} zajednice. 
