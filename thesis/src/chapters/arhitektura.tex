@@ -38,7 +38,8 @@ Jedan monolit bi sadržao svu poslovnu logiku koju izvršava aplikacija. Kako ap
 tako raste i sam monolit, koji se sve teže održava. Problemi koji nastaju kod velikog monolita nisu 
 samo problemi održavanja, već je i skaliranje upitno. Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko.
 
-Danas se ovako veliki monoliti raščlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima. 
+Danas se ovako veliki monoliti raščlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima.
+%TODO ko su ovi ljudi 
 Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" sve češće pojavlje poslednjih 
 par godina kako bi opisao određeni način projektovanja softverskih aplikacija kao paketa usluga koji se 
 mogu odvojeno isporučiti. Iako ne postoji precizna definicija ovog arhitektonskog stila, postoje određene 
@@ -47,14 +48,14 @@ kontrole podataka~\cite{martinfowler_microservices}.
 
 Mikroservisi predstavljaju aplikaciju koja je strukturirana kao kolekcija slabo vezanih servisa. Glavna 
 ideja iza mikroservisne arhitekture je da se aplikacije lakše razvijaju i održavaju ako su podeljene 
-na manje delove koji rade nesmetano zajedno.
+na manje delove koji nesmetano rade zajedno.
 
 Servisi se mogu posmatrati kao komponente sistema. Martin Fauler definiše komponente kao jedinice 
 softvera koje se mogu nezavisno zameniti i unaprediti~\cite{martinfowler_software_component}.
 
 Biblioteke su komponente koje su povezane u program i pozivaju se pomoću funkcija koje se nalaze u 
 memoriji, dok su servisi komponente koje su van procesa i koje komuniciraju preko mreže.
-Servisi, naravno, mogu da koriste biblioteke. Glavni benefit ovakvog korišćenja servisa je da se mogu 
+Servisi, naravno, mogu da koriste biblioteke. Glavna benefit ovakvog korišćenja servisa je da se mogu 
 nezavisno isporučiti, što nije slučaj ako imamo jednu aplikaciju koja je sastavljena od skupa biblioteka.
 Sa druge strane, daljinski pozivi preko mreže su skuplji, odnosno sporiji. 
 Druga loša strana je da se logika teže prebacuje iz jednog servisa u drugi, odnosno refaktorisanje je 
@@ -99,8 +100,9 @@ Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razl
     \item Kod mikroservisa se ne daje preveliki značaj standardizaciji komunikacije koliko kod \textit{SOA}. Naime, kod mikroservisa
     različiti mikroservisi mogu koristiti različite tehnologije, na primer neki mogu koristiti \textit{REST} a drugi mogu koristiti \textit{GraphQL}.
     Reprezentacije podataka se isto mogu razlikovati jer jedni mogu serijalizovati podatke u formatu \textit{JSON} a drugi u fromatu \textit{XML}.
-    Pored toga, sami mikroservisi mogu imati neke druge protokole, osmišljene samo za njihove potrebe. Ne postoji nikakav problem dokle god postoji neki 
-    protokol komuniciraje. \textit{SOA} po ovom pitanju pokušava da standardizuje način komunikacije. U slučaju veb servisa se za protokol bira \textit{SOAP}.
+    Pored toga, sami mikroservisi mogu imati neke druge protokole, osmišljene samo za njihove potrebe. 
+    Ne postoji nikakav problem dokle god postoji neki protokol komuniciraje. %TODO preformulisati prethodnu recenicu 
+    \textit{SOA} po ovom pitanju pokušava da standardizuje način komunikacije. U slučaju veb servisa se za protokol bira \textit{SOAP}.
     \item Mikroservisi podrazumevaju da je komunikacija između njih bez stanja. Komunikacijom bez stanja se postiže lakša horizontalna replikacija, odnosno 
     viša skalabilnost. U \textit{SOA} se komunikacija između servisa često odvija u okviru sesije.
 \end{itemize}		
@@ -134,7 +136,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
     Zapravo, stanje na serveru se zabranjuje. Iz tog razloga stanje sesije se u potpunosti čuva na klijentu.
 	
     \item \textbf{Keširanje}: Server u svom odgovoru sa nekim podacima mora eksplicitno da navede da li 
-    podaci mogu da se keširaju, ili ne. Ako server odgovori da su podaci kešabilni, klijent ih može 
+    podaci mogu da se keširaju ili ne. Ako server odgovori da su podaci kešabilni, klijent ih može 
     koristiti kasnije ako je zahtev za podacima isti. Server može napomenuti i vreme isteka keša.
     
     \item \textbf{Uniforman interfejs}: Uniforman interfejs definiše interfejs između klijenta i servera.
@@ -145,7 +147,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
         \item \textbf{Zasnovanost na resursima}: Individualni resursi se mogu identifikovati u 
         zahtevima koristeći \textit{URI} kao identifikator resursa. Resursi kao takvi su konceptualno odvojeni 
         od reprezentacije koja se vraća klijentima. Na primer, server ne šalje svoju bazu podataka, 
-        već radije, šalje \textit{HTML}, \textit{XML} ili \textit{JSON} koji predstavljaju traženi zapis iz baze podataka.
+        već radije, šalje \textit{HTML}, \textit{XML} ili \textit{JSON} sadržaje koji predstavljaju traženi zapis iz baze podataka.
 
         \item \textbf{Upravljanje resursima kroz reprezentaciju}: Kada klijent sadrži reprezentaciju resursa,
         uključujući meta podatke u prilogu, onda ima dovoljno podataka da izmeni ili obriše resurse 
@@ -175,7 +177,7 @@ fokus se prebacuje sa procedura na resurse (objekte). Za aplikaciju kažemo da j
 	
 	\item \textbf{Kod na zahtev (opciono)}: Serveri mogu obogatiti klijentsku stranu slanjem koda koji će biti izvršen na 
 	klijentskoj strani. Ovo može uprostiti klijente jer se smanjuje broj funkcija koje je potrebno da 
-    klijent ima. Primer na vebu bi bio slanje \textit{JavaScript} koda. 
+    klijent ima. Na primer, u veb aplikacijama bi to bilo slanje \textit{JavaScript} koda. 
 
 \end{itemize}
 
