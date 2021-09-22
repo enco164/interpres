@@ -15,7 +15,7 @@ spec:
         - image: interpres/user-management
           name: user-management
 #          change to IfNotPresent
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8085
               protocol: TCP

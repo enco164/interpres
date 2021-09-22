@@ -67,8 +67,7 @@ ključeva, odnosno ne možemo da budemo sigurni da će različiti provajderi ide
 davati različite ključeve.
 
 Pored brige o primarnim ključevima za korisnike, ovaj mikroservis služi 
-i kao svojevrsna optimizacija. %TODO mozda jos malo pojasniti aspekte optimizacije
-Naime, mnogo je brže kontaktirati 
+i kao svojevrsna optimizacija. Naime, mnogo je brže kontaktirati 
 mikroservis koji je u \textit{Kubernetes} klasteru nego neki eksterni 
 servis.
 
@@ -115,9 +114,7 @@ podešavanje projekta), \textit{import-export} (odgovorna za
 uvoz, odnosno izvoz prevoda) i \textit{translations} (odgovorna za uređivanje 
 prevoda).
 
-Sve \textit{React} komponente su pisane kao funkcijske komponente 
-(eng. \textit{function components}) uz korišćenje kuka (eng. \textit{hooks}).
-%TODO mozda nazive na engleskom jeziku ima vise smisla koristiti samo uz prvo uvodjenje termina
+Sve \textit{React} komponente su pisane kao funkcijske komponente uz korišćenje kuka.
 Programeri koji po prvi put koriste \textit{React} uglavnom nalaze da je 
 ovako napisan kod nečitljiv jer deluje da je pomešana poslovna logika komponente 
 sa prikazom korisničkog interfejsa. U stvari, mišljenje da je poslovna logika 
@@ -129,7 +126,6 @@ nalazi u kuki, a da funkcijska komponenta koristi kuku i prikazuje sadržaj.
 Ovim principom se postiže veća čitljivost, razdvajaju se odgovornosti, lakše se testira 
 automatskim testovima, a samim tim se i kôd lakše održava. 
 Ovaj princip je prikazan na primeru koda \ref{code:primer}.
-%TODO u jednoj recenici pojasniti sta je redux
 
 \begin{listing}[h]
   \centering
@@ -162,11 +158,15 @@ Ovaj princip je prikazan na primeru koda \ref{code:primer}.
 \label{code:primer}
 \end{listing}
 
-Za upravljanje stanjem u aplikaciji korišćen je \textit{redux}. On radi 
-po principu centralizovanog skladišta, što znači da njemu pristupaju sve 
-komponente. Na taj način je napravljena sigurnost da će podaci biti konzistentni 
-i da neće biti particionisani. Ako dve komponente zahtevaju isti podatak, one ga neće čuvati u svom stanju 
-već će ga potraživati sa istog mesta.
+Za upravljanje stanjem u aplikaciji korišćen je \textit{redux}. \textit{Redux} je biblioteka
+koja čuva stanje aplikacije u centralizovanom skladištu. Kada nekoj komponenti zatreba 
+neki podatak iz stanja, ona može da mu pristupi sa sigurnošću da će podaci biti konzistentni 
+i da neće biti particionisani. To znači da ako dve komponente zahtevaju isti podatak, 
+one ga neće čuvati u svom stanju već će ga potraživati sa istog mesta. Komponente mogu promeniti 
+centralizovano skladište, odnosno stanje aplikacije, prosleđivanjem podataka kroz objekat \textit{Action}.
+Promenom stanja aplikacije se okida ponovno iscrtavanje komponenata koje su pretplaćene na 
+deo stanja koji je promenjen. Tako, na primer, ako postoje dve komponente koje pristupaju
+istom podatku iz stanja, i jedna od njih ga promeni, druga će automatski biti obaveštena.
 
 \section{Server}
 Svaki mikroservis je napravljen kao zasebna aplikacija i generisan uz pomoć 

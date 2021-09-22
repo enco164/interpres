@@ -15,7 +15,7 @@ spec:
         - image: interpres/core
           name: core
 #          change to IfNotPresent
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8091
               protocol: TCP

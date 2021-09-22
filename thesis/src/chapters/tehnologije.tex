@@ -9,7 +9,7 @@ se komponente. Korišćenjem komponenti omogućeno je deljenje aplikacije na nez
 mogu iznova koristiti~\cite{react}.
 
 Svaka komponenta sastoji se iz metode za renderovanje i sadrži podatke o tome šta je sve potrebno da se prikaže 
-krajnjem korisniku. Komponente mogu biti klasne ili funkcijske. Funkcijske komponente kao ulazni parametar primaju svojstva 
+krajnjem korisniku. Komponente mogu biti klasne ili funkcijske. Funkcijske komponente (eng. \textit{function components}) kao ulazni parametar primaju svojstva
 i vraćaju \textit{JSX} element. Sa druge strane, klasne komponente su definisane kao \textit{ES6} 
 klase i renderuju \textit{React} elemente koristeći \texttt{render()} metodu. 
 
@@ -26,7 +26,7 @@ Stanje komponente se koristi za "pamćenje" podataka unutar same komponente. Mo�
 komponente ne može pristupiti iz roditeljske komponente. Može se promeniti na osnovu korisnikove interakcije ili neke druge 
 akcije unutar aplikacije. Za razliku od svojstava, stanjem se može upravljati unutar same komponente.
 
-\textit{React} kuke (eng. \textit{hooks}) služe za korišćenje stanja u funkcijskim komponentama. U teoriji, kuke su funkcije 
+\textit{React} kuke (eng. \textit{hooks}) služe za korišćenje stanja u funkcijskim komponentama. U teoriji, kuke su funkcije
 koje se "kače" za stanja i životne cikluse unutar funkcijske komponente. Da bi se koristile \textit{React} kuke, moraju se 
 poštovati dva pravila:
 \begin{itemize}

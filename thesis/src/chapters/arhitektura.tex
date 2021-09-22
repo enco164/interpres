@@ -39,8 +39,8 @@ tako raste i sam monolit, koji se sve teže održava. Problemi koji nastaju kod 
 samo problemi održavanja, već je i skaliranje upitno. Njih karakteriše spor razvojni ciklus i ažuriraju se relativno retko.
 
 Danas se ovako veliki monoliti raščlanjuju na manje, nezavisne komponente koje se nazivaju mikroservisima.
-%TODO ko su ovi ljudi 
-Džejms Luis i Martin Fauler kažu da se izraz "Mikroservisna arhitektura" sve češće pojavlje poslednjih 
+Džejms Luis i Martin Fauler, dvojica konsultanata za mikroservise koji rade za \textit{Thoughtworks}, 
+kažu da se izraz "Mikroservisna arhitektura" sve češće pojavlje poslednjih 
 par godina kako bi opisao određeni način projektovanja softverskih aplikacija kao paketa usluga koji se 
 mogu odvojeno isporučiti. Iako ne postoji precizna definicija ovog arhitektonskog stila, postoje određene 
 zajedničke karakteristike u organizaciji oko poslovne logike, automatskog isporučivanja i decentralizovane 
@@ -101,7 +101,6 @@ Razlike između ove dve arhitekture, u suštini, i nema mnogo. Ključne tri razl
     različiti mikroservisi mogu koristiti različite tehnologije, na primer neki mogu koristiti \textit{REST} a drugi mogu koristiti \textit{GraphQL}.
     Reprezentacije podataka se isto mogu razlikovati jer jedni mogu serijalizovati podatke u formatu \textit{JSON} a drugi u fromatu \textit{XML}.
     Pored toga, sami mikroservisi mogu imati neke druge protokole, osmišljene samo za njihove potrebe. 
-    Ne postoji nikakav problem dokle god postoji neki protokol komuniciraje. %TODO preformulisati prethodnu recenicu 
     \textit{SOA} po ovom pitanju pokušava da standardizuje način komunikacije. U slučaju veb servisa se za protokol bira \textit{SOAP}.
     \item Mikroservisi podrazumevaju da je komunikacija između njih bez stanja. Komunikacijom bez stanja se postiže lakša horizontalna replikacija, odnosno 
     viša skalabilnost. U \textit{SOA} se komunikacija između servisa često odvija u okviru sesije.
