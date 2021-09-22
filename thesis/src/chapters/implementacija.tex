@@ -67,7 +67,8 @@ ključeva, odnosno ne možemo da budemo sigurni da će različiti provajderi ide
 davati različite ključeve.
 
 Pored brige o primarnim ključevima za korisnike, ovaj mikroservis služi 
-i kao svojevrsna optimizacija. Naime, mnogo je brže kontaktirati 
+i kao svojevrsna optimizacija. %TODO mozda jos malo pojasniti aspekte optimizacije
+Naime, mnogo je brže kontaktirati 
 mikroservis koji je u \textit{Kubernetes} klasteru nego neki eksterni 
 servis.
 
@@ -84,19 +85,19 @@ da dohvati prevode sa repozitorijuma i da napravi zahtev za promenu sa
 novim izmenama. Ako bi se u budućnosti implementirala integracija sa nekim 
 drugim sistemom za verzionisanje koda, ovaj mikroservis je pravo mesto za to.
 
-\subsection{GitHub Application i GitHub IdP}
+\subsection{GitHub Aplikacija i GitHub IdP}
 Da bi se napravila integracija sa \textit{GitHub}-om, za potrebe menjanja 
-koda, potrebno je napraviti \textit{GitHub Application}. Aplikacija 
-ustvari daje samo pristupne ključeve, a na programeru je dalje da implementira 
+koda, potrebno je napraviti \textit{GitHub Aplikaciju}. Aplikacija 
+u stvari daje samo pristupne ključeve, a na programeru je dalje da implementira 
 i postavi aplikaciju na neki server. Implementacija aplikacije u \textit{NodeJS} 
 je preko \textit{GitHub}-ove biblioteke, nazvane \textit{octokit}. Preko ove 
 biblioteke se dobija interfejs za sve akcije koje je moguće uraditi u 
-repozitorijumu. Dve glavne koje su implementirane su čitanje fajlova sa 
+repozitorijumu. Dve glavne akcije koje su implementirane su čitanje fajlova sa 
 prevodima i pravljenje zahteva za promenu, i koriste se za uvoz i za 
 izvoz prevoda.
 
 \textit{GitHub IdP} je eksterna komponenta i služi kao provajder identiteta. 
-Slično kao i za \textit{GitHub Application}, potrebna je samo registracija 
+Slično kao i za \textit{GitHub Aplikaciju}, potrebna je samo registracija 
 za dobijanje pristupnih ključeva kojima se pristupa interfejsu provajdera. 
 Za implementaciju pristupa korićena je biblioteka \textit{Passport.js}, 
 preporučena od strane \textit{NestJS}, koja ima implementaciju 
@@ -106,7 +107,7 @@ protokola \textit{OAuth2}, koji koristi \textit{GitHub IdP}.
 Klijentski deo je izgrađen uz pomoć radnog okvira \textit{React}, a početna 
 organizacija koda uz pomoć \textit{create-react-app}, preporučenog alata za 
 generisanje \textit{React} projekta od strane \textit{Facebook}-a. 
-Projekat je izgenerisan na jeziku \textit{Typescript}. 
+Projekat je izgenerisan na jeziku \textit{TypeScript}. 
 
 Organizacija projekata je podeljena po funkcionalnostima, i one su 
 \textit{auth} (odgovorna za autorizaciju), \textit{projects} (odgovorna za 
@@ -116,17 +117,19 @@ prevoda).
 
 Sve \textit{React} komponente su pisane kao funkcijske komponente 
 (eng. \textit{function components}) uz korišćenje kuka (eng. \textit{hooks}).
+%TODO mozda nazive na engleskom jeziku ima vise smisla koristiti samo uz prvo uvodjenje termina
 Programeri koji po prvi put koriste \textit{React} uglavnom nalaze da je 
 ovako napisan kod nečitljiv jer deluje da je pomešana poslovna logika komponente 
-sa prikazom korisničkog interfejsa. Ustvari, mišljenje da je poslovna logika 
+sa prikazom korisničkog interfejsa. U stvari, mišljenje da je poslovna logika 
 pomešana sa prikazom korisničkog interfejsa nastaje iz toga da u zvaničnoj 
 dokumentaciji nije predložena arhitektura, već se samo opisuje tehnologija.
 Programeru je ostavljeno na razmišljanje kako da organizuje svoju aplikaciju.
 Prilikom razvoja projekta poštovan je princip da se sva poslovna logika 
 nalazi u kuki, a da funkcijska komponenta koristi kuku i prikazuje sadržaj. 
 Ovim principom se postiže veća čitljivost, razdvajaju se odgovornosti, lakše se testira 
-automatskim testovima, a samim tim se i kod lakše održava. 
+automatskim testovima, a samim tim se i kôd lakše održava. 
 Ovaj princip je prikazan na primeru koda \ref{code:primer}.
+%TODO u jednoj recenici pojasniti sta je redux
 
 \begin{listing}[h]
   \centering
@@ -170,8 +173,8 @@ Svaki mikroservis je napravljen kao zasebna aplikacija i generisan uz pomoć
 \textit{NestJS} interfejsa za komandnu liniju. Ako neki mikroservis treba 
 da zna za postojanje nekog drugog, informacija o lokaciji će biti prosleđenja 
 kroz konfiguraciju, odnosno kroz sistemske promenljive. U konfiguraciji 
-se pored toga čuvaju pristupni ključevi za \textit{GitHub Application}, 
-\textit{GiHub IdP}, i lokacija i kredencijali za bazu podataka. Konfiguracija 
+se pored toga čuvaju pristupni ključevi za \textit{GitHub Aplikaciju}, 
+\textit{GiHub IdP} i lokacija i kredencijali za bazu podataka. Konfiguracija 
 mikroservisa se učitava pri svakom podizanju.
 
 Mikroservisi koji čuvaju stanje u bazi podataka su \textit{core} i 
@@ -189,10 +192,10 @@ migracionih klasa, jer može izračunati prethodni oblik modela, a odatle i
 razliku koju treba primeniti na bazu podataka kako bi podržala novi model. 
 
 Stil pisanja koda na serveru je reaktivan uz \textit{rx.js} biblioteku koja
-implementira obrazac "posmatrač". Server napisan u stilu mikroservisa,
+implementira obrazac "posmatrač". Server je napisan u stilu mikroservisa,
 a komunikacija među servisima je sinhrona, odnosno po principu 
 "zahtev -- odgovor". To znači da dok neki servis čeka na odgovor drugog 
-servisa, prvi ostaje blokiran dok ne dobije odgorvor. Kako se programi napisani 
+servisa, prvi ostaje blokiran dok ne dobije odgovor. Kako se programi napisani 
 u \textit{JavaScript}-u izvršavaju u jednoj niti ovo postaje veliki problem. 
 Iz tog razloga \textit{NestJS} pruža implementaciju \textit{HTTP} klijenta 
 koji prima odgovore asinhrono. On će poslati \textit{HTTP} zahtev koji će biti razrešen kada 
@@ -252,7 +255,7 @@ Na događaj otvaranja novog zahteva za izmenu koda, pokreće se niz
 \textit{GitHub} akcija. Za klijentski deo i za svaki mikroservis 
 se pokreće naredba izgradnje i naredba testiranja. Uz navedena 
 ograničenja za spajanje grana, i sa ovom \textit{GitHub} akcijom, 
-osigurava se da će spojeni kod biti istestiran pre spajanja. To znači da 
+osigurava se da će spojeni kôd biti istestiran pre spajanja. To znači da 
 na glavnoj grani ne bi trebalo da se pojavi neka greška koja bi inače mogla 
 da se otkrije testiranjem.
 
@@ -334,7 +337,7 @@ korisničkog interfejsa je potrebno napraviti klaster. Za klaster je
 potrebno izabrati tip virtualne mašine, kao i lokaciju servera na kojoj 
 će ta virtualna mašina biti podignuta. Nadalje se sve može konfigurisati 
 i preko komandne linije uz \textit{Kubernetes}-ov alat \texttt{kubectl}.
-Preko ovog alata se izvršavaju komande sa pravljenje čaura.
+Preko ovog alata se izvršavaju komande za pravljenje čaura.
 
 Potrebno je napomenuti da se korišćenje \textit{Google Cloud Platform}-e,
 naravno, naplaćuje. U trenutku pisanja ovog rada \textit{Google} za nove 
