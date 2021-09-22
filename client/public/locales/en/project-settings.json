@@ -1,12 +1,12 @@
 {
-  "title": "Settings",
-  "savedSnackbarLabel": "Saved",
   "formLabels": {
+    "languages": "Languages",
+    "lngLoadPath": "Languages Load Path",
     "name": "Name",
     "owner": "Github Owner",
     "repo": "Github Repo",
-    "lngLoadPath": "Languages Load Path",
-    "languages": "Languages",
     "saveBtn": "Save"
-  }
+  },
+  "savedSnackbarLabel": "Saved",
+  "title": "Settings"
 }

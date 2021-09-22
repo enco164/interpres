@@ -1,20 +1,20 @@
 {
-  "import_header": "Import translations",
   "export_header": "Export translations",
-  "import": {
-    "description": "Import translations from GitHub repository.",
-    "button_label": "Import",
-    "confirm_message": "Importing translations from repository will override your current work. Are you sure you want to import?"
-  },
   "export": {
-    "description": "Export translations from Interpres to GitHub repository as Pull Request.",
     "button_label": "Export",
     "confirm": {
-      "title": "Export translations",
-      "message": "Exporting translations to GitHub repository will open up a new Pull Request",
-      "title_label": "Title",
+      "description_helper": "Styling with Markdown is supported",
       "description_label": "Description",
-      "description_helper": "Styling with Markdown is supported"
-    }
+      "message": "Exporting translations to GitHub repository will open up a new Pull Request",
+      "title": "Export translations",
+      "title_label": "Title"
+    },
+    "description": "Export translations from Interpres to GitHub repository as Pull Request."
+  },
+  "import_header": "Import translations",
+  "import": {
+    "button_label": "Import",
+    "confirm_message": "Importing translations from repository will override your current work. Are you sure you want to import?",
+    "description": "Import translations from GitHub repository."
   }
 }
