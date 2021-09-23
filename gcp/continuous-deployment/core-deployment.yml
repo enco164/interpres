@@ -14,8 +14,16 @@ spec:
       containers:
         - image: interpres/core
           name: core
-#          change to IfNotPresent
           imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 250m
+              ephemeral-storage: 10Mi
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              ephemeral-storage: 10Mi
+              memory: 512Mi
           ports:
             - containerPort: 8091
               protocol: TCP

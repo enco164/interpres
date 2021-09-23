@@ -16,6 +16,15 @@ spec:
           name: integration
 #          change to IfNotPresent
           imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 250m
+              ephemeral-storage: 10Mi
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              ephemeral-storage: 10Mi
+              memory: 512Mi
           ports:
             - containerPort: 8092
               protocol: TCP

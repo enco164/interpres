@@ -15,6 +15,15 @@ spec:
         - image: interpres/api-gateway
           imagePullPolicy: IfNotPresent
           name: api-gateway
+          resources:
+            limits:
+              cpu: 250m
+              ephemeral-storage: 10Mi
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              ephemeral-storage: 10Mi
+              memory: 512Mi
           ports:
             - containerPort: 8080
               protocol: TCP
