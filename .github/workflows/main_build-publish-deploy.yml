@@ -73,13 +73,19 @@ jobs:
           gcloud --quiet auth configure-docker
       - run: |-
           gcloud config list
+
       # Get the GKE credentials, so we can deploy to the cluster
       - run: |-
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} --region ${{ secrets.GKE_REGION }}
+
+      - name: Determine Docker Tag
+        run: echo "DOCKER_TAG=${{ github.sha }}"  >> $GITHUB_ENV
+      - run: |-
+          echo DOCKER_TAG:  $DOCKER_TAG
 
       - name: Deploy
         run: |-
           cd ./gcp/continuous-deployment
           chmod +x ./deploy.sh
-          ./deploy.sh latest
+          ./deploy.sh $DOCKER_TAG
 
