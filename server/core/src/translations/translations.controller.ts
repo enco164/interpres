@@ -1,6 +1,7 @@
 import { Body, Controller, Logger } from "@nestjs/common";
 import { MessagePattern } from "@nestjs/microservices";
 import { Operation } from "fast-json-patch";
+import { TranslationDTO } from "src/translations/dto/translation.dto";
 import { CreateTranslationDto } from "./dto/create-translation.dto";
 import { DeleteTranslationsRequest } from "./dto/delete-translations.request";
 import { GetTranslationsRequest } from "./dto/get-translations.request";
@@ -24,9 +25,9 @@ export class TranslationsController {
   @MessagePattern({ cmd: "translations/removeTranslations" })
   removeTranslations(@Body() body: DeleteTranslationsRequest) {
     this.logger.verbose({ cmd: "translations/removeTranslations", body });
-    const translations = body.translations.map((translationDto) =>
-      translationDto.toEntity()
-    );
+    const translations = body.translations
+      .map(TranslationDTO.from)
+      .map((translationDto) => translationDto.toEntity());
     return this.translationsService.removeTranslations(translations);
   }
 

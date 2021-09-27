@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ImportRequest } from "./dto/import.request";
 import { concatMap, tap, throwIfEmpty } from "rxjs/operators";
-import { forkJoin } from "rxjs";
+import { EMPTY, forkJoin } from "rxjs";
 import { ProjectDto } from "../projects/dto/project.dto";
 import { ExportRequest } from "./dto/export.request";
 
@@ -37,10 +37,12 @@ export class ImportExportService {
                 translationsLoadPath: project.lngLoadPath,
               }
             ),
-            this.coreMicroserviceClient.send(
-              { cmd: "translations/removeTranslations" },
-              { translations: project.translations }
-            ),
+            project.translations.length
+              ? this.coreMicroserviceClient.send(
+                  { cmd: "translations/removeTranslations" },
+                  { translations: project.translations }
+                )
+              : EMPTY,
           ])
         ),
         concatMap(([dataFromGithub]) =>
