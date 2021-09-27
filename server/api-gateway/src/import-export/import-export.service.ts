@@ -37,12 +37,12 @@ export class ImportExportService {
                 translationsLoadPath: project.lngLoadPath,
               }
             ),
-            project.translations.length
-              ? this.coreMicroserviceClient.send(
-                  { cmd: "translations/removeTranslations" },
-                  { translations: project.translations }
-                )
-              : EMPTY,
+            // project.translations.length
+            //   ? this.coreMicroserviceClient.send(
+            //       { cmd: "translations/removeTranslations" },
+            //       { translations: project.translations }
+            //     )
+            //   : EMPTY,
           ])
         ),
         concatMap(([dataFromGithub]) =>
