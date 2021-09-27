@@ -3,7 +3,7 @@ name: Build & Publish reverse-proxy docker image
 on:
   push:
     branches:
-      - main
+      - tmp
 #    paths:
 #      - 'reverse-proxy/**'
 

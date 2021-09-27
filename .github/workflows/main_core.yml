@@ -3,7 +3,7 @@ name: Build & Publish Core docker image
 on:
   push:
     branches:
-      - main
+      - tmp
 #    paths:
 #      - 'server/core/**'
 
