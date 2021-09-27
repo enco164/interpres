@@ -3,7 +3,7 @@ name: Build & Publish API Gateway docker image
 on:
   push:
     branches:
-      - main
+      - tmp
 
 jobs:
   build-docker-and-publish:
