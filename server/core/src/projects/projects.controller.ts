@@ -39,4 +39,9 @@ export class ProjectsController {
   findOne(@Param("id") id: string) {
     return this.projectsService.findOne(id).pipe(tap((a) => console.log(a)));
   }
+
+  @MessagePattern({ cmd: "projects/deleteProjectById" })
+  delete(@Param("id") id: string) {
+    return this.projectsService.delete(id);
+  }
 }

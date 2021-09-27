@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Logger,
   Param,
@@ -78,5 +79,15 @@ export class ProjectsController {
     });
 
     return this.projectsService.updateProject(id, updateProjectDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(":id")
+  deleteProject(@Param("id") id: string) {
+    this.logger.verbose({
+      request: `DELETE /projects/${id}`,
+    });
+
+    return this.projectsService.deleteProject(id);
   }
 }

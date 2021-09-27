@@ -46,4 +46,8 @@ export class ProjectsService {
       concatMap((project) => this.projectRepository.save(project))
     );
   }
+
+  delete(id: string) {
+    return this.projectRepository.delete(id);
+  }
 }

@@ -49,4 +49,11 @@ export class ProjectsService {
       { ...createProjectDto }
     );
   }
+
+  deleteProject(id: string) {
+    this.coreMicroserviceClient.send(
+      { cmd: "projects/deleteProjectById" },
+      { id }
+    );
+  }
 }
