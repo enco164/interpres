@@ -2,6 +2,7 @@
   "menu": {
     "import_export": "Uvoz / Izvoz",
     "overview": "Pregled",
+    "settings": "Podesavanja",
     "translations": "Prevodi"
   }
 }
